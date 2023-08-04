@@ -38,17 +38,19 @@ function CartItem({ cartItem }: Prop) {
 
   return (
     <div key={cartItem.cId} className="flex rounded-[5px] gap-4 border p-2 md:p-4 mb-2 hover:border-gray-500">
-      <Link href={`/product/${cartItem.pId}?cId=${cartItem.cId}`} className="md:w-32 md:h-32 w-[93px] h-[93px]">
-        <img
-          className="w-[93px] h-[93px] border rounded-[5px] md:w-32 md:h-32 object-cover cursor-pointer"
-          src={cartItem.image}
-          style={{
-            aspectRatio:"1/1",
-            objectFit:"cover"
-          }}
-        />
-      </Link>
-      <Box className="flex flex-col justify-between" overflow="hidden">
+      <Box className="md:w-32 md:h-32 w-[93px] h-[93px]">
+        <Link href={`/product/${cartItem.pId}?cId=${cartItem.cId}`} >
+          <img
+            className="w-[93px] h-[93px] border rounded-[5px] md:w-32 md:h-32 object-cover cursor-pointer"
+            src={cartItem.image}
+            style={{
+              aspectRatio: "1/1",
+              objectFit: "cover"
+            }}
+          />
+        </Link>
+      </Box>
+      <Box className="flex flex-col justify-between" w="full" overflow="hidden">
         <div className="flex justify-between gap-4 overflow-hidden">
           <div className="flex  flex-[1] flex-col justify-start overflow-hidden">
             <div className=" text-gray-800 max-w-[180px] md:max-w-full m-0 overflow-hidden">
@@ -83,22 +85,23 @@ function CartItem({ cartItem }: Prop) {
           <div className="flex  h-8 items-center border justify-between max-w-[200px] rounded">
             <button
               className=" hover:bg-white bg-gray-200 h-8 w-8 flex items-center justify-center"
-              onClick={() => handleQuantity("NEMEH")}
+              onClick={() => handleQuantity("HASAH")}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
               </svg>
 
             </button>
             <span className="w-10 h-10 flex items-center justify-center">
               {cartItem.quantity}
             </span>
+          
             <button
               className=" hover:bg-white bg-gray-200 h-8 w-8 flex items-center justify-center"
-              onClick={() => handleQuantity("HASAH")}
+              onClick={() => handleQuantity("NEMEH")}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-5 h-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
               </svg>
 
             </button>

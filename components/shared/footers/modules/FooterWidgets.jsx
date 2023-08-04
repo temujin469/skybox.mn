@@ -4,12 +4,15 @@ import { Heading, Text } from '@chakra-ui/react';
 
 const FooterWidgets = () => (
   <div className="ps-footer__widgets">
-    <aside className="widget widget_footer widget_contact-us">
-      <Heading fontSize="17px" mb={5}>Холбоо барих</Heading>
+    <aside className="widget widget_footer widget_contact-us pr-4">
+      <Heading fontSize="17px" mb={5}>
+        Холбоо барих
+      </Heading>
       <div className="widget_content">
         <p>+976 75104000</p>
-        <Text>
-          502 New Design Str, Melbourne, Australia <br />
+        <Text maxW="300px">
+           Улаанбаатар Хот, Баянзүрх Дүүрэг 3-р хороо, Токио Ресидэнс, 9-р давхар, 22 тоот
+          <br />
           <a href="mailto:contact@martfury.co">contact@skybox.mn</a>
         </Text>
         <ul className="ps-list--social">
@@ -37,7 +40,9 @@ const FooterWidgets = () => (
       </div>
     </aside>
     <aside className="widget widget_footer">
-      <Heading fontSize="17px" mb={5}>холбоосууд</Heading>
+      <Heading fontSize="17px" mb={5}>
+        холбоосууд
+      </Heading>
       <ul className="ps-list--link">
         <li>
           <Link href="/page/blank">
@@ -57,7 +62,9 @@ const FooterWidgets = () => (
       </ul>
     </aside>
     <aside className="widget widget_footer">
-      <Heading fontSize="17px" mb={5}>Компани</Heading>
+      <Heading fontSize="17px" mb={5}>
+        Компани
+      </Heading>
       <ul className="ps-list--link">
         <li>
           <Link href="/page/about-us">
@@ -77,7 +84,9 @@ const FooterWidgets = () => (
       </ul>
     </aside>
     <aside className="widget widget_footer">
-      <Heading fontSize="17px" mb={5}>Бизнес</Heading>
+      <Heading fontSize="17px" mb={5}>
+        Бизнес
+      </Heading>
       <ul className="ps-list--link">
         <li>
           <Link href="#">

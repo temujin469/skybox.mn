@@ -303,7 +303,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                                     onClick={(e) => handleSelectColor(e, item.Vid)}>
                                     <span className="ps-variant__tooltip" style={{ whiteSpace: "nowrap" }}>{item.Value}</span>
 
-                                    {item.MiniImageUrl !== null ? (
+                                    {item.MiniImageUrl ? (
                                         <img
                                             src={item.MiniImageUrl}
                                             alt=""
@@ -313,7 +313,14 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                                             }}
                                         />
                                     ) : (
-                                        ''
+                                            <img
+                                                src={product.MainPictureUrl}
+                                                alt=""
+                                                style={{
+                                                    aspectRatio: "1/1",
+                                                    objectFit: "cover"
+                                                }}
+                                            />
                                     )}
                                 </GridItem>
                             );
@@ -439,9 +446,9 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                         </Heading>
                         <Box gap="10px" display="flex" alignItems="center">
                             <HStack w="100%" rounded={5} bgColor="gray.100">
-                                <Button variant="ghost" size="lg" borderRightRadius={0} bgColor="gray.200" onClick={(e) => handleIncreaseItemQty(e)}>+</Button>
+                                <Button variant="ghost" size="lg" borderRightRadius={0} bgColor="gray.200" onClick={(e) => handleDecreaseItemQty(e)}>-</Button>
                                 <Heading size="sm" w="100%" minW="45px" color="gray.600" textAlign="center">{quantity}</Heading>
-                                <Button variant="ghost" size="lg" borderLeftRadius={0} bgColor="gray.200" onClick={(e) => handleDecreaseItemQty(e)}>-</Button>
+                                <Button variant="ghost" size="lg" borderLeftRadius={0} bgColor="gray.200" onClick={(e) => handleIncreaseItemQty(e)}>+</Button>
                             </HStack>
                             {/* <Box rounded={5} className="form-group--number">
                                 <button

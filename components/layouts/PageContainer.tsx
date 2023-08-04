@@ -33,9 +33,9 @@ const PageContainer = ({
     let titleView;
 
     if (title !== '') {
-        titleView = process.env.title + ' | ' + title;
+        titleView = "skybox" + ' | ' + title;
     } else {
-        titleView = process.env.title + ' | ' + process.env.titleDescription;
+        titleView = "skybox"
     }
 
     return (

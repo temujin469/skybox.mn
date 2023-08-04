@@ -40,23 +40,15 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Martfury - React eCommerce Template</title>
+        <title>Skybox</title>
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-        />
         <meta name="format-detection" content="telephone=no" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="author" content="nouthemes" />
-        <meta
-          name="keywords"
-          content="Martfury, React, eCommerce, Template"
-        />
-        <meta
+        <meta name="author" content="Skybox" />
+        {/* <meta
           name="description"
           content="Martfury - React eCommerce Template"
-        />
+        /> */}
 
       </Head>
       <QueryClientProvider client={queryClient}>

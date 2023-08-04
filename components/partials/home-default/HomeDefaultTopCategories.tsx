@@ -10,7 +10,7 @@ const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
 const HomeDefaultTopCategories = () => {
 
     const {data} = useGetHomeContent()
-    const topCategories = data?.data.attributes.featured_categories
+    const topCategories = data?.data?.attributes.featured_categories
     return (
       <div className="ps-top-categories">
         <div className="ps-container">

@@ -15,7 +15,7 @@ import HomeDefaultCollection from '~/components/partials/home-default/HomeDefaul
 
 const HomepageDefaultPage = () => {
   return (
-    <PageContainer title="Multipurpose Marketplace React Ecommerce Template">
+    <PageContainer title="Skybox">
       <main id="homepage-1">
        <Box overflowX="hidden">
           <HomeDefaultBanner />

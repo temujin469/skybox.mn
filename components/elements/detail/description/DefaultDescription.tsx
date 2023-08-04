@@ -20,7 +20,7 @@ const DefaultDescription = () => {
                     <TabPanel px={0}>
                         <PartialSpecification />
                     </TabPanel>
-                    <TabPanel px={0}>
+                    <TabPanel maxW={900} mx="auto">
                         <PartialDescription />
                     </TabPanel>
                 </TabPanels>
