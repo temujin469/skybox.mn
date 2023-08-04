@@ -251,12 +251,12 @@
 .ps-form--account {
     max-width: 430px;
     margin: 0 auto !important;
-    padding-top: 130px;
+    padding-top: 15px;
     @extend %list-reset;
 
     .ps-tab-list {
         text-align: center;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
 
         li {
             display: inline-block;
@@ -269,7 +269,7 @@
             }
 
             &.active {
-                a {
+                h2 {
                     color: $color-heading;
                 }
             }
@@ -316,6 +316,7 @@
                 display: block;
                 line-height: 20px;
                 padding: 15px 0;
+                border-radius: 5px;
 
                 i {
                     color: #ffffff;
@@ -357,6 +358,8 @@
 
     .ps-tab {
         background-color: #ffffff;
+            border-radius: 5px;
+
     }
 }
 

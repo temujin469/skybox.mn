@@ -6,12 +6,26 @@ import type { RootState } from '~/store/store';
 import { removeCartItem } from '~/store/slices/cartSlice';
 import { formatCurrency } from '~/utilities/product-helper';
 import { Box, Button, Heading } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
 const MiniCart = () => {
     const cart = useSelector((state: RootState) => state.cart);
-
+    const auth = useSelector((state: RootState) => state.auth);
+    const isAuth = Boolean(auth.user);
+    const router = useRouter()
 
     const dispatch = useDispatch()
+
+
+    const handleCheckout = () => {
+        if (!auth.isLoading) {
+            if (!isAuth) {
+               return router.push("/account/register")
+            }
+            router.push("/account/checkout")
+        }
+    }
+
 
     function handleRemoveItem(e: React.MouseEvent<HTMLDivElement, MouseEvent>, productId: string) {
         e.preventDefault();
@@ -43,21 +57,19 @@ const MiniCart = () => {
                     </Box>
                     <Box display="flex" gap={3} justifyContent="space-between" w="100%">
                         <Link href="/account/shopping-cart" style={{
-                            flexGrow:"1"
+                            flexGrow: "1"
                         }}>
-                            <Button variant="solid" size="lg"  width="100%">
+                            <Button variant="solid" size="lg" width="100%">
                                 Дэлгэрэнгүй
                             </Button>
                         </Link>
-                        <Link href="/account/checkout"
-                            style={{
-                                flexGrow: "1"
-                            }}>
-                            <Button variant="brand" size="lg" width="100%">
-                                Тооцоо хийх
 
-                            </Button>
-                        </Link>
+                        <Button style={{
+                            flexGrow: "1"
+                        }} onClick={handleCheckout} variant="brand" size="lg">
+                            Тооцоо хийх
+
+                        </Button>
                     </Box>
                 </div>
             </div>

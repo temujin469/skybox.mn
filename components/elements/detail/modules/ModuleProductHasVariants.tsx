@@ -7,7 +7,7 @@ import ThumbnailHasVariant from '~/components/elements/detail/thumbnail/Thumbnai
 import { useRouter } from 'next/router';
 import { notification } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '~/store/slices/cartSlice';
 // import { addToCompare } from '~/store/slices/compareSlice';
 import { addToWishlist } from '~/store/slices/wishlistSlice';
@@ -15,12 +15,16 @@ import useSettings from '~/apiCall/strapi/useSettings';
 import { Box, Button, Grid, GridItem, HStack, Heading, IconButton, Input, Text, Tooltip } from '@chakra-ui/react';
 import { FiHeart, FiPieChart } from "react-icons/fi"
 import { addToCompare } from '~/store/slices/compareSlice';
+import { RootState } from '~/store/store';
 
 type Props = {
     product?: ProductFullInfo
 }
 
 const ModuleProductHasVariants = ({ product }: Props) => {
+
+    const auth = useSelector((state: RootState) => state.auth);
+    const isAuth = Boolean(auth.user);
 
     const { data } = useSettings();
     const settings = data?.data.attributes;
@@ -91,27 +95,33 @@ const ModuleProductHasVariants = ({ product }: Props) => {
 
     function handleBuynow(e: any) {
         e.preventDefault();
-        if (sizes?.length && !selectedSize || !selectedVariant || !selectedColor) {
-            return api.info({
-                message: "Сонголтоо хийнэ үү!"
-            })
-        } else {
-            addToCart(dispatch, {
-                title: product?.Title!,
-                pId: product?.Id,
-                cId: cId as string,
-                color: selectedColor.Value,
-                property_value: selectedSize?.Value,
-                property_name: selectedSize?.PropertyName,
-                price: selectedVariant.Price.ConvertedPriceList.Internal.Price!,
-                quantity: quantity,
-                image: selectedColor.ImageUrl!,
-                countInStock: selectedVariant.Quantity
-            })
-            router.push("/account/checkout")
-            // api.success({
-            //     message: "Хүслийн жагсаалтанд нэмэгдлээ"
-            // })
+
+        if (!auth.isLoading) {
+            if (!isAuth) {
+                return router.push("/account/register")
+            }
+            if (sizes?.length && !selectedSize || !selectedVariant || !selectedColor) {
+                return api.info({
+                    message: "Сонголтоо хийнэ үү!"
+                })
+            } else {
+                addToCart(dispatch, {
+                    title: product?.Title!,
+                    pId: product?.Id,
+                    cId: cId as string,
+                    color: selectedColor.Value,
+                    property_value: selectedSize?.Value,
+                    property_name: selectedSize?.PropertyName,
+                    price: selectedVariant.Price.ConvertedPriceList.Internal.Price!,
+                    quantity: quantity,
+                    image: selectedColor.ImageUrl!,
+                    countInStock: selectedVariant.Quantity
+                })
+                router.push("/account/checkout")
+                // api.success({
+                //     message: "Хүслийн жагсаалтанд нэмэгдлээ"
+                // })
+            }
         }
     }
 
@@ -313,14 +323,14 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                                             }}
                                         />
                                     ) : (
-                                            <img
-                                                src={product.MainPictureUrl}
-                                                alt=""
-                                                style={{
-                                                    aspectRatio: "1/1",
-                                                    objectFit: "cover"
-                                                }}
-                                            />
+                                        <img
+                                            src={product.MainPictureUrl}
+                                            alt=""
+                                            style={{
+                                                aspectRatio: "1/1",
+                                                objectFit: "cover"
+                                            }}
+                                        />
                                     )}
                                 </GridItem>
                             );
@@ -421,14 +431,14 @@ const ModuleProductHasVariants = ({ product }: Props) => {
             <div className="ps-product__info">
                 <Heading fontSize="22px" mb={3}>{product?.Title}</Heading>
                 <div className="ps-product__meta">
-                        <Box display="flex" alignItems="end">
-                            <Heading fontSize="16px" className="pr-1">
-                                Барааны код:
-                            </Heading>
-                            <Text lineHeight="15px">
-                                {product?.Id}
-                            </Text>
-                        </Box>
+                    <Box display="flex" alignItems="end">
+                        <Heading fontSize="16px" className="pr-1">
+                            Барааны код:
+                        </Heading>
+                        <Text lineHeight="15px">
+                            {product?.Id}
+                        </Text>
+                    </Box>
                     {/* <div className="ps-product__rating">
                         Сүүлийн 30 өдөрт:
                         <span>{last30sales?.Value}{" "}

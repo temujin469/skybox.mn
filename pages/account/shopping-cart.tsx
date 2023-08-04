@@ -9,10 +9,26 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '~/store/store';
 import { Button } from '@chakra-ui/react';
 import { HiArrowSmallLeft } from "react-icons/hi2"
+import { useRouter } from 'next/router';
 
 const ShoppingCartScreen = () => {
 
   const { cartItems } = useSelector((state: RootState) => state.cart);
+  const auth = useSelector((state: RootState) => state.auth);
+
+  const isAuth = Boolean(auth.user);
+  const router = useRouter()
+
+
+
+  const handleCheckout = () => {
+    if (!auth.isLoading) {
+      if (!isAuth) {
+        return router.push("/account/register")
+      }
+      router.push("/account/checkout")
+    }
+  }
 
   const breadCrumb = [
     {
@@ -32,12 +48,14 @@ const ShoppingCartScreen = () => {
           </div>
           <div className="col-span-4">
             <ModuleCartSummary/>
-            <Link
-              href="/account/checkout"
-              className="ps-btn ps-btn--fullwidth"
+            <Button
+              onClick={handleCheckout}
+              variant="brand"
+              size="lg"
+              w="full"
             >
               Тооцоо хийх
-            </Link>
+            </Button>
           </div>
         </div>
       );

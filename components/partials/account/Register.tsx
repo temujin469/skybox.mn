@@ -1,3 +1,4 @@
+import { Heading } from '@chakra-ui/react';
 import { Form, Input, Spin, notification } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -56,10 +57,18 @@ function Register() {
         <Form className="ps-form--account" onFinish={handleSubmit}>
           <ul className="ps-tab-list">
             <li>
-              <Link href="/account/login">Нэвтрэх</Link>
+              <Link href="/account/login">
+                <Heading color="gray.400">
+                  Нэвтрэх
+                </Heading>
+                </Link>
             </li>
             <li className="active">
-              <Link href="/account/register">Бүртгүүлэх</Link>
+              <Link href="/account/register">
+                <Heading>
+                  Бүртгүүлэх
+                </Heading>
+                </Link>
             </li>
           </ul>
           <div className="ps-tab active" id="register">
@@ -95,7 +104,7 @@ function Register() {
                   <Input
                     className="form-control"
                     type="email"
-                    placeholder="Email address"
+                    placeholder="Имэйл хаяг"
                   />
                 </Form.Item>
               </div>
@@ -112,7 +121,7 @@ function Register() {
                   <Input
                     className="form-control"
                     type="password"
-                    placeholder="Password..."
+                    placeholder="Нууц үг..."
                   />
                 </Form.Item>
               </div>

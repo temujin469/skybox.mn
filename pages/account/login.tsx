@@ -7,7 +7,6 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 
 const LoginPage = () => {
     const breadCrumb = [
-       
         {
             text: 'Нэвтрэх',
             url:"/account/login"

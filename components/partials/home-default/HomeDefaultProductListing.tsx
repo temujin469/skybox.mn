@@ -17,7 +17,7 @@ const HomeDefaultProductListing = ({ collection, title }: Props) => {
     const [page, setPage] = useState<number>(0)
     const [start, setStart] = useState<number>(0)
 
-    const { data, isLoading } = useGetProductsByFilter({ variables: { start, limit: 10, filters: undefined, catId: "otc-4" } });
+    const { data, isLoading } = useGetProductsByFilter({ variables: { start, limit: 10, filters: undefined, catId: "otc-20" } });
 
     const productItems = data?.OtapiItemInfoSubList?.Content;
 

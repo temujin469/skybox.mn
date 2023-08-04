@@ -7,9 +7,9 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 
 const RegisterPage = () => {
     const breadCrumb = [
-       
         {
             text: 'Бүртгүүлэх',
+            url:"/account/register"
         },
     ];
 
@@ -17,7 +17,7 @@ const RegisterPage = () => {
         <>
             <PageContainer footer={<FooterDefault />} title="Register">
                 <div className="ps-page--my-account">
-                    <BreadCrumb breadcrumb={breadCrumb} />
+                    <BreadCrumb bgColor='white' breadcrumb={breadCrumb} />
                     <Register />
                 </div>
             </PageContainer>

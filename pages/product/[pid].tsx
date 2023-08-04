@@ -54,7 +54,7 @@ const ProductDetailHasVariantsPage = () => {
                             layout="fullwidth"
                             collectionSlug="deal-of-the-day"
                         /> */}
-                        <RelatedProduct  catId="otc-4" collection="related" />
+                        <RelatedProduct  catId="otc-20" collection="related" />
                     </Box>
                     {/*
                     <CustomerBought

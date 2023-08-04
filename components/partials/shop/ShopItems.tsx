@@ -23,7 +23,7 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
     const [page, setPage] = useState<number>(0)
     const [start, setStart] = useState<number>(0)
 
-    const { data, isLoading } = useGetProductsByFilter({ variables: { start, limit: pageSize, filters, catId: catId as string } });
+    const { data, isLoading } = useGetProductsByFilter({ variables: { start, limit: pageSize, filters, catId: catId ?  catId as string : "otc-20" } });
 
     const productItems = data?.OtapiItemInfoSubList?.Content;
 

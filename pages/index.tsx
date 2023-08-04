@@ -28,10 +28,10 @@ const HomepageDefaultPage = () => {
             title="Хямдалтай бараа"
           />
           
-          <HomeDefaultCollection catId='otc-49' title="Зуны онцлох эрэгтэй бараа" />
-          <HomeDefaultCollection catId='otc-19' title="Зуны онцлох эмэгтэй бараа" />
+          <HomeDefaultCollection catId='otc-49' title="Хүүхдийн онцлох хямдрал" />
+          <HomeDefaultCollection catId='otc-19' title="Зуны онцлох бараа" />
           <HomeDefaultCollection catId='otc-20' title="Технологи" />
-          <HomeDefaultCollection catId='otc-31' title="Гэрийн цахилгаан хэрэгсэл" />
+          <HomeDefaultCollection catId='otc-31' title="Цахилгаан хэрэгсэл" />
           <NewArrivals collection="new-arrivals-products" />
           <HomeAds />
           {/* <DownLoadApp /> */}

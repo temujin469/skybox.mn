@@ -1,3 +1,4 @@
+import { Heading } from '@chakra-ui/react';
 import { Form, Input, Spin, notification } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -57,10 +58,18 @@ function Login() {
         >
           <ul className="ps-tab-list">
             <li className="active">
-              <Link href="/account/login">Нэвтрэх</Link>
+              <Link href="/account/login">
+                <Heading>
+                  Нэвтрэх
+                </Heading>
+              </Link>
             </li>
-            <li>
-              <Link href="/account/register">Бүртгүүлэх</Link>
+            <li >
+              <Link href="/account/register">
+                <Heading color="gray.400">
+                  Бүртгүүлэх
+                </Heading>
+              </Link>
             </li>
           </ul>
           <div className="ps-tab active" id="sign-in">
@@ -72,14 +81,14 @@ function Login() {
                   rules={[
                     {
                       required: true,
-                      message: "Please input your email!",
+                      message: "Шаардлагтай",
                     },
                   ]}
                 >
                   <Input
                     className="form-control"
                     type="text"
-                    placeholder="Username or email address"
+                    placeholder="Имэйл хаяг"
                   />
                 </Form.Item>
               </div>
@@ -96,7 +105,7 @@ function Login() {
                   <Input
                     className="form-control"
                     type="password"
-                    placeholder="Password..."
+                    placeholder="Нууц үг..."
                   />
                 </Form.Item>
               </div>
