@@ -4,15 +4,17 @@ import { otApi } from "~/utilities/axios";
 const key = process.env.NEXT_PUBLIC_INSTANCE_KEY;
 
 type Response = {
-  OtapiItemFullInfo:ProductFullInfo
+  OtapiItemDescription: {
+    ItemDescription:string
+  };
 };
 
 type Variables = {
-  id:string
+  id: string;
 };
 
-const useGetItemFullInfo = createQuery<Response, Variables>({
-  primaryKey: "/GetItemFullInfoWithDeliveryCosts",
+const useGetItemDescription = createQuery<Response, Variables>({
+  primaryKey: "/GetItemDescription",
   queryFn: async ({ queryKey: [primaryKey, variables] }) => {
     try {
       const res = await otApi.get(
@@ -25,4 +27,4 @@ const useGetItemFullInfo = createQuery<Response, Variables>({
   },
 });
 
-export default useGetItemFullInfo;
+export default useGetItemDescription;

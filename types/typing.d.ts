@@ -239,8 +239,8 @@ interface ProductFullInfo extends ProductInfo {
     AddCost: number;
   }[];
   Videos: {
-    PreviewUrl:string
-    Url:string
+    PreviewUrl: string;
+    Url: string;
   }[];
   Attributes: ProductAttribute[];
   HasHierarchicalConfigurators: boolean;
@@ -253,6 +253,15 @@ interface ProductFullInfo extends ProductInfo {
     DisplayName: string;
     Weight: number;
   };
+  Promotions?: {
+    Id: string;
+    Name: string;
+    Price: Price;
+    ConfiguredItems:{
+      Price:Price,
+      Id:string
+    }[]
+  }[];
 };
 
 // Ecommerce

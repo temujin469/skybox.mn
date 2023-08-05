@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { AspectRatio, Box } from '@chakra-ui/react';
 import { Affix, Modal } from 'antd';
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import Lightbox from 'react-18-image-lightbox';
@@ -6,6 +6,7 @@ import Slider from 'react-slick';
 import NextArrow from '~/components/elements/carousel/NextArrow';
 import PrevArrow from '~/components/elements/carousel/PrevArrow';
 import { GoPlay } from "react-icons/go"
+import BlurImage from '../../BlurImage';
 
 type Props = {
     colorPicture?: string;
@@ -110,18 +111,17 @@ const ThumbnailHasVariant = ({ colorPicture, pictures, setColorPicture, videos }
     if (productImages.length > 0) {
         // videos
         imagesView = productImages?.map((item, i) => (
-            <Box rounded={5} border="1px" borderColor="gray.100" position={"relative"} className="item" key={i} onClick={() => setColorPicture(undefined)}>
-                <img src={item.url} alt={item.url} style={{
-                    aspectRatio: "1/1",
-                    objectFit: "cover",
-                    borderRadius: "5px"
-                }} />
+            <Box rounded="5px" border="1px" borderColor="gray.100" position={"relative"} className="item" key={i} onClick={() => setColorPicture(undefined)}>
+                <AspectRatio ratio={1}>
+                    <BlurImage fill src={item.url} alt={item.url} />
+                </AspectRatio>
                 <Box _hover={{
                     color: "brand.100"
                 }} hidden={!item.videoUrl} style={{
                     position: "absolute",
                     top: "50%",
                     left: "50%",
+                    opacity: "0.5",
                     transform: "translate(-50%,-50%)",
                     fontSize: "30px",
                 }}>
@@ -151,12 +151,9 @@ const ThumbnailHasVariant = ({ colorPicture, pictures, setColorPicture, videos }
                                     <source src={item.videoUrl} type="video/mp4" />
                                 </video>
                             ) : (
-                                <img src={item.url} alt={item.url} style={{
-                                    aspectRatio: "1/1",
-                                    objectFit: "cover",
-                                    borderRadius: "5px"
-
-                                }} />
+                                <AspectRatio ratio={1}>
+                                        <BlurImage src={item.url} alt={item.url} fill />
+                                </AspectRatio>
                             )
                         ) : (
                             <img src={colorPicture ? colorPicture : item.url} alt={colorPicture} style={{

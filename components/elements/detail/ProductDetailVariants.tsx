@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
 import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
 import ModuleProductHasVariants from '~/components/elements/detail/modules/ModuleProductHasVariants';
+import useAppState from '~/hooks/useAppState';
 // import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
 // import ModuleDetailShoppingActions from '~/components/elements/detail/modules/ModuleDetailShoppingActions';
 // import ModuleProductDetailSpecification from '~/components/elements/detail/modules/ModuleProductDetailSpecification';
@@ -11,6 +12,11 @@ import ModuleProductHasVariants from '~/components/elements/detail/modules/Modul
 
 const ProductDetailVariants = ({ product }:{product:ProductFullInfo}) => {
     // console.log({ product });
+    const {setProductId} = useAppState()
+
+    useEffect(()=>{
+        setProductId(product.Id)
+    },[product])
     if (product) {
             return (
                 <div className="ps-product--detail ps-product--fullwidth">

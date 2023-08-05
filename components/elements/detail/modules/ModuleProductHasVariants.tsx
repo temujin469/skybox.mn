@@ -16,6 +16,7 @@ import { Box, Button, Grid, GridItem, HStack, Heading, IconButton, Input, Text, 
 import { FiHeart, FiPieChart } from "react-icons/fi"
 import { addToCompare } from '~/store/slices/compareSlice';
 import { RootState } from '~/store/store';
+import BlurImage from '../../BlurImage';
 
 type Props = {
     product?: ProductFullInfo
@@ -52,19 +53,19 @@ const ModuleProductHasVariants = ({ product }: Props) => {
     const defaultColor = colors?.find((color) => defaultVariant?.Configurators.find(variant => variant.Vid === color.Vid))
     const defaultSize = sizes?.find((size) => defaultVariant?.Configurators.find(variant => variant.Vid === size.Vid))
 
-    const [selectedVariant, setSelectedVariant] = useState<ProductConfiguredItem | undefined>(defaultVariant);
+    const [selectedVariant, setSelectedVariant] = useState<ProductConfiguredItem | undefined>();
     const [selectedSize, setSelectedSize] = useState<ProductAttribute | undefined>(defaultSize);
     const [selectedColor, setSelectedColor] = useState<ProductAttribute | undefined>(defaultColor);
     const [colorPicture, setColorPicture] = useState<string | undefined>(defaultColor?.ImageUrl)
 
-    const last30sales = product?.FeaturedValues?.find((feature) => feature.Name === "SalesInLast30Days")
+    const last30sales = product?.FeaturedValues?.find((feature) => feature.Name === "SalesInLast30Days");
 
-    const [api, contextHolder] = notification.useNotification()
-
-
-    console.log(product?.PromotionPrice)
-    console.log(product?.Price)
-
+    const promotion = product?.Promotions?.find(
+        (promotion) => promotion.ConfiguredItems.find(item => item.Id === selectedVariant?.Id)
+    );
+    const selectedPromotion = promotion?.ConfiguredItems.find(item => item.Id === selectedVariant?.Id);
+  
+    const [api, contextHolder] = notification.useNotification();
 
 
     function handleAddItemToCart(e: any) {
@@ -74,6 +75,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                 message: "Сонголтоо хийнэ үү!"
             })
         } else {
+            const price = selectedPromotion?.Price.ConvertedPriceList.Internal.Price ? selectedPromotion?.Price.ConvertedPriceList.Internal.Price : selectedVariant.Price.ConvertedPriceList.Internal.Price
             addToCart(dispatch, {
                 title: product?.Title!,
                 pId: product?.Id,
@@ -81,7 +83,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                 color: selectedColor.Value,
                 property_value: selectedSize?.Value,
                 property_name: selectedSize?.PropertyName,
-                price: selectedVariant.Price.ConvertedPriceList.Internal.Price!,
+                price: price,
                 quantity: quantity,
                 image: selectedColor.ImageUrl!,
                 countInStock: selectedVariant.Quantity
@@ -105,6 +107,8 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                     message: "Сонголтоо хийнэ үү!"
                 })
             } else {
+
+                const price = selectedPromotion?.Price.ConvertedPriceList.Internal.Price ? selectedPromotion?.Price.ConvertedPriceList.Internal.Price : selectedVariant.Price.ConvertedPriceList.Internal.Price
                 addToCart(dispatch, {
                     title: product?.Title!,
                     pId: product?.Id,
@@ -112,7 +116,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                     color: selectedColor.Value,
                     property_value: selectedSize?.Value,
                     property_name: selectedSize?.PropertyName,
-                    price: selectedVariant.Price.ConvertedPriceList.Internal.Price!,
+                    price: price,
                     quantity: quantity,
                     image: selectedColor.ImageUrl!,
                     countInStock: selectedVariant.Quantity
@@ -132,6 +136,8 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                 message: "Сонголтоо хийнэ үү!"
             })
         } else {
+
+            const price = selectedPromotion?.Price.ConvertedPriceList.Internal.Price ? selectedPromotion?.Price.ConvertedPriceList.Internal.Price : selectedVariant.Price.ConvertedPriceList.Internal.Price
             addToCompare(dispatch, {
                 title: product?.Title!,
                 pId: product?.Id,
@@ -139,7 +145,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                 color: selectedColor.Value,
                 property_value: selectedSize?.Value,
                 property_name: selectedSize?.PropertyName,
-                price: selectedVariant.Price.ConvertedPriceList.Internal.Price!,
+                price: price,
                 quantity: quantity,
                 image: selectedColor.ImageUrl!,
                 countInStock: selectedVariant.Quantity
@@ -158,6 +164,9 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                 message: "Сонголтоо хийнэ үү!"
             })
         } else {
+
+            const price = selectedPromotion?.Price.ConvertedPriceList.Internal.Price ? selectedPromotion?.Price.ConvertedPriceList.Internal.Price : selectedVariant.Price.ConvertedPriceList.Internal.Price
+
             addToWishlist(dispatch, {
                 title: product?.Title!,
                 pId: product?.Id,
@@ -165,7 +174,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                 color: selectedColor.Value,
                 property_value: selectedSize?.Value,
                 property_name: selectedSize?.PropertyName,
-                price: selectedVariant.Price.ConvertedPriceList.Internal.Price!,
+                price:price,
                 quantity: quantity,
                 image: selectedColor.ImageUrl!,
                 countInStock: selectedVariant.Quantity
@@ -249,16 +258,18 @@ const ModuleProductHasVariants = ({ product }: Props) => {
 
     let variants, sizeSelectionArea, priceArea, thumbnailArea;
     if (selectedVariant) {
-        if (selectedVariant.PromotionPrice) {
+      
+
+        if (selectedPromotion) {
             priceArea = (
-                <h4 className="ps-product__price sale">
-                    <del className="mr-2">
-                        {formatCurrency(selectedVariant.PromotionPrice.ConvertedPriceList.Internal.Price)}
-                        ₮
-                    </del>
-                    {formatCurrency(selectedVariant.Price.OriginalPrice)}
+                <Heading color="gray.700" gap={2} size="2xl" mb={5} display="flex" alignItems="end">
+                    {formatCurrency(selectedPromotion.Price.ConvertedPriceList.Internal.Price)}
                     ₮
-                </h4>
+                    <Text textDecorationLine="line-through" color="gray.600" lineHeight="30px" fontSize="25px">
+                        {formatCurrency(selectedVariant.Price.ConvertedPriceList.Internal.Price)}
+                        ₮
+                    </Text>
+                </Heading>
             );
         } else {
             priceArea = (
@@ -269,6 +280,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                 // </h4>
                 <Heading color="gray.700" size="2xl" mb={5}>
                     {/* //     {/* {formatCurrency(selectedVariant.Price.OriginalPrice * Math.ceil(settings?.CNY_rate!))} */}
+                    
                     {formatCurrency(selectedVariant.Price.ConvertedPriceList.Internal.Price)}
                     ₮
                 </Heading>
@@ -294,7 +306,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                 <Grid templateColumns={['repeat(7, 1fr)', 'repeat(9, 1fr)', 'repeat(9, 1fr)', 'repeat(12, 1fr)']} gap={[2, 2]}>
                     {
                         colors.map((item) => {
-                            return (
+                            return item.ImageUrl ? (
                                 <GridItem
                                     border="2px"
                                     borderColor={selectedColor && selectedColor.Vid === item.Vid ? "brand.1" : "gray.400"}
@@ -313,27 +325,13 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                                     onClick={(e) => handleSelectColor(e, item.Vid)}>
                                     <span className="ps-variant__tooltip" style={{ whiteSpace: "nowrap" }}>{item.Value}</span>
 
-                                    {item.MiniImageUrl ? (
-                                        <img
-                                            src={item.MiniImageUrl}
-                                            alt=""
-                                            style={{
-                                                aspectRatio: "1/1",
-                                                objectFit: "cover"
-                                            }}
+                                        <BlurImage
+                                            src={item.MiniImageUrl!}
+                                            alt={item.Value}
+                                            fill
                                         />
-                                    ) : (
-                                        <img
-                                            src={product.MainPictureUrl}
-                                            alt=""
-                                            style={{
-                                                aspectRatio: "1/1",
-                                                objectFit: "cover"
-                                            }}
-                                        />
-                                    )}
                                 </GridItem>
-                            );
+                            ) : null
                         })
                     }
                 </Grid>

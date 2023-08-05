@@ -17,6 +17,12 @@ type HomeContent = {
     promotions: Promotion[];
   };
   featured_categories:FeaturedCategory[]
+  featured_products:{
+    id:number,
+    title:string,
+    category_id:string,
+    product_quantity:number
+  }[]
 };
 
 
@@ -48,11 +54,12 @@ const query = QueryString.stringify(
           },
         },
       },
-      featured_categories :{
-        populate:{
-          image:true
-        }
-      }
+      featured_categories: {
+        populate: {
+          image: true,
+        },
+      },
+      featured_products:true
     },
   },
   { encodeValuesOnly: true }

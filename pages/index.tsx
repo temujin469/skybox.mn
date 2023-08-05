@@ -11,7 +11,7 @@ import { Box } from '@chakra-ui/react';
 import HomeDefaultProductListing from '~/components/partials/home-default/HomeDefaultProductListing';
 import Newsletters from '~/components/partials/commons/Newletters';
 import NewArrivals from '~/components/partials/home-default/NewArrivals';
-import HomeDefaultCollection from '~/components/partials/home-default/HomeDefaultCollection';
+import HomeDafaultCategoryCollection from '~/components/partials/home-default/HomeDafaultCategoryCollection';
 
 const HomepageDefaultPage = () => {
   return (
@@ -28,10 +28,7 @@ const HomepageDefaultPage = () => {
             title="Хямдалтай бараа"
           />
           
-          <HomeDefaultCollection catId='otc-49' title="Хүүхдийн онцлох хямдрал" />
-          <HomeDefaultCollection catId='otc-19' title="Зуны онцлох бараа" />
-          <HomeDefaultCollection catId='otc-20' title="Технологи" />
-          <HomeDefaultCollection catId='otc-31' title="Цахилгаан хэрэгсэл" />
+          <HomeDafaultCategoryCollection/>
           <NewArrivals collection="new-arrivals-products" />
           <HomeAds />
           {/* <DownLoadApp /> */}

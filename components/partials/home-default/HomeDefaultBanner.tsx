@@ -1,10 +1,11 @@
-import React  from 'react';
+import React from 'react';
 import Slider from 'react-slick';
 import NextArrow from '~/components/elements/carousel/NextArrow';
 import PrevArrow from '~/components/elements/carousel/PrevArrow';
 import Link from 'next/link';
 import Promotion from '~/components/elements/media/Promotion';
 import useGetHomeContent from '~/apiCall/strapi/useGetHomeContent';
+import BlurImage from '~/components/elements/BlurImage';
 
 const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL
 
@@ -29,10 +30,10 @@ const HomeDefaultBanner = () => {
     if (banner?.banner_main.data) {
         const carouseItems = banner?.banner_main.data.map((item) => (
             <div className="slide-item" key={item.id}>
-                <Link href="/shop" className="ps-banner-item--default bg--cover"
-                    style={{
-                        backgroundImage: `url(${baseUrl}${item.attributes.url})`,
-                    }}> 
+                <Link href="/shop" className="ps-banner-item--default bg--cover relative"
+                >
+
+                    <BlurImage fill src={`${baseUrl}${item.attributes.url}`} />
                 </Link>
             </div>
         ));

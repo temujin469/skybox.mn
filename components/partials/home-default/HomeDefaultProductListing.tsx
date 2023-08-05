@@ -54,7 +54,7 @@ const HomeDefaultProductListing = ({ collection, title }: Props) => {
             className={currentCollection === link.name ? 'active' : ''}
             key={link.name}>
             <Link href="#" onClick={(e) => handleChangeTab(e, link)}>
-                <Heading size="sm">
+                <Heading fontSize={{ base: "14px", md: "16px" }} fontWeight={[500, 500, 600]}>
                     {link.title}
                 </Heading>
             </Link>
@@ -100,16 +100,15 @@ const HomeDefaultProductListing = ({ collection, title }: Props) => {
                     <Box className="ps-section__header"
                         backgroundColor="white"
                     >
-                        <Heading textTransform="uppercase">{title}</Heading>
+                        <Heading textTransform="uppercase" mb={{base:3,sm:0}}>{title}</Heading>
                         <ul className="ps-section__links">
                             {sectionLinksView}
                             <li>
                                 <Link href={`/shop`}>
-                                    <Heading size="sm">
+                                    <Heading fontSize={{base:"14px",md:"16px"}} fontWeight={[500,500,600]}>
                                         Бүгд
                                     </Heading>
                                 </Link>
-
                             </li>
                         </ul>
                     </Box>

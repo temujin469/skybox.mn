@@ -158,4 +158,5 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
     );
 };
 
+
 export default ShopItems;

@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import Rating from '~/components/elements/Rating';
 import useProduct from '~/hooks/useProduct';
-import { Box } from '@chakra-ui/react';
+import { AspectRatio, Box } from '@chakra-ui/react';
+import BlurImage from '../BlurImage';
 
 const ProductHorizontal = ({ product }:{product:ProductInfo}) => {
     const {  price, title } = useProduct();
@@ -12,13 +13,13 @@ const ProductHorizontal = ({ product }:{product:ProductInfo}) => {
         }} className="ps-product--horizontal">
             <div className="ps-product__thumbnail">
                 <Link href="/product/[pid]" as={`/product/${product.Id}`}>
-                    <img
-                    src={product.MainPictureUrl}
-                    style={{
-                        aspectRatio:"1/1",
-                        borderRadius:"5px",
-                    }}
-                    />
+                    <AspectRatio ratio={1}>
+                        <BlurImage
+                            src={product.MainPictureUrl}
+                            fill
+                            alt={product.Title}
+                        />
+                    </AspectRatio>
                 </Link>
             </div>
             <Box className="ps-product__content" overflow="hidden">
