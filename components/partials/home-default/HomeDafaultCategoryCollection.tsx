@@ -7,16 +7,10 @@ function HomeDafaultCategoryCollection() {
 
   const categoryProducts = homeData.data?.data.attributes.featured_products;
 
-  console.log(categoryProducts)
-
   return (
-    <div className='ps-container'>
-      {
-        categoryProducts?.map(item=>(
-          <CategoryProductCarousel catId={item.category_id} title={item.title} productQuantity={item.product_quantity}/>
-        ))
-      }
-    </div>
+    categoryProducts?.map(item => (
+      <CategoryProductCarousel catId={item.category_id} title={item.title} productQuantity={item.product_quantity} />
+    ))
   );
 }
 
