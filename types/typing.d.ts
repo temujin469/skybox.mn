@@ -108,16 +108,14 @@ type ProductPicture = {
 };
 
 type ProductFilter = {
-  title: string;
-  catId: string;
-  minPrice: number;
-  maxPrice: number;
-  minQuantity: number;
-  maxQuantity: number;
-  minVendorRating: number;
-  maxVendorRating: number;
-  orderBy: string;
-  isOrignal: boolean;
+  ItemTitle: string;
+  CategoryId: string;
+  MinPrice: number;
+  MaxPrice: number;
+  BrandId: number;
+  OrderBy: string;
+  VendorId:string;
+  Provider:string
 };
 
 type ProductPictureInfo = {
@@ -264,6 +262,7 @@ interface ProductFullInfo extends ProductInfo {
   }[];
 };
 
+
 // Ecommerce
 type ProductItem = {
   pId: stirng;
@@ -356,3 +355,27 @@ type Setttings = {
   deliver_fee:number;
   CNY_rate:number
 }
+
+type OtapiResponse = {
+  ErrorCode: "Ok" | string;
+  RequistId: string;
+  SubErrorCode: {};
+  ErrorDescription?:string
+};
+
+
+type CategorySearchPropertyInfoContent = {
+  Id:string
+  Name:string
+  Values:{
+    Id:string
+    Name:string
+    ItemCount:number
+  }[]
+}
+
+type BrandInfoContent = {
+  Id: string;
+  ProviderName: string;
+  PictureUrl?: string;
+};

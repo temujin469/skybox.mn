@@ -12,12 +12,12 @@ import { HiOutlineMail } from "react-icons/hi"
 const Newsletters = () => (
   <section>
     <Box bgColor="brand.2">
-      <Box className={"ps-container"}>
+      <Box className={"ps-container"} px={{base:"0",sm:"30px"}}>
         <Grid
-          templateColumns={["repeat(1,1fr)", "repeat(12,1fr)"]}
+          templateColumns={"repeat(12,1fr)"}
           alignItems="center"
         >
-          <GridItem colSpan={[1, 4]} py="50px" px={3}>
+          <GridItem colSpan={{base:12,md:4}} py="50px" px={3}>
             <Heading size="xl" mb="30px" color="white">
               Бидэнтэй нэгдэхийг хүсвэл...
             </Heading>
@@ -49,7 +49,7 @@ const Newsletters = () => (
           </GridItem>
           <GridItem
             h={350}
-            colSpan={[1, 8]}
+            colSpan={{base:12,md:8}}
             style={{
               backgroundImage: "url('/static/img/bg/subscribe.png')",
               backgroundRepeat: "no-repeat",

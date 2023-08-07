@@ -1,5 +1,4 @@
 import { AspectRatio, Box } from '@chakra-ui/react';
-import { Affix, Modal } from 'antd';
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import Lightbox from 'react-18-image-lightbox';
 import Slider from 'react-slick';
@@ -112,7 +111,7 @@ const ThumbnailHasVariant = ({ colorPicture, pictures, setColorPicture, videos }
         // videos
         imagesView = productImages?.map((item, i) => (
             <Box rounded="5px" border="1px" borderColor="gray.100" position={"relative"} className="item" key={i} onClick={() => setColorPicture(undefined)}>
-                <AspectRatio ratio={1}>
+                <AspectRatio ratio={1} overflow="hidden">
                     <BlurImage fill src={item.url} alt={item.url} />
                 </AspectRatio>
                 <Box _hover={{
@@ -133,40 +132,39 @@ const ThumbnailHasVariant = ({ colorPicture, pictures, setColorPicture, videos }
 
 
         galleryImagesView = productImages.map((item, index) => (
-            <div className="item" key={item.url} style={{
-                display: 'inline-block',
-                width: "100%",
-                borderRadius: "5px"
-            }}>
-                <a href="#" onClick={(e) => handleOpenLightbox(e, index)}>
-                    {
-                        !colorPicture ? (
-                            item.videoUrl ? (
-                                <video style={{
-                                    width: "100%",
-                                    aspectRatio: "1/1",
-                                    objectFit: "cover",
-                                    borderRadius: "5px"
-                                }} controls>
-                                    <source src={item.videoUrl} type="video/mp4" />
-                                </video>
+            <AspectRatio ratio={1}>
+                <div className="item" key={item.url} style={{
+                    display: 'inline-block',
+                    width: "100%",
+                    borderRadius: "5px"
+                }}>
+                    <a href="#" onClick={(e) => handleOpenLightbox(e, index)}>
+                        {
+                            !colorPicture ? (
+                                item.videoUrl ? (
+                                    <video style={{
+                                        width: "100%",
+                                        aspectRatio: "1/1",
+                                        objectFit: "cover",
+                                        borderRadius: "5px"
+                                    }} controls>
+                                        <source src={item.videoUrl} type="video/mp4" />
+                                    </video>
+                                ) : (
+                                    <AspectRatio ratio={1}>
+                                        <BlurImage src={item.url} alt={item.url} fill />
+                                    </AspectRatio>
+                                )
                             ) : (
                                 <AspectRatio ratio={1}>
-                                        <BlurImage src={item.url} alt={item.url} fill />
+                                    <BlurImage fill src={colorPicture ? colorPicture : item.url} alt={colorPicture} />
                                 </AspectRatio>
                             )
-                        ) : (
-                            <img src={colorPicture ? colorPicture : item.url} alt={colorPicture} style={{
-                                aspectRatio: "1/1",
-                                objectFit: "cover",
-                                borderRadius: "5px"
 
-                            }} />
-                        )
-
-                    }
-                </a>
-            </div>
+                        }
+                    </a>
+                </div>
+            </AspectRatio>
         ));
     }
 
@@ -224,6 +222,7 @@ const ThumbnailHasVariant = ({ colorPicture, pictures, setColorPicture, videos }
             height="screen"
             className="ps-product__thumbnail"
             data-vertical="false"
+            mb="10px"
         >
             {/* <Affix offsetTop={70}> */}
 

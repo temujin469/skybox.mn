@@ -1,10 +1,10 @@
 #homepage-1 {
     .ps-home-banner {
-        padding-top: 30px;
+        padding-top: 20px;
         margin-bottom: 30px;
 
          @include media("<xs") {
-            padding-top: 15px;
+            padding-top: 10px;
         }
         .ps-collection {
             display: block;

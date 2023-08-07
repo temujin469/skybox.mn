@@ -12,12 +12,17 @@ import HomeDefaultProductListing from '~/components/partials/home-default/HomeDe
 import Newsletters from '~/components/partials/commons/Newletters';
 import NewArrivals from '~/components/partials/home-default/NewArrivals';
 import HomeDafaultCategoryCollection from '~/components/partials/home-default/HomeDafaultCategoryCollection';
+import { GetStaticProps } from 'next';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
+import useGetHomeContent from '~/apiCall/strapi/useGetHomeContent';
+import HomeDefaultBrands from '~/components/partials/home-default/HomeDefaultBrands';
 
 const HomepageDefaultPage = () => {
   return (
     <PageContainer title="Skybox">
       <main id="homepage-1">
        <Box overflowX="hidden">
+          <HomeDefaultBrands />
           <HomeDefaultBanner />
           <SiteFeatures />
           {/* <HomeDefaultDealOfDay collection="deal-of-the-day" /> */}
@@ -38,5 +43,17 @@ const HomepageDefaultPage = () => {
     </PageContainer>
   );
 };
+
+export const getStaticProps: GetStaticProps = async () => {
+  const queryClient = new QueryClient()
+  await queryClient.prefetchQuery(useGetHomeContent.getKey(), useGetHomeContent.queryFn);
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient)
+    }
+  }
+}
+
 
 export default HomepageDefaultPage;

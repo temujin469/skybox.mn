@@ -20,7 +20,7 @@ export const getCategorySubcategoryInfoList = async (parentCatId:string) => {
 
 export const FindCategoryItemSimpleInfoListFrame = async ({filter,start,limit}:{filter:ProductFilter,start:number,limit:number}) => {
   const res = await otApi.get(
-    `/FindCategoryItemSimpleInfoListFrame?instanceKey=${key}&parentCategoryId=${filter}&categoryId=${filter.catId}&categoryItemFilter=&framePosition=${start}&frameSize=${limit}`
+    `/FindCategoryItemSimpleInfoListFrame?instanceKey=${key}&parentCategoryId=${filter}&categoryId=${filter.CategoryId}&categoryItemFilter=&framePosition=${start}&frameSize=${limit}`
   );
   return res.data;
 };

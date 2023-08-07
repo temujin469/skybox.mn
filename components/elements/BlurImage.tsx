@@ -37,7 +37,7 @@ function BlurImage(props:Props) {
         props.className,
         'duration-700 ease-in-out',
         isLoading
-          ? 'blur-lg'
+          ? 'blur-sm'
           : 'blur-0'
       )}
       onLoadingComplete={() => setLoading(false)}

@@ -1,13 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import ModuleProductActions from '~/components/elements/products/modules/ModuleProductActions';
 import useProduct from '~/hooks/useProduct';
-import Rating from '~/components/elements/Rating';
-import Image from 'next/image';
 import { AspectRatio } from '@chakra-ui/react';
-import { getPlaiceholder } from "plaiceholder";
-import { GetServerSideProps } from 'next';
-import cn from 'clsx';
 import BlurImage from '../BlurImage';
 
 type Props = {
@@ -16,7 +10,6 @@ type Props = {
 
 const Product = ({ product }: Props) => {
     const { title, price, badge } = useProduct();
-    // const { base64 } = await getPlaiceholder(file);
 
     return (
         <div className="ps-product">

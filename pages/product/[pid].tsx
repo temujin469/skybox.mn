@@ -7,6 +7,7 @@ import ProductDetailVariants from '~/components/elements/detail/ProductDetailVar
 import PageContainer from '~/components/layouts/PageContainer';
 import useGetItemFullInfo from '~/apiCall/otapi/useGetItemFullInfo';
 import { Box } from '@chakra-ui/react';
+import useGetCategoryRootPath from '~/apiCall/otapi/useGetCategoryRootPath';
 
 const ProductDetailHasVariantsPage = () => {
     const router = useRouter();
@@ -15,18 +16,13 @@ const ProductDetailHasVariantsPage = () => {
     const { data, isLoading } = useGetItemFullInfo({ variables: { id: pid as string } });
     const product = data?.OtapiItemFullInfo;
 
+    const rootPathData = useGetCategoryRootPath({variables:{catId:product?.CategoryId}});
 
-    const breadCrumb = [
-        {
-            id: 2,
-            text: 'Дэлгүүр',
-            url: '/shop',
-        },
-        {
-            id: 3,
-            text: !isLoading && product ? product.Id : 'Хайж байна...',
-        },
-    ];
+
+    const breadCrumb = rootPathData.data?.CategoryInfoList.Content.map(cat=>({
+        text:cat.Name,
+        url:`/shop?catId=${cat.Id}`
+    })).reverse()
     // Views
     let productView;
     if (!isLoading) {
@@ -39,7 +35,7 @@ const ProductDetailHasVariantsPage = () => {
     }
     return (
         <PageContainer title={product ? product.Title : 'Хайж байна...'}>
-            <BreadCrumb breadcrumb={breadCrumb} />
+            <BreadCrumb breadcrumb={breadCrumb!} />
             <Box overflowX="hidden" py={["0", "30px"]}>
                 <div className="ps-container">
                     {/* <div className="ps-page__container">

@@ -10,22 +10,30 @@ import useGetProductsByFilter from '~/apiCall/otapi/useGetProductsByFilter';
 import useFilter from '~/hooks/useFilter';
 import { ProductGroupWithCarousel } from '../product/ProductGroupWithCarousel';
 import { Box, Heading } from '@chakra-ui/react';
+import useSearchItemsFrame from '~/apiCall/otapi/useSearchItemsFrame';
 
 const ShopItems = ({ columns = 1, pageSize = 60 }) => {
     const router = useRouter();
     const { catId } = router.query;
     const { filters } = useFilter()
     const [listView, setListView] = useState(true);
-    const [total, setTotal] = useState<number>(0);
+    const [totalPage, setTotalPage] = useState<number>(0);
     const [classes, setClasses] = useState(
         'col-xl-4 col-lg-4 col-md-3 col-sm-6 col-6'
     );
     const [page, setPage] = useState<number>(0)
-    const [start, setStart] = useState<number>(0)
+    const [start, setStart] = useState<number>(0);
+
+    //   const { data, isLoading } = useSearchItemsFrame({ variables: { start, limit: pageSize, filters:{
+    //     CategoryId:catId as string
+    //   }} });
+
+    //   console.log("filtered",data)
 
     const { data, isLoading } = useGetProductsByFilter({ variables: { start, limit: pageSize, filters, catId: catId ?  catId as string : "otc-20" } });
 
     const productItems = data?.OtapiItemInfoSubList?.Content;
+
 
     function handleChangeViewMode(e: any) {
         e.preventDefault();
@@ -65,7 +73,7 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
         if (data?.OtapiItemInfoSubList?.TotalCount) {
             const totalProd = data?.OtapiItemInfoSubList.TotalCount;
             const totalPage = Math.ceil(totalProd / pageSize)
-            setTotal(totalPage)
+            setTotalPage(totalPage)
         }
         handleSetColumns();
     }, [columns, data, pageSize]);
@@ -143,7 +151,7 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
                 <div className="ps-shopping__footer text-center">
                     <div className="ps-pagination">
                         <Pagination
-                            total={total}
+                            total={totalPage}
                             pageSize={pageSize}
                             responsive={true}
                             showSizeChanger={false}

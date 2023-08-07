@@ -24,12 +24,12 @@ const BreadCrumb = ({ breadcrumb, bgColor }: Props) => {
             <div
                 className='ps-container'
             >
-                <Breadcrumb spacing='3px'
-                    separator={
-                        <Text color="gray.600">
-                            <HiOutlineChevronRight />
-                        </Text>
-                }
+                <Breadcrumb overflow="hidden" textOverflow="ellipsis" spacing='4px'
+                //     separator={
+                //         <Text color="gray.600">
+                //             <HiOutlineChevronRight />
+                //         </Text>
+                // }
                 >
                     <BreadcrumbItem>
                         <Link href="/">
@@ -40,14 +40,13 @@ const BreadCrumb = ({ breadcrumb, bgColor }: Props) => {
 
                     </li>
                     {breadcrumb?.map((item, index) => {
-
                         if (!item.url) {
-                            return <BreadcrumbItem key={item.text}>
+                            return <BreadcrumbItem whiteSpace="nowrap" key={item.text}>
                                     {item.text}
                             </BreadcrumbItem>
                         } else {
                             return (
-                                <BreadcrumbItem key={item.text}>
+                                <BreadcrumbItem whiteSpace="nowrap" key={item.text}>
                                         <Link href={item.url} onClick={() => handleClick(index)}>
                                             {item.text}
                                         </Link>
