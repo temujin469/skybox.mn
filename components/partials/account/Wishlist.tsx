@@ -36,7 +36,7 @@ const Wishlist = () => {
                     gap={3}
                 >{
                         wishlist.wishlistItems.map((product) => (
-                            <GridItem colSpan={1}>
+                            <GridItem colSpan={1} overflow="hidden">
                                 <div className="ps-product relative">
                                     <div className="ps-product__thumbnail">
                                         <Link href="/product/[pid]" as={`/product/${product.pId}?cId=${product.cId}`}>
@@ -63,7 +63,7 @@ const Wishlist = () => {
                                         </div>
 
                                     </div>
-                                    <div className='top-0  border right-0 absolute bg-white w-6 h-6 rounded-full flex items-center justify-center translate-x-[50%] translate-y-[-50%]'
+                                    <div className='top-0 right-0 absolute bg-white w-6 h-6 rounded-[6px] flex items-center justify-center '
                                      onClick={()=>handleRemoveWishlistItem(product.cId)}
                                      >
                                         <IoMdRemove className="hover:text-red-500"/>
