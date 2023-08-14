@@ -23,7 +23,7 @@ const PanelSearch = () => {
                     <input
                         className="form-control"
                         type="text"
-                        placeholder="Search something..."
+                        placeholder="Хайх..."
                         onChange={(e) => setKeyword(e.target.value)}
                     />
                     <button>

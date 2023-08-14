@@ -38,7 +38,7 @@ const compareSlice = createSlice({
           : [newItem, ...state.compareItems];
       }
 
-      Cookies.set("wishlist", JSON.stringify(state.compareItems));
+      Cookies.set("compare", JSON.stringify(state.compareItems));
 
       state.loading = false;
       state.error = false;
@@ -52,7 +52,7 @@ const compareSlice = createSlice({
         (item) => item.cId !== action.payload
       );
       state.compareItems = compareItems;
-      Cookies.set("wishlist", JSON.stringify(compareItems));
+      Cookies.set("compare", JSON.stringify(compareItems));
 
       state.loading = false;
     },

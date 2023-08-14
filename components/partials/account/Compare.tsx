@@ -11,10 +11,10 @@ const Compare = () => {
     const { compareItems } = useSelector((state: RootState) => state.compare)
     const dispatch = useDispatch()
 
-    function handleAddItemToCart(e: any, product: ProductItem) {
-        e.preventDefault();
-        addToCompare(dispatch, product)
-    }
+    // function handleAddItemToCart(e: any, product: ProductItem) {
+    //     e.preventDefault();
+    //     addToCompare(dispatch, product)
+    // }
     function handleRemoveCompareItem(e: any, cId: string) {
         e.preventDefault();
         removeCompareItem(dispatch, cId)
