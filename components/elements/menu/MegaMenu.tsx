@@ -8,6 +8,8 @@ import useBreadCrumb from '~/hooks/useBreadCrumb';
 import useFilter from '~/hooks/useFilter';
 import { Heading, Text } from '@chakra-ui/react';
 import Icon from '../Icon';
+import { FaChevronRight } from "react-icons/fa"
+
 
 
 const MegaMenu = () => {
@@ -28,13 +30,17 @@ const MegaMenu = () => {
 
     return data?.data?.map(({ attributes: menu }) => (
         <li className="menu-item-has-children has-mega-menu">
-            <Link href={`/shop?catId=${menu.category_id}`} onClick={() => handleBreadCrumb([menu], menu.category_id)}>
+            <Link href={`/shop?catId=${menu.category_id}`} className='flex justify-between items-center' onClick={() => handleBreadCrumb([menu], menu.category_id)}>
                 <Heading fontSize="16px" color="gray.600" display="flex" alignItems="center" gap="3px">
-                    {menu.icon &&
-                        <Icon iconName={menu.icon} size={17} color='#4d5560'/>
-                    }
-                    {menu.name}
+                        {menu.icon &&
+                            <Icon iconName={menu.icon} size={17} color='#4d5560' />
+                        }
+                        {menu.name}
                 </Heading>
+                <Heading fontSize="13px" color="gray.500">
+                    <FaChevronRight className="" />
+                </Heading>
+                
             </Link>
             <div className="mega-menu">
                 {menu.categories.map((cat) => (

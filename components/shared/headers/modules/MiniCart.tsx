@@ -78,7 +78,7 @@ const MiniCart = () => {
         cartItemsView = (
             <div className="ps-cart__content">
                 <div className="ps-cart__items">
-                    <span>Сагсанд бүтээгдэхүүн алга</span>
+                    <span>Таны сагс хоосон байна!</span>
                 </div>
             </div>
         );

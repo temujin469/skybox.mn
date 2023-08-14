@@ -1,11 +1,13 @@
-import React, { Component, useEffect } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import React  from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import useProduct from '~/hooks/useProduct';
 import type { RootState } from '~/store/store';
-import { addToCart, removeCartItem } from '~/store/slices/cartSlice';
+import { addToCart } from '~/store/slices/cartSlice';
 import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import { formatCurrency } from '~/utilities/product-helper';
+import { IoMdRemove } from "react-icons/io"
+import { removeWishlistItem } from '~/store/slices/wishlistSlice';
 
 
 const Wishlist = () => {
@@ -18,9 +20,8 @@ const Wishlist = () => {
         addToCart(dispatch, product)
     }
 
-    function handleRemoveWishlistItem(e: any, productId: string) {
-        e.preventDefault();
-        removeCartItem(dispatch, productId)
+    function handleRemoveWishlistItem( productId: string) {
+        removeWishlistItem(dispatch, productId)
     }
 
     // views
@@ -35,8 +36,8 @@ const Wishlist = () => {
                     gap={3}
                 >{
                         wishlist.wishlistItems.map((product) => (
-                            <GridItem colSpan={1} overflow="hidden">
-                                <div className="ps-product">
+                            <GridItem colSpan={1}>
+                                <div className="ps-product relative">
                                     <div className="ps-product__thumbnail">
                                         <Link href="/product/[pid]" as={`/product/${product.pId}?cId=${product.cId}`}>
                                             {/* {thumbnailImage(product.Pictures[0])} */}
@@ -61,6 +62,11 @@ const Wishlist = () => {
                                             <Heading color="gray.600" size="sm">{formatCurrency(product.price)}₮</Heading>
                                         </div>
 
+                                    </div>
+                                    <div className='top-0  border right-0 absolute bg-white w-6 h-6 rounded-full flex items-center justify-center translate-x-[50%] translate-y-[-50%]'
+                                     onClick={()=>handleRemoveWishlistItem(product.cId)}
+                                     >
+                                        <IoMdRemove className="hover:text-red-500"/>
                                     </div>
                                 </div>
                             </GridItem>

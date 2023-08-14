@@ -2,15 +2,13 @@ import React from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import InvoiceDetail from '~/components/partials/account/InvoiceDetail';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Newletters from '~/components/partials/commons/Newletters';
 import PageContainer from '~/components/layouts/PageContainer';
 
 const InvoiceDetailPage = () => {
     const breadCrumb = [
         {
-            text: 'Захиалга',
-            
-        },
+            text: 'Захиалга'
+        }
     ];
     return (
         <>

@@ -11,7 +11,7 @@ const ProductCart = ({ product }:{product:ProductItem}) => {
             <div className="ps-product__thumbnail">
                 <Link href={`/product/${product.pId}?cId=${product.cId}`}>
                     <AspectRatio ratio={1}>
-                        <BlurImage src={product.image} />
+                        <BlurImage src={product.image} fill />
                     </AspectRatio>
                 </Link>
             </div>

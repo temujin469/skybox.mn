@@ -10,6 +10,7 @@ import { formatCurrency } from "~/utilities/product-helper";
 import useOrderDetail from "~/apiCall/strapi/useOrderDetail";
 import { Tag } from "antd";
 import { Button, Heading, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import BackButton from "~/components/elements/BackButton";
 
 
 
@@ -140,11 +141,9 @@ const InvoiceDetail = () => {
                     </Tbody>
                   </Table>
                 </TableContainer>
-                <Link href="/account/invoices">
-                  <Button size="lg">
-                    Буцах
-                  </Button>
-                </Link>
+                <div className="text-end">
+                  <BackButton url={`/account/invoices`} />
+                </div>
               </div>
             </div>
           </div>

@@ -10,11 +10,11 @@ type Props = {
 
 const BreadCrumb = ({ breadcrumb, bgColor }: Props) => {
 
-    const { links, setLinks } = useBreadCrumb();
+    // const { links, setLinks } = useBreadCrumb();
 
-    const handleClick = (index: number) => {
-        setLinks(links?.slice(0, index + 1))
-    }
+    // const handleClick = (index: number) => {
+    //     setLinks(links?.slice(0, index + 1))
+    // }
 
 
     return (
@@ -36,23 +36,14 @@ const BreadCrumb = ({ breadcrumb, bgColor }: Props) => {
                             Нүүр
                         </Link>
                     </BreadcrumbItem>
-                    <li >
-
-                    </li>
                     {breadcrumb?.map((item, index) => {
-                        if (!item.url) {
-                            return <BreadcrumbItem whiteSpace="nowrap" key={item.text}>
+                        return (
+                            <BreadcrumbItem whiteSpace="nowrap" key={item.text}>
+                                <Link href={item.url ? item.url : "#"}>
                                     {item.text}
+                                </Link>
                             </BreadcrumbItem>
-                        } else {
-                            return (
-                                <BreadcrumbItem whiteSpace="nowrap" key={item.text}>
-                                        <Link href={item.url} onClick={() => handleClick(index)}>
-                                            {item.text}
-                                        </Link>
-                                </BreadcrumbItem>
-                            );
-                        }
+                        );
                     })}
                 </Breadcrumb>
             </div>

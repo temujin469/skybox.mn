@@ -8,6 +8,7 @@ import useOrder from '~/apiCall/strapi/useOrderDetail';
 import { RootState } from '~/store/store';
 import { useRouter } from 'next/router';
 import { formatCurrency } from '~/utilities/product-helper';
+import BackButton from '~/components/elements/BackButton';
 
 const Payment = () => {
     const router = useRouter()
@@ -105,13 +106,8 @@ const Payment = () => {
                     }}>
                         {/* <ModulePaymentShipping info={{ isShipping: order?.is_shipping_included!, contactInfo: order?.contact_information }} /> */}
                         <ModulePaymentMethods />
-                        <div className="ps-block__footer">
-                            <Link href={`/account/invoice-detail?orderId=${order?.order_id}`}>
-                                <p>
-                                    <i className="icon-arrow-left mr-2"></i>
-                                    Буцах
-                                </p>
-                            </Link>
+                        <div className="text-end">
+                            <BackButton url={`/account/invoice-detail?orderId=${order?.order_id}` }/>
                         </div>
                     </div>
                     

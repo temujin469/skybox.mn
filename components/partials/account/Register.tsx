@@ -28,12 +28,17 @@ function Register() {
       console.log(message)
     }
 
-    if (isSuccess || user) {
+    if (isSuccess && user && !isLoading && !isError) {
+      api.success({
+        message: `Амжилттай бүртгэгдлээ`,
+        // description:"",
+        placement: "bottomRight"
+      });
       router.push("/")
     }
 
     dispatch(reset())
-  }, [user, isError, isSuccess, message, router, dispatch])
+  }, [user, isError, isSuccess, router, dispatch])
 
   const handleSubmit = (userData: UserBody) => {
 
@@ -97,7 +102,7 @@ function Register() {
                   rules={[
                     {
                       required: true,
-                      message: "Please input your email!",
+                      message: "ёёёё",
                     },
                   ]}
                 >
@@ -114,7 +119,11 @@ function Register() {
                   rules={[
                     {
                       required: true,
-                      message: "Please input your password!",
+                      message: "Нууц үгээ оруулна уу!",
+                    },
+                    {
+                      min:6,
+                      message:"Хамгийн багадаа 6 тэмдэгт байх ёстой!"
                     },
                   ]}
                 >
@@ -145,7 +154,7 @@ function Register() {
                     <i className="fa fa-google-plus"></i>
                   </a>
                 </li>
-                <li>
+                {/* <li>
                   <a className="twitter" href="#">
                     <i className="fa fa-twitter"></i>
                   </a>
@@ -154,7 +163,7 @@ function Register() {
                   <a className="instagram" href="#">
                     <i className="fa fa-instagram"></i>
                   </a>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

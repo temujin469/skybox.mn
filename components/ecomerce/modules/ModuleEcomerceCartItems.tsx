@@ -20,7 +20,7 @@ const ModuleEcomerceCartItems = () => {
         );
     } else {
         cartItemsViews = (
-            <Result status="warning" title="Сагсанд бүтээгдэхүүн байхгүй байна." />
+            <Result status="warning" title="Таны сагс хоосон байна!" />
         );
     }
     return <>{cartItemsViews}</>;

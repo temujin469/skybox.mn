@@ -26,12 +26,17 @@ function Login() {
       console.log(message)
     }
 
-    if (isSuccess || user) {
+    if (isSuccess && user && !isLoading && !isError) {
       router.push("/")
+      api.success({
+        message: `Амжилттай нэвтэрлээ`,
+        // description:"",
+        placement: "bottomRight"
+      });
     }
 
     dispatch(reset())
-  }, [user, isError, isSuccess, message, router, dispatch])
+  }, [user, isError, isSuccess, router, dispatch])
 
   const handleSubmit = (userData: UserBody) => {
     // if (password !== password2) {
@@ -74,14 +79,14 @@ function Login() {
           </ul>
           <div className="ps-tab active" id="sign-in">
             <div className="ps-form__content">
-              <h5>Бүртгэлдээ нэвтэрнэ үү</h5>
+              <h5>Өөрийн бүртгэлээр нэвтрэх</h5>
               <div className="form-group">
                 <Form.Item
                   name="email"
                   rules={[
                     {
                       required: true,
-                      message: "Шаардлагтай",
+                      message: "Имэйл хаягаа оруулна уу!",
                     },
                   ]}
                 >
@@ -98,7 +103,11 @@ function Login() {
                   rules={[
                     {
                       required: true,
-                      message: "Please input your password!",
+                      message: "Нууц үгээ оруулна уу!",
+                    },
+                    {
+                      min: 6,
+                      message: "Хамгийн багадаа 6 тэмдэгт байх ёстой!"
                     },
                   ]}
                 >
@@ -140,7 +149,7 @@ function Login() {
                     <i className="fa fa-google-plus"></i>
                   </a>
                 </li>
-                <li>
+                {/* <li>
                   <a
                     className="twitter"
                     href="#"
@@ -155,7 +164,7 @@ function Login() {
                   >
                     <i className="fa fa-instagram"></i>
                   </a>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

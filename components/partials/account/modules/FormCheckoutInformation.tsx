@@ -41,14 +41,14 @@ function FormCheckoutInformation() {
         handleSubmit,
         formState: { errors },
     } = useForm<ValidationSchema>({
-        // defaultValues: {
-        //     firstname: shippingAddress?.firstname,
-        //     lastname: shippingAddress?.lastname,
-        //     phoneNumber: shippingAddress?.phoneNumber,
-        //     address: shippingAddress?.address,
-        //     city: shippingAddress?.city,
-        //     state: shippingAddress?.state
-        // },
+        defaultValues: {
+            firstname: contact_information?.firstname,
+            lastname: contact_information?.lastname,
+            phoneNumber: contact_information?.phoneNumber,
+            address: contact_information?.address,
+            city: contact_information?.city,
+            state: contact_information?.state
+        },
         resolver: zodResolver(infoSchema),
     })
 
@@ -87,6 +87,7 @@ function FormCheckoutInformation() {
             dispatch(setContactInfo(info))
             if (isSave) {
                 saveInfoMutation.mutate(info)
+                return router.push("/account/shipping");
             }
             router.push("/account/shipping")
         }
@@ -95,6 +96,7 @@ function FormCheckoutInformation() {
     return (
         <form
             className="ps-form__billing-info"
+            autoComplete="off"
             onSubmit={handleSubmit(handleSubmitContactInfo)}>
             {contextHolder}
             {/* <h3 className="ps-form__heading">Хувийн мэдээлэл</h3> */}

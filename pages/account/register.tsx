@@ -15,7 +15,7 @@ const RegisterPage = () => {
 
     return (
         <>
-            <PageContainer footer={<FooterDefault />} title="Register">
+            <PageContainer footer={<FooterDefault />} title="Бүртгүүлэх">
                 <div className="ps-page--my-account">
                     <BreadCrumb bgColor='white' breadcrumb={breadCrumb} />
                     <Register />

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '~/store/store';
 import { useRouter } from 'next/router';
 import useUserInfo from '~/apiCall/strapi/useUserInfo';
+import { FiLogOut } from 'react-icons/fi';
 
 
 
@@ -52,7 +53,7 @@ const AccountMenuSidebar = () =>{
     return (
       <aside className="ps-widget--account-dashboard bg-white p-10 mb-20">
         <div className="ps-widget__header">
-          <img src="/static/img/users/3.jpg" />
+          <img src="/static/img/users/defaultUser.png" />
           <figure>
             <figcaption>{user?.username}</figcaption>
             <p>{user?.email}</p>
@@ -72,7 +73,10 @@ const AccountMenuSidebar = () =>{
             ))}
             <li>
               <Link href="/account/my-account">
-                <p>Системээс гарах</p>
+                <p className='flex gap-2'>
+                  <FiLogOut />
+                  <p>Системээс гарах</p>
+                </p>
               </Link>
             </li>
           </ul>

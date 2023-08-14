@@ -16,15 +16,21 @@ const TableInvoices = () => {
     const router = useRouter()
 
     const orderId = router.query.orderId
-    const jwt = useSelector((state: RootState) => state.auth.token)
+    const  {token,user}= useSelector((state: RootState) => state.auth);
+    console.log(user?.id)
+
+
 
     const query = QueryString.stringify({
-        populate: ["contact_information", "products"],
+        populate: ["contact_information", "products","user"],
+        filters: {
+            user: user?.id
+        },
     },
         { encodeValuesOnly: true }
     )
 
-    const { data } = useOrders({ variables: { jwt: jwt!, query } });
+    const { data } = useOrders({ variables: { jwt: token!, query } });
 
     let color = "green"
 

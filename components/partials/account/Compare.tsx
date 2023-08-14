@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { RootState } from '~/store/store';
 import { addToCompare, removeCompareItem } from '~/store/slices/compareSlice';
 import { formatCurrency } from '~/utilities/product-helper';
+import { Box, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr } from '@chakra-ui/react';
+import { FiTrash2 } from 'react-icons/fi';
 
 const Compare = () => {
 
@@ -32,12 +34,106 @@ const Compare = () => {
                             Харьцуулах жагсаалт хоосон байна!
                         </div>
                     ) : (
-                        <div className="table-responsive">
-                            <table className="table ps-table--compare"
+                            // <div className="table-responsive">
+
+                        <div>
+                                <TableContainer className='w-fit mx-auto'>
+                                    <Table variant='simple'>
+                                        <Tbody className='w-fit'>
+                                            <Tr bg="yellow.100">
+                                                <Th >Бүтээгдэхүүн</Th>
+                                                {compareItems && compareItems.length > 0 ? (
+                                                    compareItems.map((product) => (
+                                                        <Td key={product.cId} className='w-[200px] md:w-[300px]'>
+                                                            <a
+                                                                href="#"
+                                                                className='flex items-center gap-1 hover:text-red-500'
+                                                                onClick={(e) =>
+                                                                    handleRemoveCompareItem(
+                                                                        e,
+                                                                        product.cId
+                                                                    )
+                                                                }>
+                                                                <FiTrash2 size={17} />
+                                                                Хасах
+                                                            </a>
+                                                        </Td>
+                                                    ))
+                                                ) : (
+                                                    <Td></Td>
+                                                )}
+                                            </Tr>
+                                            <Tr>
+                                                <Td className='w-[200px]'></Td>
+                                                {compareItems && compareItems.length > 0 ? (
+                                                    compareItems.map((product) => (
+                                                        <Td w={"200px"} className='w-[200px] md:w-[300px]' key={product.cId}>
+                                                            <Box className='w-[200px] md:w-[300px]'>
+                                                                <div className="mb-2">
+                                                                    <Link
+                                                                        href={`/product/${product.pId}?cId=${product.cId}`}>
+                                                                            <div className='aspect-square rounded-md overflow-hidden'>
+                                                                            <img src={product.image} className='w-full h-full' />
+                                                                            </div>
+                                                                    </Link>
+                                                                </div>
+                                                                <div className="ps-product__content">
+                                                                    <Link
+                                                                        href={`/product/${product.pId}?cId=${product.cId}`}>
+                                                                        <p className="overflow-hidden text-ellipsis">
+                                                                            {
+                                                                                product.title
+                                                                            }
+                                                                        </p>
+                                                                    </Link>
+                                                                </div>
+                                                            </Box>
+                                                        </Td>
+                                                    ))
+                                                ) : (
+                                                    <Td></Td>
+                                                )}
+                                                {/* <Td isNumeric>25.4</Td> */}
+                                            </Tr>
+                                        </Tbody>
+                                        <Tfoot>
+                                            <Tr bg="yellow.100">
+                                                <Th>Үнэ</Th>
+                                                {compareItems && compareItems.length > 0 ? (
+                                                    compareItems.map((product) => {
+                                                        if (product.salePrice) {
+                                                            return (
+                                                                <Th key={product.cId} className='w-[200px]'>
+                                                                    <h4 className="price sale">
+                                                                        {formatCurrency(product.salePrice)}₮
+                                                                        {" "}
+                                                                        <del>
+                                                                            {formatCurrency(product.price)}₮
+                                                                        </del>
+                                                                    </h4>
+                                                                </Th>
+                                                            );
+                                                        } else
+                                                            return (
+                                                                <Th key={product.cId} className='w-[200px]'>
+                                                                    <h4 className="price">
+                                                                        {formatCurrency(product.price)}₮
+                                                                    </h4>
+                                                                </Th>
+                                                            );
+                                                    })
+                                                ) : (
+                                                    <Th></Th>
+                                                )}
+                                            </Tr>
+                                        </Tfoot>
+                                    </Table>
+                                </TableContainer>
+                            {/* <table className="table ps-table--compare"
                             >
                                 <tbody  >
                                     <tr>
-                                        <td className="heading" rowSpan={2}>
+                                        <td className="heading whitespace-nowrap w-[200px]" rowSpan={2}>
                                             Бүтээгдэхүүн
                                         </td>
                                         {compareItems && compareItems.length > 0 ? (
@@ -89,7 +185,7 @@ const Compare = () => {
                                             <td></td>
                                         )}
                                     </tr>
-                                    {/* <tr>
+                                    <tr>
                                         <td className="heading">Rating</td>
                                         {compareItems && compareItems.length > 0 ? (
                                             compareItems.map((product) => (
@@ -103,9 +199,9 @@ const Compare = () => {
                                         ) : (
                                             <td></td>
                                         )}
-                                    </tr> */}
+                                    </tr>
                                     <tr>
-                                        <td className="heading">
+                                        <td className="heading w-[200px]">
                                             Үнэ</td>
                                         {compareItems && compareItems.length > 0 ? (
                                             compareItems.map((product) => {
@@ -134,7 +230,7 @@ const Compare = () => {
                                             <td></td>
                                         )}
                                     </tr>
-                                    {/* <tr>
+                                    <tr>
                                         <td className="heading">Sold By</td>
                                         {compareItems && compareItems.length > 0 ? (
                                             compareItems.map((compareItems) => (
@@ -147,8 +243,8 @@ const Compare = () => {
                                         ) : (
                                             <td></td>
                                         )}
-                                    </tr> */}
-                                    {/* <tr>
+                                    </tr>
+                                    <tr>
                                         <td className="heading"></td>
                                         {compareItems && compareItems.length > 0 ? (
                                             compareItems.map((product) => (
@@ -168,9 +264,9 @@ const Compare = () => {
                                         ) : (
                                             <td></td>
                                         )}
-                                    </tr> */}
+                                    </tr>
                                 </tbody>
-                            </table>
+                            </table> */}
                         </div>
                     )}
                 </div>

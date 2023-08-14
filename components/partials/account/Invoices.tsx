@@ -1,6 +1,7 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import TableInvoices from './modules/TableInvoices';
+import OrdersTap from './modules/order/OrdersTab';
 
 const Invoices = ()=>{
   return (
@@ -18,6 +19,7 @@ const Invoices = ()=>{
                 </div>
                 <div className="ps-section__content">
                   <TableInvoices />
+                  {/* <OrdersTap/> */}
                 </div>
               </div>
             </div>

@@ -3,15 +3,18 @@ import BreadCrumb from '~/components/elements/BreadCrumb';
 import Product from '~/components/elements/products/Product';
 // import ProductGroupGridItems from '~/components/partials/product/ProductGroupGridItems';
 import PageContainer from '~/components/layouts/PageContainer';
-import Newsletters from '~/components/partials/commons/Newletters';
 import { useRouter } from 'next/router';
+import { Heading } from '@chakra-ui/react';
+import Image from 'next/image';
+import NotFoundState from '~/components/elements/NotFound';
 
 const SearchPage = () => {
     const [pageSize] = useState(100);
-    const [keyword, setKeyword] = useState('');
+    const router = useRouter();
+
+    const key = router.query?.keyword;
+    const [keyword, setKeyword] = useState(key);
     // const { productItems, loading, getProducts } = useGetProducts();
-    const Router = useRouter();
-    const { query } = Router;
 
     // function handleSetKeyword() {
     //     if (query && query.keyword !== '') {
@@ -34,7 +37,7 @@ const SearchPage = () => {
 
     const breadcrumb = [
         {
-            text: 'Search Result',
+            text: 'Хайлтын үр дүн',
         },
     ];
 
@@ -78,22 +81,27 @@ const SearchPage = () => {
             <div className="ps-page">
                 <BreadCrumb breadcrumb={breadcrumb} />
             </div>
-            <div className="container">
+            <div className='ps-container'>
                 <div className="ps-shop ps-shop--search">
-                    <div className="container">
-                        <div className="ps-shop__header">
-                            <h1>
-                                Search result for: "<strong>{keyword}</strong>"
-                            </h1>
+                    <div>
+                        <div className="flex gap-2 py-10">
+                            <Heading>
+                                Хайлтын үр дүн: 
+                            </Heading>
+                            <Heading>"{keyword}"</Heading>
                         </div>
                         <div className="ps-shop__content">
+                            {/* <Alert status='info'>
+                                <AlertIcon />
+                                Chakra is going live on August 30th. Get ready!
+                            </Alert> */}
+                            <NotFoundState/>
                             {statusView}
                             {shopItemsView}
                         </div>
                     </div>
                 </div>
             </div>
-            <Newsletters/>
         </PageContainer>
     );
 };
