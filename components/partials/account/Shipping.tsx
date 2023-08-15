@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import ModulePaymentOrderSummary from '~/components/partials/account/modules/ModulePaymentOrderSummary';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,7 @@ import { strapiApi } from '~/utilities/axios';
 import { useRouter } from 'next/router';
 import { clearCartItems } from '~/store/slices/cartSlice';
 import { Box, Button, Grid, GridItem } from '@chakra-ui/react';
+import useQpay from '~/hooks/qpay/useQpay';
 
 const Shipping = () => {
     const ecomerce = useSelector((state: RootState) => state.ecomerce);
@@ -28,6 +29,18 @@ const Shipping = () => {
     function handleChangeMethod(e: any) {
         setIsShipping(e.target.value); //e.target.value
     }
+
+    // const { accessToken, getAccessToken, createInvoice } = useQpay();
+    // console.log(ac)
+
+    // useEffect(() => {
+    //     console.log("access token", accessToken);
+    //     if (accessToken) {
+    //         createInvoice(
+    //             { access_token: accessToken, callback_url: "df", invoice_description: "Order No1311 200.00", invoice_receiver_code: "83",amount:200 }
+    //         )
+    //     }
+    // }, [accessToken])
 
 
     const makeOrderMutation = useMutation({
@@ -57,7 +70,7 @@ const Shipping = () => {
     // console.log(makeOrderMutation.data)
 
     const handleMakeOrder = () => {
-
+        // getAccessToken();
 
         if (user && cart.cartItems.length && cart.amount && ecomerce.contactInfo && shippingFee) {
             const ORDER_ID = `SKB${Math.random().toString().slice(2, 10)}`;
