@@ -51,8 +51,8 @@ const AccountQuickLinks = (props:Props) => {
 
   if (isLoggedIn === true) {
     return (
-      <div className="ps-block--user-account">
-        <i className="icon-user"></i>
+      <div className="ps-block--user-account mt-1">
+        <i className="icon-user mt-1"></i>
         <div className="ps-block__content">
           <ul className="ps-list--arrow">
             {linksView}

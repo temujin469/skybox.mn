@@ -102,7 +102,7 @@ function Register() {
                   rules={[
                     {
                       required: true,
-                      message: "ёёёё",
+                      message: "Имэйл хаягаа оруулна уу!",
                     },
                   ]}
                 >
@@ -142,7 +142,7 @@ function Register() {
               </div>
             </div>
             <div className="ps-form__footer">
-              <p>Холбох:</p>
+              <p className='mb-2'>Сошиал хаягаар нэвтрэх</p>
               <ul className="ps-list--social">
                 <li>
                   <a className="facebook"  href={`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/facebook`}>
