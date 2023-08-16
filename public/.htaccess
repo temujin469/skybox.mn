@@ -1,17 +1,10 @@
 <IfModule mod_rewrite.c>
-
 RewriteEngine On
-
-# Need to disable DirectoryIndex to avoid rewriting directory URL to index.html
-DirectoryIndex disabled
-
-# Redirect home page request to the NextJS server
-RewriteCond %{REQUEST_URI} ^/$
-RewriteRule ^(.*)$ http://127.0.0.1:4002/ [P,L]
-
-# Redirect all other requests to the NextJS server with the URI appended
+RewriteBase /
+RewriteRule ^index\.html$ — [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ http://127.0.0.1:4002/$1 [P,L]
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule . /index.html [L]
 
 </IfModule>
