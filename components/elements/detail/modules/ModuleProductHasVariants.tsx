@@ -64,13 +64,13 @@ const ModuleProductHasVariants = ({ product }: Props) => {
         (promotion) => promotion.ConfiguredItems.find(item => item.Id === selectedVariant?.Id)
     );
     const selectedPromotion = promotion?.ConfiguredItems.find(item => item.Id === selectedVariant?.Id);
-  
+
     const [api, contextHolder] = notification.useNotification();
 
 
     function handleAddItemToCart(e: any) {
         e.preventDefault();
-        if (sizes?.length && !selectedSize || !selectedVariant || !selectedColor) {
+        if (sizes?.length && !selectedSize || !selectedVariant || colors?.length && !selectedColor) {
             return api.info({
                 message: "Сонголтоо хийнэ үү!"
             })
@@ -80,12 +80,12 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                 title: product?.Title!,
                 pId: product?.Id,
                 cId: cId as string,
-                color: selectedColor.Value,
+                color: selectedColor?.Value,
                 property_value: selectedSize?.Value,
                 property_name: selectedSize?.PropertyName,
                 price: price,
                 quantity: quantity,
-                image: selectedColor.ImageUrl!,
+                image: selectedColor?.ImageUrl!,
                 countInStock: selectedVariant.Quantity
             })
             api.success({
@@ -174,7 +174,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                 color: selectedColor.Value,
                 property_value: selectedSize?.Value,
                 property_name: selectedSize?.PropertyName,
-                price:price,
+                price: price,
                 quantity: quantity,
                 image: selectedColor.ImageUrl!,
                 countInStock: selectedVariant.Quantity
@@ -231,7 +231,6 @@ const ModuleProductHasVariants = ({ product }: Props) => {
             setSelectedVariant(existVariant);
             router.push(`/product/${product?.Id}?cId=${existVariant?.Id}`)
             console.log(existVariant.Id)
-
         }
     }
 
@@ -258,7 +257,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
 
     let variants, sizeSelectionArea, priceArea, thumbnailArea;
     if (selectedVariant) {
-      
+
 
         if (selectedPromotion) {
             priceArea = (
@@ -280,7 +279,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                 // </h4>
                 <Heading color="gray.700" size="2xl" mb={5}>
                     {/* //     {/* {formatCurrency(selectedVariant.Price.OriginalPrice * Math.ceil(settings?.CNY_rate!))} */}
-                    
+
                     {formatCurrency(selectedVariant.Price.ConvertedPriceList.Internal.Price)}
                     ₮
                 </Heading>
@@ -306,7 +305,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                 <Grid templateColumns={['repeat(7, 1fr)', 'repeat(9, 1fr)', 'repeat(9, 1fr)', 'repeat(12, 1fr)']} gap={[2, 2]}>
                     {
                         colors.map((item) => {
-                            return item.ImageUrl ? (
+                            return (
                                 <GridItem
                                     border="2px"
                                     borderColor={selectedColor && selectedColor.Vid === item.Vid ? "brand.1" : "gray.400"}
@@ -325,13 +324,13 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                                     onClick={(e) => handleSelectColor(e, item.Vid)}>
                                     <span className="ps-variant__tooltip" style={{ whiteSpace: "nowrap" }}>{item.Value}</span>
 
-                                        <BlurImage
-                                            src={item.MiniImageUrl!}
-                                            alt={item.Value}
-                                            fill
-                                        />
+                                    <BlurImage
+                                        src={(item.MiniImageUrl ? item.ImageUrl : product.MainPictureUrl) as string}
+                                        alt={item.Value}
+                                        fill
+                                    />
                                 </GridItem>
-                            ) : null
+                            )
                         })
                     }
                 </Grid>
@@ -383,22 +382,27 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                             </Box>
                         </figcaption>
                     </figure>
-                    <figure>
-                        <figcaption>
-                            <Box display="flex" alignItems="end" mb={3}>
-                                <Heading fontSize="16px" className="pr-1">
-                                    Өнгө:
-                                </Heading>
-                                <Text lineHeight="15px">
-                                    {selectedColor
-                                        ? selectedColor.Value
-                                        : 'Сонгоx'}
-                                </Text>
-                            </Box>
-                        </figcaption>
+                    {
+                        colors && colors.length > 0 ? (
+                            <figure>
+                                <figcaption>
+                                    <Box display="flex" alignItems="end" mb={3}>
+                                        <Heading fontSize="16px" className="pr-1">
+                                            Өнгө:
+                                        </Heading>
+                                        <Text lineHeight="15px">
+                                            {selectedColor
+                                                ? selectedColor.Value
+                                                : 'Сонгоx'}
+                                        </Text>
+                                    </Box>
+                                </figcaption>
+                                {colorSelectionArea}
+                            </figure>
+                        ) : null
+                    }
 
-                        {colorSelectionArea}
-                    </figure>
+
                     {/* {selectedVariant !== null} */}
                     {
                         sizes && sizes?.length > 0 ? (

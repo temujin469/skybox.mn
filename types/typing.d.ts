@@ -107,15 +107,18 @@ type ProductPicture = {
   Url: string;
 };
 
+type StuffStatus = "New" | "Unused" | "Second"|"Another"
+
 type ProductFilter = {
   ItemTitle: string;
   CategoryId: string;
   MinPrice: number;
   MaxPrice: number;
-  BrandId: number;
+  BrandId: string;
   OrderBy: string;
-  VendorId:string;
-  Provider:string
+  VendorId: string;
+  Provider: string;
+  StuffStatus:StuffStatus
 };
 
 type ProductPictureInfo = {
@@ -378,4 +381,5 @@ type BrandInfoContent = {
   Id: string;
   ProviderName: string;
   PictureUrl?: string;
+  Name:string
 };

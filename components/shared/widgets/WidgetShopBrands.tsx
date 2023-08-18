@@ -4,12 +4,24 @@ import { Checkbox } from 'antd';
 import { Radio, Input } from 'antd';
 import { useRouter } from 'next/router';
 import { Heading } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import { otApi } from '~/utilities/axios';
+import Image from 'next/image';
+import BlurImage from '~/components/elements/BlurImage';
 
 const WidgetShopBrands = () => {
-    const Router = useRouter();
-    const { slug } = Router.query;
-    const [brands, setBrands] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+    const { brandId } = router.query;
+    const key = process.env.NEXT_PUBLIC_INSTANCE_KEY;
+    const {data,isLoading} = useQuery({
+        queryKey: ["/GetBrandInfo",brandId],
+        queryFn:async()=>{
+            const res = await otApi.get(`/GetBrandInfo?brandId=${brandId}&instanceKey=${key}`);
+            return res.data;
+        }
+    });
+
+    console.log(data)
 
     // async function getCategories() {
     //     setLoading(true);
@@ -36,7 +48,7 @@ const WidgetShopBrands = () => {
     //     }
     // }
 
-    function handleSelectBrand(e) {
+    function handleSelectBrand(e:any) {
         Router.push(`/brand/${e.target.value}`);
     }
 
@@ -68,6 +80,9 @@ const WidgetShopBrands = () => {
                     options={brands}
                     onChange={handleSelectBrand}
                 /> */}
+                <div className='relative aspect-square'>
+                    <BlurImage src={data?.BrandInfo?.PictureUrl} alt={data?.BrandInfo?.Name} fill />
+                </div>
             </figure>
         </aside>
     );

@@ -1,67 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import Router from 'next/router';
 import { Spin } from 'antd';
 import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
+import useGetBrandInfoList from '~/apiCall/otapi/useGetBrandInfoList';
+import { useRouter } from 'next/router';
 
-const exampleCategories = [
-    'Бүгд',
-    'Babies & Moms',
-    'Books & Office',
-    'Cars & Motocycles',
-    'Clothing & Apparel',
-    ' Accessories',
-    'Bags',
-    'Kid’s Fashion',
-    'Mens',
-    'Shoes',
-    'Sunglasses',
-    'Womens',
-    'Computers & Technologies',
-    'Desktop PC',
-    'Laptop',
-    'Smartphones',
-    'Consumer Electrics',
-    'Air Conditioners',
-    'Accessories',
-    'Type Hanging Cell',
-    'Audios & Theaters',
-    'Headphone',
-    'Home Theater System',
-    'Speakers',
-    'Car Electronics',
-    'Audio & Video',
-    'Car Security',
-    'Radar Detector',
-    'Vehicle GPS',
-    'Office Electronics',
-    'Printers',
-    'Projectors',
-    'Scanners',
-    'Store & Business',
-    'Refrigerators',
-    'TV Televisions',
-    '4K Ultra HD TVs',
-    'LED TVs',
-    'OLED TVs',
-    'Washing Machines',
-    'Type Drying Clothes',
-    'Type Horizontal',
-    'Type Vertical',
-    'Garden & Kitchen',
-    'Cookware',
-    'Decoration',
-    'Furniture',
-    'Garden Tools',
-    'Home Improvement',
-    'Powers And Hand Tools',
-    'Utensil & Gadget',
-    'Health & Beauty',
-    'Equipments',
-    'Hair Care',
-    'Perfumer',
-    'Wine Cabinets',
-];
 
 function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -80,12 +23,19 @@ function useDebounce(value, delay) {
 }
 
 const SearchHeader = () => {
+    const router = useRouter()
     const inputEl = useRef(null);
     const [isSearch, setIsSearch] = useState(false);
-    const [keyword, setKeyword] = useState('');
+    const [keyword, setKeyword] = useState<string | undefined>(router.query.keyword as string);
+    const [brand, setBrand] = useState<string | undefined>(router.query.brandId as string)
     const [resultItems, setResultItems] = useState(null);
     const [loading, setLoading] = useState(false);
     const debouncedSearchTerm = useDebounce(keyword, 300);
+
+    const { data } = useGetBrandInfoList();
+
+    const brands = data?.BrandInfoList?.Content;
+
 
     function handleClearKeyword() {
         setKeyword('');
@@ -93,9 +43,11 @@ const SearchHeader = () => {
         setLoading(false);
     }
 
-    function handleSubmit(e) {
+    function handleSubmit(e:any) {
         e.preventDefault();
-        Router.push(`/search?keyword=${keyword}`);
+        router.push(
+            brand && keyword ? `/shop?brandId=${brand}&keyword=${keyword}` : brand && !keyword ? `/shop?brandId=${brand}` : `/shop?keyword=${keyword}`
+            );
     }
 
     // useEffect(() => {
@@ -163,9 +115,9 @@ const SearchHeader = () => {
         );
     }
 
-    selectOptionView = exampleCategories.map((option) => (
-        <option value={option} key={option}>
-            {option}
+    selectOptionView = brands?.map((brand) => (
+        <option value={brand.Id} key={brand.Id}>
+            {brand.Name.split("/")[0]}
         </option>
     ));
 
@@ -176,7 +128,13 @@ const SearchHeader = () => {
             action="/"
             onSubmit={handleSubmit}>
             <div className="ps-form__categories">
-                <select className="form-control">{selectOptionView}</select>
+                <select className="form-control" onChange={(e)=>setBrand(e.target.value)}>
+                    <option>
+                        Брэнд
+                    </option>
+                    {
+                        selectOptionView
+                    }</select>
             </div>
             <div className="ps-form__input">
                 <input
@@ -192,9 +150,8 @@ const SearchHeader = () => {
             </div>
             <button onClick={handleSubmit}>Хайх</button>
             <div
-                className={`ps-panel--search-result${
-                    isSearch ? ' active ' : ''
-                }`}>
+                className={`ps-panel--search-result${isSearch ? ' active ' : ''
+                    }`}>
                 <div className="ps-panel__content">{productItemsView}</div>
                 {loadMoreView}
             </div>

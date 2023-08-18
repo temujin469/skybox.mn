@@ -14,13 +14,15 @@ import { useRouter } from "next/router";
 const ShopSidebarWithoutBannerPage = () => {
   // const breadCrumb = useBreadCrumb()
   const router = useRouter()
-  const { catId } = router.query;
+  const { catId,brandId } = router.query;
   const { data } = useGetCategoryRootPath({ variables: { catId: catId as string } })
 
   const breadCrumb = data?.CategoryInfoList.Content.map((cat) => ({
     text: cat.Name,
     url: `/shop/?catId=${cat.Id}`
   }))
+
+  const cat = data?.CategoryInfoList?.Content[data?.CategoryInfoList?.Content.length - 1];
 
 
   return (
@@ -31,8 +33,13 @@ const ShopSidebarWithoutBannerPage = () => {
           {/* <Box px={["10px", "30px"]}> */}
           <div className="ps-layout--shop">
             <Box height="100%" top="85px" mb="170px" position={"sticky"} className="ps-layout__left">
-              <WidgetShopCategories />
-              <WidgetShopBrands />
+              {/* {
+                catId && <WidgetShopCategories category={cat} />
+              } */}
+              {
+                
+                brandId && <WidgetShopBrands />
+              }
               <WidgetShopFilterByPriceRange />
             </Box>
             <div className="ps-layout__right">

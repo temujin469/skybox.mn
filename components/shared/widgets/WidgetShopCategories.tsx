@@ -3,12 +3,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Heading } from '@chakra-ui/react';
 
-const WidgetShopCategories = () => {
+const WidgetShopCategories = ({category}:{category:any}) => {
     const Router = useRouter();
-    const [categories, setCategories] = useState(null);
-    const [loading, setLoading] = useState(false);
-
-    const { slug } = Router.query;
 
     // async function getCategories() {
     //     setLoading(true);
@@ -45,11 +41,12 @@ const WidgetShopCategories = () => {
     // } else {
     //     categoriesView = <p>Loading...</p>;
     // }
-
+console.log(category)
     return (
         <aside className="widget widget_shop">
             <Heading size="md">Ангилал</Heading>
             {/* {categoriesView} */}
+            <p>{category?.Name}</p>
         </aside>
     );
 };

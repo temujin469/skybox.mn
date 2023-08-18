@@ -6,33 +6,38 @@ import ModuleShopSortBy from '~/components/partials/shop/modules/ModuleShopSortB
 import { useRouter } from 'next/router';
 import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
-import useGetProductsByFilter from '~/apiCall/otapi/useGetProductsByFilter';
 import useFilter from '~/hooks/useFilter';
 import { ProductGroupWithCarousel } from '../product/ProductGroupWithCarousel';
 import { Box, Heading } from '@chakra-ui/react';
 import useSearchItemsFrame from '~/apiCall/otapi/useSearchItemsFrame';
+import NotFoundState from '~/components/elements/NotFound';
 
 const ShopItems = ({ columns = 1, pageSize = 60 }) => {
     const router = useRouter();
-    const { catId } = router.query;
+    const { catId,brandId,min,max,keyword } = router.query;
     const { filters } = useFilter()
     const [listView, setListView] = useState(true);
     const [totalPage, setTotalPage] = useState<number>(0);
     const [classes, setClasses] = useState(
         'col-xl-4 col-lg-4 col-md-3 col-sm-6 col-6'
     );
-    const [page, setPage] = useState<number>(0)
+    const [page, setPage] = useState<number>(1)
     const [start, setStart] = useState<number>(0);
 
-    //   const { data, isLoading } = useSearchItemsFrame({ variables: { start, limit: pageSize, filters:{
-    //     CategoryId:catId as string
-    //   }} });
+      const {data,isLoading}= useSearchItemsFrame({ variables: { start, limit: pageSize, filters:{
+        CategoryId:catId as string,
+        BrandId:brandId as string,
+          MinPrice: Number(min),
+          MaxPrice: Number(max),
+          ItemTitle:keyword as string,
+        ...filters
+      }} });
 
-    //   console.log("filtered",data)
+      console.log("filtered",data)
 
-    const { data, isLoading } = useGetProductsByFilter({ variables: { start, limit: pageSize, filters, catId: catId ?  catId as string : "otc-20" } });
+    // const { data, isLoading } = useGetProductsByFilter({ variables: { start, limit: pageSize, filters, catId: catId ?  catId as string : "otc-20" } });
 
-    const productItems = data?.OtapiItemInfoSubList?.Content;
+    const productItems = data?.Result?.Items?.Content
 
 
     function handleChangeViewMode(e: any) {
@@ -66,17 +71,22 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
 
     const handlePagination = (page: number) => {
         setPage(page)
-        setStart(page * pageSize)
+        setStart(page * pageSize);
+        window.scroll({top:0,behavior:"smooth"})
     }
 
     useEffect(() => {
-        if (data?.OtapiItemInfoSubList?.TotalCount) {
-            const totalProd = data?.OtapiItemInfoSubList.TotalCount;
-            const totalPage = Math.ceil(totalProd / pageSize)
+        if (data?.Result?.MaximumPageCount) {
+            // const totalProd = data?.OtapiItemInfoSubList.TotalCount;
+            // const totalPage = Math.ceil(totalProd / pageSize)
+            const totalPage = data?.Result?.MaximumPageCount;
             setTotalPage(totalPage)
         }
         handleSetColumns();
     }, [columns, data, pageSize]);
+    useEffect(() => {
+        setPage(1)
+    }, [router.query]);
 
     // Views
     let productItemsView;
@@ -99,7 +109,7 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
                 ));
             }
         } else {
-            productItemsView = <p>Бүтээгдэхүүн олдсонгүй.</p>;
+            productItemsView = <NotFoundState/>;
         }
     } else {
         const skeletonItems = generateTempArray(12).map((item) => (
@@ -155,8 +165,8 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
                             pageSize={pageSize}
                             responsive={true}
                             showSizeChanger={false}
-                            // current={page !== undefined ? parseInt(page) : 1}
-                            onChange={(e) => handlePagination(e)}
+                            current={page}
+                            onChange={(value) => handlePagination(value)}
                         />
                     </div>
                 </div>
