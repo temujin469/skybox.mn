@@ -104,7 +104,7 @@ const HomeDefaultProductListing = ({ collection, title }: Props) => {
                         <ul className="ps-section__links">
                             {sectionLinksView}
                             <li>
-                                <Link href={`/shop`}>
+                                <Link href={`/#`}>
                                     <Heading fontSize={{base:"14px",md:"16px"}} fontWeight={[500,500,600]}>
                                         Бүгд
                                     </Heading>

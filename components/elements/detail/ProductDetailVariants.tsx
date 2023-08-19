@@ -16,7 +16,8 @@ const ProductDetailVariants = ({ product }:{product:ProductFullInfo}) => {
 
     useEffect(()=>{
         setProductId(product.Id)
-    },[product])
+    },[product]);
+
     if (product) {
             return (
                 <div className="ps-product--detail ps-product--fullwidth">

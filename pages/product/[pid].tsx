@@ -8,13 +8,14 @@ import PageContainer from '~/components/layouts/PageContainer';
 import useGetItemFullInfo from '~/apiCall/otapi/useGetItemFullInfo';
 import { Box } from '@chakra-ui/react';
 import useGetCategoryRootPath from '~/apiCall/otapi/useGetCategoryRootPath';
+import useBatchGetItemFullInfo from '~/apiCall/otapi/useBatchGetItemFullInfo';
 
 const ProductDetailHasVariantsPage = () => {
     const router = useRouter();
     const { pid } = router.query;
 
-    const { data, isLoading } = useGetItemFullInfo({ variables: { id: pid as string } });
-    const product = data?.OtapiItemFullInfo;
+    const { data, isLoading } = useBatchGetItemFullInfo({ variables: { id: pid as string } });
+    const product = data?.Result?.Item;
 
     const rootPathData = useGetCategoryRootPath({variables:{catId:product?.CategoryId}});
 

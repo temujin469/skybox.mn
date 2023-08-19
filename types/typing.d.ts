@@ -383,3 +383,39 @@ type BrandInfoContent = {
   PictureUrl?: string;
   Name:string
 };
+
+// home types
+
+type ProductCollection = {
+  id:number
+  collectionName: string;
+  bgColor: string;
+  products: {
+    product_id: string;
+  }[];
+};
+
+type HomeContent = {
+  banner: {
+    banner_main: {
+      data: MediaData[];
+    };
+    banner_1: {
+      data: MediaData;
+    };
+    banner_2: {
+      data: MediaData;
+    };
+  };
+  promotion_section: {
+    promotions: Promotion[];
+  };
+  featured_categories: FeaturedCategory[];
+  featured_products: {
+    id: number;
+    title: string;
+    category_id: string;
+    product_quantity: number;
+  }[];
+  productCollections:ProductCollection[]
+};

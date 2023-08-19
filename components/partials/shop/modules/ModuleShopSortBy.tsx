@@ -8,7 +8,7 @@ const ModuleShopSortBy = () => {
     setFilter({...filters,OrderBy:e.target.value})
   }
   return (
-    <Select placeholder="Эрэмбэлэх" maxW={230} onChange={handleChange}>
+    <Select placeholder="Хэвийн" maxW={230} onChange={handleChange}>
       <option value="UpdatedTime:Asc">Шинэ бараа эхэндээ</option>
       <option value="UpdatedTime:Desc">Хуучин бараа эхэндээ</option>
       <option value="Price:Asc">Хямд үнтэй нь эхэндээ</option>

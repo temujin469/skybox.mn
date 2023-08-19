@@ -7,7 +7,7 @@ import useAppState from '~/hooks/useAppState';
 const PartialDescription = () => {
 
     const {productId}= useAppState()
-    const { data, isLoading} = useGetItemDescription({ variables: { id: productId! } })
+    const { data, isLoading} = useGetItemDescription({ variables: { id: productId! } });
 
     return (
         isLoading ? (

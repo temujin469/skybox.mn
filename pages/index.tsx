@@ -16,6 +16,7 @@ import { GetStaticProps } from 'next';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import useGetHomeContent from '~/apiCall/strapi/useGetHomeContent';
 import HomeDefaultBrands from '~/components/partials/home-default/HomeDefaultBrands';
+import HomeDefaultProductCollections from '~/components/partials/home-default/collection/HomeDefaultProductCollections';
 
 const HomepageDefaultPage = () => {
   return (
@@ -34,7 +35,8 @@ const HomepageDefaultPage = () => {
           />
           
           <HomeDafaultCategoryCollection/>
-          <NewArrivals collection="new-arrivals-products" />
+          {/* <NewArrivals collection="new-arrivals-products" /> */}
+          <HomeDefaultProductCollections/>
           <HomeAds />
           {/* <DownLoadApp /> */}
        </Box>

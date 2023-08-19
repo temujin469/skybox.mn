@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import { Spin } from 'antd';
 import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
 import useGetBrandInfoList from '~/apiCall/otapi/useGetBrandInfoList';
 import { useRouter } from 'next/router';
+import searchItemsFrame from '~/apiCall/otapi/searchItemsFrame';
+import { CircularProgress } from '@chakra-ui/react';
 
 
-function useDebounce(value, delay) {
+function useDebounce(value: string, delay: number) {
     const [debouncedValue, setDebouncedValue] = useState(value);
     useEffect(() => {
         // Update debounced value after delay
@@ -28,14 +28,13 @@ const SearchHeader = () => {
     const [isSearch, setIsSearch] = useState(false);
     const [keyword, setKeyword] = useState<string | undefined>(router.query.keyword as string);
     const [brand, setBrand] = useState<string | undefined>(router.query.brandId as string)
-    const [resultItems, setResultItems] = useState(null);
     const [loading, setLoading] = useState(false);
-    const debouncedSearchTerm = useDebounce(keyword, 300);
+    const [resultItems, setResultItems] = useState<ProductInfo[] | undefined>()
+    const debouncedSearchTerm = useDebounce(keyword!,1000);
 
-    const { data } = useGetBrandInfoList();
+    const brandData = useGetBrandInfoList();
 
-    const brands = data?.BrandInfoList?.Content;
-
+    const brands = brandData?.data?.BrandInfoList?.Content;
 
     function handleClearKeyword() {
         setKeyword('');
@@ -43,63 +42,74 @@ const SearchHeader = () => {
         setLoading(false);
     }
 
-    function handleSubmit(e:any) {
+    const searchUrl = brand && keyword ? `/shop?brandId=${brand}&keyword=${keyword}` : brand && !keyword ? `/shop?brandId=${brand}` : `/shop?keyword=${keyword}`
+
+    function handleSubmit(e: any) {
         e.preventDefault();
-        router.push(
-            brand && keyword ? `/shop?brandId=${brand}&keyword=${keyword}` : brand && !keyword ? `/shop?brandId=${brand}` : `/shop?keyword=${keyword}`
-            );
+        router.push(searchUrl)
+        setIsSearch(false)
     }
 
-    // useEffect(() => {
-    //     if (debouncedSearchTerm) {
-    //         setLoading(true);
-    //         if (keyword) {
-    //             const queries = {
-    //                 _limit: 5,
-    //                 title_contains: keyword,
-    //             };
-    //             const products = ProductRepository.getRecords(queries);
-    //             products.then((result) => {
-    //                 setLoading(false);
-    //                 setResultItems(result);
-    //                 setIsSearch(true);
-    //             });
-    //         } else {
-    //             setIsSearch(false);
-    //             setKeyword('');
-    //         }
-    //         if (loading) {
-    //             setIsSearch(false);
-    //         }
-    //     } else {
-    //         setLoading(false);
-    //         setIsSearch(false);
-    //     }
-    // }, [debouncedSearchTerm]);
+    const fetchProducts = async () => {
+        const data = await searchItemsFrame({
+            start: 0, limit: 5, filters: {
+                ItemTitle: debouncedSearchTerm,
+                BrandId: brand
+            }
+        })
+        const items = data?.Result?.Items?.Content;
+        setResultItems(items);
+        setLoading(false);
+        setIsSearch(true);
+
+    }
+
+    useEffect(() => {
+        if (debouncedSearchTerm) {
+            setLoading(true);
+            if (keyword) {
+                fetchProducts()
+            } else {
+                setIsSearch(false);
+                setKeyword('');
+            }
+            if (loading) {
+                setIsSearch(false);
+            }
+        } else {
+            setLoading(false);
+            setIsSearch(false);
+        }
+    }, [debouncedSearchTerm]);
 
     // Views
     let productItemsView,
         clearTextView,
         selectOptionView,
-        loadingView,
-        loadMoreView;
+        loadingView;
     if (!loading) {
-        if (resultItems && resultItems.length > 0) {
-            if (resultItems.length > 5) {
-                loadMoreView = (
-                    <div className="ps-panel__footer text-center">
-                        <Link href="/search">
-                            <p>See all results</p>
-                        </Link>
-                    </div>
-                );
-            }
-            productItemsView = resultItems.map((product) => (
-                <ProductSearchResult product={product} key={product.id} />
-            ));
-        } else {
-            productItemsView = <p>No product found.</p>;
-        }
+        if (resultItems && resultItems?.length > 0) {
+            // if (resultItems.length >= 5) {
+            //     loadMoreView = (
+            //         <div className="ps-panel__footer text-center">
+            //             <Link href={searchUrl}>
+            //                 <p>Цааш үзэх</p>
+            //             </Link>
+            //         </div>
+            //     );
+            // }
+            productItemsView = <div className='p-2'>
+                {
+                    resultItems.map((product) => (
+                        <ProductSearchResult product={product} key={product.Id} />
+                    ))
+                }
+            </div>
+        } 
+        // else {
+        //     productItemsView = <p>
+        //         Бүтээгдэхүүн олдсонгүй.</p>;
+        // }
         if (keyword !== '') {
             clearTextView = (
                 <span className="ps-form__action" onClick={handleClearKeyword}>
@@ -110,7 +120,7 @@ const SearchHeader = () => {
     } else {
         loadingView = (
             <span className="ps-form__action">
-                <Spin size="small" />
+                <CircularProgress isIndeterminate size={5} color='brand.1'/>
             </span>
         );
     }
@@ -128,7 +138,7 @@ const SearchHeader = () => {
             action="/"
             onSubmit={handleSubmit}>
             <div className="ps-form__categories">
-                <select className="form-control" onChange={(e)=>setBrand(e.target.value)}>
+                <select className="form-control" onChange={(e) => setBrand(e.target.value)}>
                     <option>
                         Брэнд
                     </option>
@@ -143,6 +153,7 @@ const SearchHeader = () => {
                     type="text"
                     value={keyword}
                     placeholder="хайх..."
+                    onClick={()=>setIsSearch(true)}
                     onChange={(e) => setKeyword(e.target.value)}
                 />
                 {clearTextView}
@@ -150,10 +161,11 @@ const SearchHeader = () => {
             </div>
             <button onClick={handleSubmit}>Хайх</button>
             <div
+            onMouseLeave={()=>setIsSearch(false)}
                 className={`ps-panel--search-result${isSearch ? ' active ' : ''
                     }`}>
-                <div className="ps-panel__content">{productItemsView}</div>
-                {loadMoreView}
+                <div className="overflow-hidden">{productItemsView}</div>
+                {/* {loadMoreView} */}
             </div>
         </form>
     );

@@ -51,11 +51,11 @@ const HomeDefaultBanner = () => {
                 </div>
                 <div className="ps-section__right">
                     <Promotion
-                        link="/shop"
+                        link="#"
                         image={banner?.banner_1 ? banner.banner_1.data.attributes : undefined}
                     />
                     <Promotion
-                        link="/shop"
+                        link="#"
                         image={banner?.banner_2 ? banner.banner_2.data.attributes : undefined}
 
                     />

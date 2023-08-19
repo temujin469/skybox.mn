@@ -48,9 +48,6 @@ const WidgetShopBrands = () => {
     //     }
     // }
 
-    function handleSelectBrand(e:any) {
-        Router.push(`/brand/${e.target.value}`);
-    }
 
     // useEffect(() => {
     //     getCategories();

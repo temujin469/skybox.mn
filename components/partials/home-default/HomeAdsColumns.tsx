@@ -16,7 +16,7 @@ const HomeAdsColumns = () => {
                         promotions?.map((promotion) =>(
                             <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 ">
                                 <Promotion
-                                    link="/shop"
+                                    link={promotion.link || "#"}
                                     image={promotion ? promotion.image.data.attributes: undefined}
                                 />
                             </div>

@@ -8,20 +8,21 @@ import PartialSpecification from './PartialSpecification';
 import PartialDescription from './PartialDescription';
 
 
+
 const DefaultDescription = () => {
     return (
         <div className="ps-product__content">
             <Tabs variant='enclosed'>
                 <TabList mb='1em'>
-                    <Tab>Нэмэлт мэдээлэл</Tab>
                     <Tab>Тайлбар</Tab>
+                    <Tab>Нэмэлт мэдээлэл</Tab>
                 </TabList>
                 <TabPanels >
-                    <TabPanel px={0}>
-                        <PartialSpecification />
-                    </TabPanel>
                     <TabPanel px={0} maxW={900} mx="auto">
                         <PartialDescription />
+                    </TabPanel>
+                    <TabPanel px={0}>
+                        <PartialSpecification />
                     </TabPanel>
                 </TabPanels>
             </Tabs>

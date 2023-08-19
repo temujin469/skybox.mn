@@ -25,15 +25,15 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
     const [start, setStart] = useState<number>(0);
 
       const {data,isLoading}= useSearchItemsFrame({ variables: { start, limit: pageSize, filters:{
+          ...filters,
         CategoryId:catId as string,
         BrandId:brandId as string,
           MinPrice: Number(min),
           MaxPrice: Number(max),
-          ItemTitle:keyword as string,
-        ...filters
+          ItemTitle:(keyword || brandId) ? keyword as string : "a",
       }} });
 
-      console.log("filtered",data)
+    //   console.log("filtered",data)
 
     // const { data, isLoading } = useGetProductsByFilter({ variables: { start, limit: pageSize, filters, catId: catId ?  catId as string : "otc-20" } });
 
