@@ -1,3 +1,4 @@
+import { Button } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { notification } from 'antd';
@@ -76,9 +77,6 @@ const  FormEditAddress =()=> {
     return (
       <form className="ps-form--edit-address" onSubmit={handleSubmit(onSubmit)}>
         {contextHolder}
-        <div className="ps-form__header">
-          <h3>Хүргэлтийн хаяг</h3>
-        </div>
         <div className="ps-form__content">
           <div className="form-group">
             <label>
@@ -120,7 +118,7 @@ const  FormEditAddress =()=> {
             />
             <p>{errors?.phoneNumber?.message}</p>
           </div>
-          <div className="form-group">
+          <div className="form-group mb-[30px]">
             <label>
               Хаяг <sup>*</sup>
             </label>
@@ -133,11 +131,12 @@ const  FormEditAddress =()=> {
             />
             <p>{errors?.address?.message}</p>
           </div>
-          <div className="form-group submit">
-            <button className="ps-btn" type="submit" disabled={isLoading}>
+          <div className='text-end'>
+          <Button size="lg" variant="brand" type="submit" disabled={isLoading}>
               Шинэчлэх
-            </button>
+            </Button>
           </div>
+           
         </div>
       </form>
     );

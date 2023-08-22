@@ -44,6 +44,7 @@ function App({ Component, pageProps }: AppProps) {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
+        {/* <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>  */}
         <meta name="author" content="Skybox" />
         <meta
           name='viewport'

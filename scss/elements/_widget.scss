@@ -659,10 +659,13 @@
         @extend %list-reset;
 
         ul {
-            border: 1px solid #d1d1d1;
+            // border: 1px solid #d1d1d1;
 
             li {
-                border-bottom: 1px solid #eaeaea;
+                // border-bottom: 1px solid #eaeaea;
+                border-radius: 5px;
+                overflow: hidden;
+                margin-bottom: 5px;
 
                 a {
                     display: block;

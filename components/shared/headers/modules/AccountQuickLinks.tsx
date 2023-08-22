@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import Link from 'next/link';
 import { logout } from '~/store/auth/authSlice';
 import { AppDispatch } from '~/store/store';
+import { useToast } from '@chakra-ui/react';
 
 type Props = {
   isLoggedIn: boolean;
@@ -10,10 +11,17 @@ type Props = {
 
 const AccountQuickLinks = (props:Props) => {
   const dispatch:AppDispatch = useDispatch();
+  const toast = useToast()
   const handleLogout = (e:any) => {
     e.preventDefault();
     dispatch(logout());
+    toast({
+      title:"Амжилттай гарлаа",
+      status:"success",
+      isClosable: true,
+    })
   };
+
   const accountLinks = [
     {
       text: "Бүртгэлийн мэдээлэл",
@@ -58,7 +66,7 @@ const AccountQuickLinks = (props:Props) => {
             {linksView}
             <li className="ps-block__footer">
               <a href="#" onClick={(e) => handleLogout(e)}>
-                Гарах
+              Системээс гарах
               </a>
             </li>
           </ul>

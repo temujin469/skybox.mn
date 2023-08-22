@@ -1,3 +1,4 @@
+import { Box, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '~/store/store';
@@ -9,18 +10,14 @@ const ModuleCartSummary = () => {
 
     return (
         <>
-            <div className="ps-block--shopping-total">
-                <h3 className='mb-4'>Захиалгын дүн</h3>
-                <div className="ps-block__header">
-                    <p>
-                        Барааны үнэ: <span> {formatCurrency(amount!)}₮</span>
-                    </p>
-                </div>
-                <div className="ps-block__content">
-                    <h4>
-                        Нийт: <span>{formatCurrency(amount!)}₮</span>
-                    </h4>
-                </div>
+            <div className="">
+                <Heading className='mb-4 uppercase'>Захиалгын дүн</Heading>
+                    <Box mb="10px" className='flex items-center justify-between'>
+                        <Text>Барааны үнэ</Text> <Heading size="sm"> {formatCurrency(amount!)}₮</Heading>
+                    </Box>
+                    <Box className='flex items-center justify-between'>
+                       <Text>Нийт</Text> <Heading size="sm">{formatCurrency(amount!)}₮</Heading>
+                    </Box>
             </div>
         </>
     );

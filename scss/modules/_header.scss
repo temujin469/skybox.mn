@@ -126,7 +126,7 @@
         }
     }
 
-    @include media('<lg') {
+    @include media('<md') {
         display: none;
         &.header--mobile {
             display: block;
@@ -573,7 +573,7 @@
         }
     }
 
-    @media (min-width: 1200px) {
+    @include media('>md')  {
         display: none;
     }
 }

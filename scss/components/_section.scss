@@ -1473,7 +1473,7 @@ backdrop-filter: blur(5px);
 }
 
 .ps-my-account {
-    min-height: 100vh;
+    min-height: calc(100vh - (141px + 61px));
     background-color: #f1f1f1;
 }
 

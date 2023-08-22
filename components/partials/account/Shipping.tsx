@@ -30,7 +30,7 @@ const Shipping = () => {
         setIsShipping(e.target.value); //e.target.value
     }
 
-    // const { accessToken, getAccessToken, createInvoice } = useQpay();
+    const { getAccessToken, createInvoice } = useQpay();
     // console.log(ac)
 
     // useEffect(() => {
@@ -69,24 +69,31 @@ const Shipping = () => {
 
     // console.log(makeOrderMutation.data)
 
-    const handleMakeOrder = () => {
-        // getAccessToken();
+    const handleMakeOrder = async () => {
+        const tokenRes  =await  getAccessToken();
+        const accessToken = tokenRes.access_token;
+        console.log("access token", accessToken);
+            if (accessToken) {
+                createInvoice(
+                    { access_token: accessToken, callback_url: "df", invoice_description: "Order No1311 200.00", invoice_receiver_code: "83",amount:200 }
+                )
+            }
 
-        if (user && cart.cartItems.length && cart.amount && ecomerce.contactInfo && shippingFee) {
-            const ORDER_ID = `SKB${Math.random().toString().slice(2, 10)}`;
-            setOrderID(ORDER_ID)
+        // if (user && cart.cartItems.length && cart.amount && ecomerce.contactInfo && shippingFee) {
+        //     const ORDER_ID = `SKB${Math.random().toString().slice(2, 10)}`;
+        //     setOrderID(ORDER_ID)
 
-            makeOrderMutation.mutate({
-                contact_information: ecomerce.contactInfo,
-                user: user.id,
-                order_id: ORDER_ID,
-                products: cart.cartItems,
-                is_shipping_included: isShipping,
-                total_payment: isShipping ? (cart.amount + shippingFee) : cart.amount,
-                total_product_quantity: cart.total,
-                payment_status: "ХҮЛЭЭГДЭЖ БАЙГАА"
-            })
-        }
+        //     makeOrderMutation.mutate({
+        //         contact_information: ecomerce.contactInfo,
+        //         user: user.id,
+        //         order_id: ORDER_ID,
+        //         products: cart.cartItems,
+        //         is_shipping_included: isShipping,
+        //         total_payment: isShipping ? (cart.amount + shippingFee) : cart.amount,
+        //         total_product_quantity: cart.total,
+        //         payment_status: "ХҮЛЭЭГДЭЖ БАЙГАА"
+        //     })
+        // }
     }
 
     return (

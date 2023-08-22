@@ -14,7 +14,7 @@ const ModuleEcomerceCartItems = () => {
         const items = cartItems.map((item) => <CartItem cartItem={item} />);
 
         cartItemsViews = (
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col divide-y'>
                 {items}
             </div>
         );

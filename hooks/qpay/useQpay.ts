@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
+
 // ====Types ====//
 type GetTokenResponse = {
   refresh_expires_in: number;
@@ -41,6 +42,9 @@ type createIvoiceParameter = {
 
 const useQpay = () => {
   const QPAY_API = "https://merchant.qpay.mn/v2";
+  // const QPAY_API = "https://merchant-sandbox.qpay.mn/v2";
+const INVOICE_CODE="MUNKH_DAATGAL_INVOICE";
+
 
   const [accessToken, setAccesToken] = useState<null | string>(null);
   const [refreshToken, setRefreshToken] = useState<null | string>(null);
@@ -72,12 +76,12 @@ const useQpay = () => {
   // === create invoice ====//
   const createInvoice = async (parameter: createIvoiceParameter) => {
     const invoiceBody = {
-      invoice_code: "GZTEST_INVOICE",
+      invoice_code: INVOICE_CODE,
       sender_invoice_no: "1234567",
       invoice_receiver_code: "terminal",
       invoice_description: "test",
       sender_branch_code: "SALBAR1",
-      amount: 100,
+      amount: parameter.amount,
       callback_url: "https://bd5492c3ee85.ngrok.io/payments?payment_id=1234567",
       // invoice_code: "TEST_INVOICE",
       // sender_invoice_no: "123455678",
@@ -138,12 +142,9 @@ const useQpay = () => {
     const config = {
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        // Cookie:
-        //   "qpay_merchant_openapi.sid=s%3A4Hgsx_I-DZ0dVwXU4WevpIb86JMzhrdC.Jk08AIs6IjZuyFIj0RqUAKyymYuxR8PDGjWdxwrARSA",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
-        "Access-Control-Allow-Headers":
-          "Content-Type, Authorization, X-Requested-With",
+        // 'Cookie': 'qpay_merchant_openapi.sid=s%3ABW610kvPkDF_oFjzjPJqZ-No0bLvrz7T.mav0jhYpuE9z2upMFdQaFn8rh0BRPwM1YpBNM9vQ36A',
+        "Access-Control-Allow-Origin": "http://localhost:3000",
+          'Access-Control-Allow-Credentials':true,
       },
     };
 

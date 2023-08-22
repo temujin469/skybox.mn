@@ -14,7 +14,7 @@ const WishlistPage = () => {
     return (
       <PageContainer footer={<FooterDefault />} title="Хүслийн жагсаалт">
         <div className="ps-page--simple">
-          <BreadCrumb breadcrumb={breadCrumb} />
+          <BreadCrumb breadcrumb={breadCrumb} bgColor='white'/>
           <Wishlist />
         </div>
       </PageContainer>

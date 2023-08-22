@@ -8,6 +8,7 @@ import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import { formatCurrency } from '~/utilities/product-helper';
 import { IoMdRemove } from "react-icons/io"
 import { removeWishlistItem } from '~/store/slices/wishlistSlice';
+import AccountLayout from '~/components/layouts/AccountLayout';
 
 
 const Wishlist = () => {
@@ -31,7 +32,7 @@ const Wishlist = () => {
             <div className="ps-shop-items">
                 <Grid
                     templateColumns={
-                        ['repeat(2, 1fr)', 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)', 'repeat(5, 1fr)']
+                        ['repeat(2, 1fr)', 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)']
                     }
                     gap={3}
                 >{
@@ -85,14 +86,17 @@ const Wishlist = () => {
         }
     }
     return (
-        <div className="ps-section--shopping ps-whishlist">
-            <div className="container">
-                <div className="ps-section__header">
-                    <h3>Хүслийн жагсаалт</h3>
-                </div>
-                <div className="ps-section__content">{wishlistItemsView}</div>
-            </div>
-        </div>
+        // <div className="ps-section--shopping ps-whishlist">
+        //     <div className="container">
+        //         <div className="ps-section__header">
+        //             <h3>Хүслийн жагсаалт</h3>
+        //         </div>
+        //         <div className="ps-section__content">{wishlistItemsView}</div>
+        //     </div>
+        // </div>
+        <AccountLayout title="Хүслийн жагсаалт">
+            {wishlistItemsView}
+        </AccountLayout>
     );
 };
 export default Wishlist;

@@ -13,7 +13,7 @@ const UserInformationPage = () => {
     ];
 
     return (
-        <PageContainer footer={<FooterDefault />} title="Хэрэглэгчийн мэдээлэл">
+        <PageContainer title="Хэрэглэгчийн мэдээлэл">
             <div className="ps-page--my-account">
                 <BreadCrumb bgColor='white' breadcrumb={breadCrumb} />
                 <UserInformation />

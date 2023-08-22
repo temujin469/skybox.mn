@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { strapiApi } from '~/utilities/axios';
 import useUserInfo from '~/apiCall/strapi/useUserInfo';
 import { notification } from 'antd';
+import { Button } from '@chakra-ui/react';
 
 
  const infoSchema = z.object({
@@ -75,9 +76,6 @@ const FormChangeUserInformation = () => {
     return (
       <form className="ps-form--account-setting">
         {contextHolder}
-        <div className="ps-form__header">
-          <h3>Хэрэглэгчийн мэдээлэл</h3>
-        </div>
         <div className="ps-form__content">
           <div className="form-group">
             <input
@@ -149,11 +147,10 @@ const FormChangeUserInformation = () => {
               </div>
             </div> */}
           </div>
-
-          <div className="form-group submit">
-            <button className="ps-btn" onClick={handleSubmit(onSubmit)}>
+          <div className='text-end'>
+          <Button size="lg" variant="brand" onClick={handleSubmit(onSubmit)} disabled={updateMutation.isLoading}>
               Шинэчлэх
-            </button>
+            </Button>
           </div>
         </div>
       </form>

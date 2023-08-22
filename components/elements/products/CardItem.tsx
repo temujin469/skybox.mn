@@ -38,7 +38,7 @@ function CartItem({ cartItem }: Prop) {
   };
 
   return (
-    <div key={cartItem.cId} className="flex rounded-[5px] gap-4 border p-2 md:p-4 mb-2 hover:border-gray-500">
+    <div key={cartItem.cId} className="flex gap-3 md:gap-4 py-[10px]">
       <Box position="relative" width={"128px"}>
         <Link href={`/product/${cartItem.pId}?cId=${cartItem.cId}`} >
           <AspectRatio ratio={1} height="100%" width="100%">
@@ -74,7 +74,7 @@ function CartItem({ cartItem }: Prop) {
             onClick={() => removeCartItemHandler(cartItem.cId)}
             className="h-5 w-5"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>

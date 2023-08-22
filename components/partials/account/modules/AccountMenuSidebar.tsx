@@ -1,10 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
-import { RootState } from '~/store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '~/store/store';
 import { useRouter } from 'next/router';
 import useUserInfo from '~/apiCall/strapi/useUserInfo';
 import { FiLogOut } from 'react-icons/fi';
+import { logout } from '~/store/auth/authSlice';
+import { useToast } from '@chakra-ui/react';
 
 
 
@@ -13,8 +15,22 @@ const AccountMenuSidebar = () =>{
   const { token } = useSelector((state: RootState) => state.auth);
 
   const { data: user, isLoading } = useUserInfo({ variables: { jwt: token! } });
+  const toast = useToast()
+  
     const router = useRouter()
-  const path = router.pathname.split('/')[2]
+  const path = router.pathname.split('/')[2];
+
+  const dispatch:AppDispatch  = useDispatch()
+
+  const handleLogout = () => {
+    dispatch(logout());
+    toast({
+      title:"Амжилттай гарлаа",
+      status:"success",
+      isClosable: true,
+    })
+  };
+
 
   const accountLinks = [
     {
@@ -51,7 +67,7 @@ const AccountMenuSidebar = () =>{
   ];
 
     return (
-      <aside className="ps-widget--account-dashboard bg-white p-10 mb-20">
+      <aside className="ps-widget--account-dashboard">
         <div className="ps-widget__header">
           <img src="/static/img/users/defaultUser.png" />
           <figure>
@@ -59,25 +75,23 @@ const AccountMenuSidebar = () =>{
             <p>{user?.email}</p>
           </figure>
         </div>
-        <div className="ps-widget__content">
+        <div className="ps-widget__content rounded-md">
           <ul>
             {accountLinks.map((link) => (
               <li key={link.text} className={link.active ? "active" : ""}>
                 <Link href={link.url}>
-                  <p>
                     <i className={link.icon}></i>
                     {link.text}
-                  </p>
                 </Link>
               </li>
             ))}
             <li>
-              <Link href="/account/my-account">
+              <a className="cursor-pointer" onClick={handleLogout}>
                 <p className='flex gap-2'>
                   <FiLogOut />
                   <p>Системээс гарах</p>
                 </p>
-              </Link>
+              </a>
             </li>
           </ul>
         </div>
