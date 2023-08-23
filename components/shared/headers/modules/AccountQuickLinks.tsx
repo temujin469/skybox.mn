@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { logout } from '~/store/auth/authSlice';
 import { AppDispatch } from '~/store/store';
 import { useToast } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
 type Props = {
   isLoggedIn: boolean;
@@ -11,6 +12,7 @@ type Props = {
 
 const AccountQuickLinks = (props:Props) => {
   const dispatch:AppDispatch = useDispatch();
+  const router = useRouter()
   const toast = useToast()
   const handleLogout = (e:any) => {
     e.preventDefault();
@@ -20,6 +22,7 @@ const AccountQuickLinks = (props:Props) => {
       status:"success",
       isClosable: true,
     })
+    router.push("/")
   };
 
   const accountLinks = [

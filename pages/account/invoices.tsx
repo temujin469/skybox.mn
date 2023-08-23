@@ -9,7 +9,7 @@ const InvoicePage = () => {
     const breadCrumb = [
        
         {
-            text: 'Нэхэмжлэл',
+            text: 'Захиалга',
         },
     ];
     return (

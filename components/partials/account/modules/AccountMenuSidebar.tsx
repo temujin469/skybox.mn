@@ -29,6 +29,7 @@ const AccountMenuSidebar = () =>{
       status:"success",
       isClosable: true,
     })
+    router.push("/")
   };
 
 
