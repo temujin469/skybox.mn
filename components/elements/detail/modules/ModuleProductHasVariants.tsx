@@ -427,7 +427,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
     }
 
     return (
-        <div className="ps-product__header">
+        <div className="ps-product__header pb-[30px]">
             {contextHolder}
             {thumbnailArea}
             <div className="ps-product__info">

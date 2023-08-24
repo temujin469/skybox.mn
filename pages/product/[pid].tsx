@@ -16,6 +16,7 @@ const ProductDetailHasVariantsPage = () => {
 
     const { data, isLoading } = useBatchGetItemFullInfo({ variables: { id: pid as string } });
     const product = data?.Result?.Item;
+    const vendorItems = data?.Result?.VendorItems;
 
     const rootPathData = useGetCategoryRootPath({variables:{catId:product?.CategoryId}});
 
@@ -28,7 +29,7 @@ const ProductDetailHasVariantsPage = () => {
     let productView;
     if (!isLoading) {
         if (product) {
-            productView = <ProductDetailVariants product={product} />;
+            productView = <ProductDetailVariants product={product} vendorItems={vendorItems} />;
         } else {
         }
     } else {
@@ -37,29 +38,29 @@ const ProductDetailHasVariantsPage = () => {
     return (
         <PageContainer title={product ? product.Title : 'Хайж байна...'}>
             <BreadCrumb breadcrumb={breadCrumb!} />
-            <Box overflowX="hidden" py={["0", "30px"]}>
-                <div className="ps-container">
+            <Box overflowX="hidden" pt={["15px", "30px"]}>
+                {/* <div className="ps-container"> */}
                     {/* <div className="ps-page__container">
                         <div className="ps-page__left">{productView}</div>
                         <div className="ps-page__right">
                             <ProductWidgets />
                         </div>
                     </div> */}
-                    <Box py={{base:"15px",sm:0}}>
+                    {/* <Box py={{base:"15px",sm:0}}> */}
                         {productView}
                         {/* <CustomerBought
                             layout="fullwidth"
                             collectionSlug="deal-of-the-day"
                         /> */}
-                        <RelatedProduct  catId={product?.CategoryId!} collection="related" />
-                    </Box>
+                        {/* <RelatedProduct  catId={product?.CategoryId!} collection="related" /> */}
+                    {/* </Box> */}
                     {/*
                     <CustomerBought
                         layout="fullwidth"
                         collectionSlug="deal-of-the-day"
                     />
                     <RelatedProduct collectionSlug="shop-recommend-items" /> */}
-                </div>
+                {/* </div> */}
             </Box>
         </PageContainer>
     );

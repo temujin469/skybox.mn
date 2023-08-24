@@ -11,8 +11,7 @@ import PartialDescription from './PartialDescription';
 
 const DefaultDescription = () => {
     return (
-        <div className="ps-product__content">
-            <Tabs variant='enclosed'>
+            <Tabs variant={{sm:"enclosed",md:"line"}}>
                 <TabList mb='1em'>
                     <Tab>Тайлбар</Tab>
                     <Tab>Нэмэлт мэдээлэл</Tab>
@@ -26,7 +25,6 @@ const DefaultDescription = () => {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
-        </div>
     );
 };
 

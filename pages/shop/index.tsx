@@ -31,18 +31,17 @@ const ShopSidebarWithoutBannerPage = () => {
       <div className="ps-page--shop" id="shop-sidebar">
         <div className="ps-container">
           {/* <Box px={["10px", "30px"]}> */}
-          <div className="ps-layout--shop">
-            <Box height="100%" top="85px" mb="170px" position={"sticky"} className="ps-layout__left">
+          <div className=" md:grid grid-cols-12 md:gap-[20px] xl:gap-[30px] mt-[10px] md:mt-[30px]">
+            <div className="col-span-4 xl:col-span-3 hidden md:block h-full mb-[170px]">
               {/* {
                 catId && <WidgetShopCategories category={cat} />
               } */}
               {
-                
                 brandId && <WidgetShopBrands />
               }
               <WidgetShopFilterByPriceRange />
-            </Box>
-            <div className="ps-layout__right">
+            </div>
+            <div className="col-span-8 xl:col-span-9">
               {/* <div className="ps-page__header">
                 <h1>Shop Sidebar</h1>
               </div> */}
