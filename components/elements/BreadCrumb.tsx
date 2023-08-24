@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import useBreadCrumb from '~/hooks/useBreadCrumb';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Text } from '@chakra-ui/react';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Heading, Text } from '@chakra-ui/react';
 import { HiOutlineChevronRight } from "react-icons/hi"
 type Props = {
     breadcrumb: BreadCrumb[],
@@ -24,7 +24,7 @@ const BreadCrumb = ({ breadcrumb, bgColor }: Props) => {
             <div
                 className='ps-container'
             >
-                <Breadcrumb overflow="hidden" textOverflow="ellipsis" spacing='4px'
+                <Breadcrumb  overflow="hidden" textOverflow="ellipsis" spacing='4px'
                 //     separator={
                 //         <Text color="gray.600">
                 //             <HiOutlineChevronRight />
@@ -33,14 +33,18 @@ const BreadCrumb = ({ breadcrumb, bgColor }: Props) => {
                 >
                     <BreadcrumbItem>
                         <Link href="/">
-                            Нүүр
+                            <Heading fontWeight={500} fontSize={{base:"13px",md:"14px"}}>
+                                Нүүр
+                            </Heading>
                         </Link>
                     </BreadcrumbItem>
                     {breadcrumb?.map((item, index) => {
                         return (
                             <BreadcrumbItem whiteSpace="nowrap" key={item.text}>
                                 <Link href={item.url ? item.url : "#"}>
-                                    {item.text}
+                                    <Heading fontWeight={500} fontSize={{ base: "13px", md: "14px" }}>
+                                        {item.text}
+                                    </Heading>
                                 </Link>
                             </BreadcrumbItem>
                         );

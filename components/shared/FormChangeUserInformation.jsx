@@ -89,6 +89,7 @@ const FormChangeUserInformation = () => {
           </div>
           <div className="form-group">
             <input
+            disabled={true}
               className="form-control"
               type="text"
               defaultValue={user?.email}

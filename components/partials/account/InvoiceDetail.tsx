@@ -25,44 +25,8 @@ const InvoiceDetail = () => {
   const order = (data?.data && data.data.length) ? data.data[0].attributes : undefined;
   console.log(data)
 
-  const invoiceProducts = [
-    {
-      id: "6",
-      thumbnail: "/static/img/products/shop/5.jpg",
-      title: "Grand Slam Indoor Of Show Jumping Novel",
-      vendor: "Robert's Store",
-      sale: true,
-      price: "32.99",
-      salePrice: "41.00",
-      rating: true,
-      ratingCount: "4",
-      badge: [
-        {
-          type: "sale",
-          value: "-37%",
-        },
-      ],
-    },
-    {
-      id: "7",
-      thumbnail: "/static/img/products/shop/6.jpg",
-      title: "Sound Intone I65 Earphone White Version",
-      vendor: "Youngshop",
-      sale: true,
-      price: "100.99",
-      salePrice: "106.00",
-      rating: true,
-      ratingCount: "5",
-      badge: [
-        {
-          type: "sale",
-          value: "-5%",
-        },
-      ],
-    },
-  ];
   return (
-    <section className="ps-my-account ps-page--account">
+    <section className="ps-my-account p-[10px] md:p-[30px]">
       <div>
         <div
           style={{
@@ -70,14 +34,14 @@ const InvoiceDetail = () => {
             margin: "auto",
           }}
         >
-          <div className="ps-page__content">
+          <div className="ps-page__content rounded-md bg-white p-[13px] md:p-[20px]">
             <div className="ps-section--account-setting">
-              <div className="ps-section__header">
-                <h4 className="px-4">
+              <div className="mb-[30px]">
+                <Heading>
                   Захиалга {order?.order_id} <Tag color="green">
                     {order?.order_status ? order?.order_status : order?.payment_status}
                     </Tag>
-                </h4>
+                </Heading>
               </div>
               <div className="ps-section__content">
                 <div className="row">

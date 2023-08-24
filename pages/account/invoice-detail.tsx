@@ -12,11 +12,9 @@ const InvoiceDetailPage = () => {
     ];
     return (
         <>
-            <PageContainer footer={<FooterDefault />} title="Invoice detail">
-                <div className="ps-page--my-account">
+            <PageContainer bgColor="#f1f1f1" footer={<FooterDefault />} title="Захиалгын дэлгэрэнгүй">
                     <BreadCrumb bgColor="white" breadcrumb={breadCrumb} />
                     <InvoiceDetail />
-                </div>
             </PageContainer>
         </>
     );

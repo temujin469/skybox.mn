@@ -2,7 +2,7 @@ import React from 'react';
 // import LazyLoad from 'react-lazyload';
 import { formatCurrency } from '~/utilities/product-helper';
 import Link from 'next/link';
-import { Text } from '@chakra-ui/react';
+import { Heading, Text } from '@chakra-ui/react';
 
 
 function getImageURL(source: ProductPictureInfo, size?: "large" | "medium" | "small") {
@@ -57,21 +57,21 @@ export default function useProduct() {
             let view;
             if (payload.PromotionPrice) {
                 view = (
-                    <p className="ps-product__price sale">
+                    <Heading className="ps-product__price sale" display="flex" alignItems="center" >
                         <span>{payload.PromotionPrice.ConvertedPriceList.Internal.Sign}</span>
                         {formatCurrency(payload.PromotionPrice.ConvertedPriceList.Internal.Price)}
-                        <del className="ml-2">
+                        <Heading fontSize="13px" className="ml-2" textDecorationLine="line-through">
                             <span>{payload.Price.ConvertedPriceList.Internal.Sign}</span>
                             {formatCurrency(payload.Price.ConvertedPriceList.Internal.Price)}
-                        </del>
-                    </p>
+                        </Heading>
+                    </Heading>
                 );
             } else {
                 view = (
-                    <p className="ps-product__price">
+                    <Heading fontSize="15px" color={"black"}>
                         <span>{payload.Price.ConvertedPriceList.Internal.Sign}</span>
                         {formatCurrency(payload.Price.ConvertedPriceList.Internal.Price)}
-                    </p>
+                    </Heading>
                 );
             }
             return view;
@@ -166,9 +166,9 @@ export default function useProduct() {
                 <Link
                     href={payload?.cId ? `/product/${payload?.pId}?cId=${payload?.cId}` : `/product/${payload?.pId}`}
                     >
-                        <Text fontWeight={500}  textOverflow="ellipsis" lineHeight="5" mb={1} _hover={{color:"brand"}} whiteSpace="nowrap" overflow="hidden">
+                        <Heading fontSize={"14px"} fontWeight={500}  textOverflow="ellipsis" lineHeight="5" mb={1} _hover={{color:"brand"}} whiteSpace="nowrap" overflow="hidden">
                         {payload?.title}
-                        </Text>
+                        </Heading>
                 </Link>
             );
             return view;

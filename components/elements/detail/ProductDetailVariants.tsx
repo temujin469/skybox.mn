@@ -5,6 +5,7 @@ import ModuleProductHasVariants from "~/components/elements/detail/modules/Modul
 import WidgetVendor from "~/components/shared/widgets/vendor/WidgetVendor";
 import useAppState from "~/hooks/useAppState";
 import Product from "../products/Product";
+import VendorView from "~/components/shared/widgets/vendor/VendorView";
 // import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
 // import ModuleDetailShoppingActions from '~/components/elements/detail/modules/ModuleDetailShoppingActions';
 // import ModuleProductDetailSpecification from '~/components/elements/detail/modules/ModuleProductDetailSpecification';
@@ -36,7 +37,7 @@ const ProductDetailVariants = ({
         <div className="ps-container  sm:px-[20px] xl:px-[30px]">
           <ModuleProductHasVariants product={product} />
         </div>
-        <div className="md:bg-gray-50">
+        <div className="md:bg-[#F1F1F1]">
           <div className="ps-container sm:px-[20px] xl:px-[30px]">
             <div className="md:grid grid-cols-12 gap-[20px] xl:gap-[30px] sm:py-[20px] xl:py-[30px]">
               <div className="col-span-8 md:p-[15px] lg:p-[25px] md:rounded-md h-fit bg-white">
@@ -44,7 +45,7 @@ const ProductDetailVariants = ({
               </div>
               <div className="col-span-4 rounded-md  h-fit bg-white">
                 <div className="p-[15px] shadow-md md:shadow-none rounded-md md:p-[20px] lg:p-[25px]">
-                  <WidgetVendor />
+                  <VendorView />
                 </div>
                 <div className="grid grid-cols-2 md:p-[18px] lg:p-[23px] mt-[20px] md:mt-0">
                   {vendorItems?.Content?.map((product) => (

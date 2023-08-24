@@ -7,9 +7,7 @@ import ThumbnailDefault from '../detail/thumbnail/ThumbnailDefault';
 const ProductWide = ({ product }: { product: ProductInfo }) => {
     return (
         <Link href={`/product/${product.Id}`}>
-            <Box padding="10px" _hover={{
-                borderColor: "gray.400"
-            }} mb="10px" border="1px" borderRadius={5} borderColor="gray.200" overflow="hidden" display="flex" gap={3}>
+            <Box padding="10px" bg="white" mb="10px" borderRadius={5} overflow="hidden" display="flex" gap={3}>
                 <ThumbnailDefault product={product} />
                 <Box>
                     <Heading display={{ base: "none", md: "block" }} color="gray.600" mb={5} size="sm">{product.Title}</Heading>

@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { Checkbox } from 'antd';
-import { Radio, Input } from 'antd';
+import React from 'react';
 import { useRouter } from 'next/router';
 import { Heading } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { otApi } from '~/utilities/axios';
-import Image from 'next/image';
 import BlurImage from '~/components/elements/BlurImage';
 
 const WidgetShopBrands = () => {
@@ -69,7 +65,7 @@ const WidgetShopBrands = () => {
     //     brandsView = <p>Loading...</p>;
     // }
     return (
-        <aside className="widget widget_shop widget_shop--brand">
+        <aside className="rounded-md p-[20px] mb-[20px] bg-white">
             <Heading size="md">Брэнд</Heading>
             <figure>
                 {/* <Radio.Group

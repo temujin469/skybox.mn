@@ -6,13 +6,14 @@ import BlurImage from '../BlurImage';
 
 type Props = {
     product: ProductInfo,
+    className?:string;
 }
 
-const Product = ({ product }: Props) => {
+const Product = ({ product ,className}: Props) => {
     const { title, price, badge } = useProduct();
 
     return (
-        <div className="ps-product">
+        <div className={`ps-product border ${className}`}>
             <div className="ps-product__thumbnail">
                 <Link href="/product/[pid]" as={`/product/${product.Id}`}>
                     <AspectRatio ratio={1}>

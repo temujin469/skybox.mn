@@ -118,7 +118,15 @@ type ProductFilter = {
   OrderBy: string;
   VendorId: string;
   Provider: string;
-  StuffStatus:StuffStatus
+  StuffStatus: StuffStatus;
+  Configurators: {
+    Configurator: {
+      $: {
+        Pid:string
+        Vid: string;
+      };
+    };
+  }[];
 };
 
 type ProductPictureInfo = {
@@ -420,3 +428,15 @@ type HomeContent = {
   }[];
   productCollections:ProductCollection[]
 };
+
+type AvailableProviderSearchMethod =any
+
+type SearchPropertyContent = {
+   Id: string;
+   Name: string;
+   Values: {
+     Id: string;
+     Name: string;
+     ItemCount: number;
+   }[]
+ }

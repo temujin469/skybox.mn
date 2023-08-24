@@ -57,7 +57,7 @@ const ThumbnailDefault = ({ product }: Props) => {
             </Box>
             <Box display="flex" justifyContent="space-between" flexDirection="column" gap={2}>
                 {
-                    productImages.map((item) => (
+                    productImages.slice(0,6).map((item) => (
 
                         <img src={item} alt={item} style={{
                             aspectRatio: "1/1",

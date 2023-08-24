@@ -6,27 +6,30 @@ import { useRouter } from 'next/router';
 import useUserInfo from '~/apiCall/strapi/useUserInfo';
 import { FiLogOut } from 'react-icons/fi';
 import { logout } from '~/store/auth/authSlice';
-import { useToast } from '@chakra-ui/react';
+import { Heading, useToast } from '@chakra-ui/react';
+import {  FaRegHeart, FaRegUser } from 'react-icons/fa';
+import { RiArticleLine } from 'react-icons/ri';
+import { TbMapPinPlus } from 'react-icons/tb';
 
 
 
-const AccountMenuSidebar = () =>{
+const AccountMenuSidebar = () => {
 
-  const { token } = useSelector((state: RootState) => state.auth);
+  const auth = useSelector((state: RootState) => state.auth);
 
-  const { data: user, isLoading } = useUserInfo({ variables: { jwt: token! } });
+  const { data: user, isLoading } = useUserInfo({ variables: { jwt: auth.token! } });
   const toast = useToast()
-  
-    const router = useRouter()
+
+  const router = useRouter()
   const path = router.pathname.split('/')[2];
 
-  const dispatch:AppDispatch  = useDispatch()
+  const dispatch: AppDispatch = useDispatch()
 
   const handleLogout = () => {
     dispatch(logout());
     toast({
-      title:"Амжилттай гарлаа",
-      status:"success",
+      title: "Амжилттай гарлаа",
+      status: "success",
       isClosable: true,
     })
     router.push("/")
@@ -37,21 +40,21 @@ const AccountMenuSidebar = () =>{
     {
       text: "Хэрэглэгчийн мэдээлэл",
       url: "/account/user-information",
-      icon: "icon-user",
+      icon: <FaRegUser size={20} />,
       active: path === "user-information"
     },
-   
+
     {
       text: "Захиалга",
       url: "/account/invoices",
-      icon: "icon-papers",
+      icon: <RiArticleLine size={20} />,
       active: path === "invoices"
 
     },
     {
       text: "Хаяг",
       url: "/account/addresses",
-      icon: "icon-map-marker",
+      icon: <TbMapPinPlus size={20} />,
       active: path === "addresses"
     },
     // {
@@ -62,42 +65,69 @@ const AccountMenuSidebar = () =>{
     {
       text: "Хүслийн жагсаалт",
       url: "/account/wishlist",
-      icon: "icon-heart",
+      icon: <FaRegHeart size={20} />,
       active: path === "wishlist"
     },
   ];
 
-    return (
-      <aside className="ps-widget--account-dashboard">
-        <div className="ps-widget__header">
-          <img src="/static/img/users/defaultUser.png" />
-          <figure>
-            <figcaption>{user?.username}</figcaption>
-            <p>{user?.email}</p>
-          </figure>
-        </div>
-        <div className="ps-widget__content rounded-md">
-          <ul>
-            {accountLinks.map((link) => (
-              <li key={link.text} className={link.active ? "active" : ""}>
-                <Link href={link.url}>
-                    <i className={link.icon}></i>
-                    {link.text}
-                </Link>
-              </li>
-            ))}
-            <li>
-              <a className="cursor-pointer" onClick={handleLogout}>
-                <p className='flex gap-2'>
-                  <FiLogOut />
-                  <p>Системээс гарах</p>
-                </p>
-              </a>
+  if (!auth.user && !auth.isLoading ) {
+    return <aside className="ps-widget--account-dashboard">
+      <div className="ps-widget__content">
+        <ul>
+          <li  className={"active"}>
+            <Link href="/account/wishlist" className='text-gray-700'>
+              <Heading fontWeight={500} color={"white" } fontSize={{ base: "16px", md: "17px" }} className='flex items-center gap-2'>
+                <FaRegHeart size={20} />
+                Хүслийн жагсаалт
+              </Heading>
+            </Link>
+          </li>
+          <li>
+            <Link className="cursor-pointer text-gray-700" href={"/account/register"}>
+              <Heading fontWeight={500} color="inherit" fontSize={{ base: "16px", md: "17px" }} className='flex items-center gap-2'>
+                <FaRegUser size={20} />
+                Бүртгүүлэх
+              </Heading>
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </aside>
+  }
+
+  return (
+    <aside className="ps-widget--account-dashboard">
+      <div className="ps-widget__header">
+        <img src="/static/img/users/defaultUser.png" />
+        <figure>
+          <figcaption>{user?.username}</figcaption>
+          <p>{user?.email}</p>
+        </figure>
+      </div>
+      <div className="ps-widget__content">
+        <ul>
+          {accountLinks.map((link) => (
+            <li key={link.text} className={link.active ? "active" : ""}>
+              <Link href={link.url} className='text-gray-700'>
+                <Heading fontWeight={500} color={link.active ? "white" : "inherit"} fontSize={{ base: "16px", md: "17px" }} className='flex items-center gap-2'>
+                  {link.icon}
+                  {link.text}
+                </Heading>
+              </Link>
             </li>
-          </ul>
-        </div>
-      </aside>
-    );
+          ))}
+          <li>
+            <a className="cursor-pointer text-gray-700" onClick={handleLogout}>
+              <Heading fontWeight={500} color="inherit" fontSize={{ base: "16px", md: "17px" }} className='flex items-center gap-2'>
+                <FiLogOut size={20} />
+                Системээс гарах
+              </Heading>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+  );
 }
 
 export default AccountMenuSidebar;

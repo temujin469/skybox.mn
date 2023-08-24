@@ -3,6 +3,8 @@ import AccountMenuSidebar from '../partials/account/modules/AccountMenuSidebar'
 import { Heading } from '@chakra-ui/react'
 
 function AccountLayout({children,title}:{children:React.ReactNode,title:string}) {
+  // const user =useSelector((state:RootState)=>state.auth.user);
+  // const isAuth = Boolean(isA)
   return (
     <section className="ps-my-account p-[10px] md:p-0">
     <div className="max-w-[1500px] md:p-[20px] xl:p-[40px] mx-auto">

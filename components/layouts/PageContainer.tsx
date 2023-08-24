@@ -22,12 +22,14 @@ type Props = {
     footer?: React.ReactNode
     children:React.ReactNode
     title?:string
+    bgColor?:string
 }
 
 const PageContainer = ({
     header = initHeaders,
     footer = initFooters,
     children,
+    bgColor,
     title = 'Page',
 }:Props) => {
     let titleView;
@@ -39,7 +41,7 @@ const PageContainer = ({
     }
 
     return (
-        <Box pb={["80px","80px",0]}>
+        <Box pb={["80px","80px",0]} bg={bgColor ? bgColor : "white"}>
             <Head>
                 <title>{titleView}</title>
             </Head>

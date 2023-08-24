@@ -38,7 +38,7 @@ const Wishlist = () => {
                 >{
                         wishlist.wishlistItems.map((product) => (
                             <GridItem colSpan={1} overflow="hidden">
-                                <div className="ps-product relative">
+                                <div className="ps-product relative border">
                                     <div className="ps-product__thumbnail">
                                         <Link href="/product/[pid]" as={`/product/${product.pId}?cId=${product.cId}`}>
                                             {/* {thumbnailImage(product.Pictures[0])} */}

@@ -45,7 +45,7 @@ const WidgetShopFilterByPriceRange = () => {
     },[min,max])
 
     return (
-        <aside className="widget widget_shop">
+        <aside className="rounded-md bg-white p-[20px] mb-[20px]">
             <div>
                 <Heading size="md" className='mb-3'>Үнэ</Heading>
                 {/* <Slider

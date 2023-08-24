@@ -19,6 +19,8 @@ const HomeDefaultProductListing = ({ collection, title }: Props) => {
 
     const { data, isLoading } = useGetProductsByFilter({ variables: { start, limit: 10, filters: undefined, catId: "otc-20" } });
 
+    // console.log(data)
+
     const productItems = data?.OtapiItemInfoSubList?.Content;
 
     const sectionLinks = [
@@ -72,7 +74,7 @@ const HomeDefaultProductListing = ({ collection, title }: Props) => {
                 />
             );
         } else {
-            productItemsView = <p>No product(s) found.</p>;
+            productItemsView = <p>Бүтээгдэхүүн олдсонгүй.</p>;
         }
     } else {
         const skeletons = generateTempArray(6).map((item) => (

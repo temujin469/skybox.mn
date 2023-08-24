@@ -131,10 +131,13 @@
         top: 100%;
         left: 0;
         width: 100%;
+        margin-top: 5px;
         z-index: 999;
         background-color: #fff;
-        border: 1px solid #eaeaea;
+        // border: 1px solid #eaeaea;
+        box-shadow: 0 2px 5px rgba(109, 103, 103, 0.288);
         // padding: 10px 20px;
+        border-radius: 5px;
         @include transform(scale3d(1, 1, 0));
         transition: all 0.4s ease;
         opacity: 0;

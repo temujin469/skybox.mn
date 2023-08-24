@@ -26,13 +26,12 @@
   border-radius: 5px;
   /* From https://css.glass */
   background-color: rgba(255, 255, 255, 0.69);
-  // box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   // border: 1px solid rgba(255, 255, 255, 0.3);
   // padding: 20px 20px 0;
   // border: 1px solid transparent;
-  border: 1px solid rgba(218, 216, 216, 0.781);
+  // border: 1px solid rgba(218, 216, 216, 0.781);
   @extend %list-reset;
 
   .ps-product__thumbnail {
@@ -42,7 +41,9 @@
 
   &:hover {
     // background-color: rgba(255, 255, 255, 0.527);
-    background-color: rgba(240, 240, 240, 0.644);
+    // background-color: rgba(240, 240, 240, 0.644);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+
 
     .ps-product__thumbnail {
       img {

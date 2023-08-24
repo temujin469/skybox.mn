@@ -7,14 +7,16 @@ import { useRouter } from 'next/router';
 import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import useFilter from '~/hooks/useFilter';
-import { ProductGroupWithCarousel } from '../product/ProductGroupWithCarousel';
 import { Box, Heading } from '@chakra-ui/react';
-import useSearchItemsFrame from '~/apiCall/otapi/useSearchItemsFrame';
 import NotFoundState from '~/components/elements/NotFound';
+import useBatchSearchItemsFrame from '~/apiCall/otapi/useBatchSearchItemsFrame';
+import useAppState from '~/hooks/useAppState';
+import { LuLayoutList } from 'react-icons/lu';
+import { FiGrid } from 'react-icons/fi';
 
 const ShopItems = ({ columns = 1, pageSize = 60 }) => {
     const router = useRouter();
-    const { catId,brandId,min,max,keyword } = router.query;
+    const { catId,brandId,min,max,keyword,filtered ,vendorId} = router.query;
     const { filters } = useFilter()
     const [listView, setListView] = useState(true);
     const [totalPage, setTotalPage] = useState<number>(0);
@@ -24,20 +26,34 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
     const [page, setPage] = useState<number>(1)
     const [start, setStart] = useState<number>(0);
 
-      const {data,isLoading}= useSearchItemsFrame({ variables: { start, limit: pageSize, filters:{
-          ...filters,
-        CategoryId:catId as string,
-        BrandId:brandId as string,
-          MinPrice: Number(min),
-          MaxPrice: Number(max),
-          ItemTitle:(keyword || brandId) ? keyword as string : "a",
-      }} });
+    //   const {data,isLoading}= useSearchItemsFrame({ variables: { start, limit: pageSize, filters:{
+    //       ...filters,
+    //     CategoryId:catId as string,
+    //     BrandId:brandId as string,
+    //       MinPrice: Number(min),
+    //       MaxPrice: Number(max),
+    //       ItemTitle:(keyword || brandId) ? keyword as string : "a",
+    //   }} });
 
-    //   console.log("filtered",data)
+    const { data, isLoading } = useBatchSearchItemsFrame({
+        variables: {
+            start, limit: pageSize, filters: {
+                ...filters,
+                CategoryId: catId as string,
+                BrandId: brandId as string,
+                MinPrice: Number(min),
+                MaxPrice: Number(max),
+                VendorId:vendorId as string,
+                ItemTitle: (keyword || brandId || vendorId) ? keyword as string : "a",
+                Configurators:filtered == "true" ? filters?.Configurators : undefined
+            }
+        }
+    });
 
-    // const { data, isLoading } = useGetProductsByFilter({ variables: { start, limit: pageSize, filters, catId: catId ?  catId as string : "otc-20" } });
+    const productItems = data?.Result?.Items?.Items?.Content;
+    const searchPropertyContents = data?.Result?.SearchProperties?.Content;
 
-    const productItems = data?.Result?.Items?.Content
+    const {setSearchPropertyContents} = useAppState()
 
 
     function handleChangeViewMode(e: any) {
@@ -76,11 +92,20 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
     }
 
     useEffect(() => {
-        if (data?.Result?.MaximumPageCount) {
+        // if (data?.Result?.MaximumPageCount) {
+        //     // const totalProd = data?.OtapiItemInfoSubList.TotalCount;
+        //     // const totalPage = Math.ceil(totalProd / pageSize)
+        //     const totalPage = data?.Result?.MaximumPageCount;
+        //     setTotalPage(totalPage)
+        // }
+        if (data?.Result?.Items?.MaximumPageCount) {
             // const totalProd = data?.OtapiItemInfoSubList.TotalCount;
-            // const totalPage = Math.ceil(totalProd / pageSize)
-            const totalPage = data?.Result?.MaximumPageCount;
+            const totalPage = data?.Result.Items.MaximumPageCount
             setTotalPage(totalPage)
+        }
+
+        if(searchPropertyContents){
+            setSearchPropertyContents(searchPropertyContents)
         }
         handleSetColumns();
     }, [columns, data, pageSize]);
@@ -95,7 +120,7 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
             if (listView) {
                 const items = productItems.map((item) => (
                     <div className={classes} key={item.Id}>
-                        <Product product={item} />
+                        <Product product={item} className='border-0 bg-white' />
                     </div>
                 ));
                 productItemsView = (
@@ -123,7 +148,7 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
     return (
         <div>
             <div className="ps-shopping">
-                <div className="ps-shopping__header">
+                <div className="bg-white rounded-md sm:mx-[5px] p-[10px] sm:p-[20px] mb-[15px]">
                     {/* <p>
                     <strong className="mr-2">{total}</strong>
                     Products found
@@ -137,20 +162,20 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
                     }} className="ps-shopping__actions">
                         <ModuleShopSortBy />
                         <Box display="flex" className="ps-shopping__view" alignItems="center">
-                            <Heading size="sm" mr="10px">Харах</Heading>
-                            <ul className="ps-tab-list">
+                            {/* <Heading display={{base:"none",md:"block"}} size="sm" mr="10px">Харах</Heading> */}
+                            <ul className="ps-tab-list h-fit">
                                 <li className={listView === true ? 'active' : ''}>
                                     <a
                                         href="#"
                                         onClick={(e) => handleChangeViewMode(e)}>
-                                        <i className="icon-grid"></i>
+                                        <FiGrid />
                                     </a>
                                 </li>
                                 <li className={listView !== true ? 'active' : ''}>
                                     <a
                                         href="#"
                                         onClick={(e) => handleChangeViewMode(e)}>
-                                        <i className="icon-list4"></i>
+                                        <LuLayoutList />
                                     </a>
                                 </li>
                             </ul>
