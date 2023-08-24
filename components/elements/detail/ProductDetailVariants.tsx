@@ -17,7 +17,7 @@ const ProductDetailVariants = ({
   vendorItems,
 }: {
   product: ProductFullInfo;
-  vendorItems: {
+  vendorItems?: {
     Content: ProductInfo[];
   };
 }) => {
