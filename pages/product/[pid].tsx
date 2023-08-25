@@ -9,10 +9,18 @@ import useGetItemFullInfo from '~/apiCall/otapi/useGetItemFullInfo';
 import { Box } from '@chakra-ui/react';
 import useGetCategoryRootPath from '~/apiCall/otapi/useGetCategoryRootPath';
 import useBatchGetItemFullInfo from '~/apiCall/otapi/useBatchGetItemFullInfo';
+import NotFoundState from '~/components/elements/NotFound';
 
-const ProductDetailHasVariantsPage = () => {
+type Props = {
+    params:{
+        pid:string
+    }
+}
+
+const ProductDetailHasVariantsPage = ({params}:Props) => {
     const router = useRouter();
     const { pid } = router.query;
+    // console.log(params)
 
     const { data, isLoading } = useBatchGetItemFullInfo({ variables: { id: pid as string } });
     const product = data?.Result?.Item;
@@ -21,7 +29,7 @@ const ProductDetailHasVariantsPage = () => {
     const rootPathData = useGetCategoryRootPath({variables:{catId:product?.CategoryId}});
 
 
-    const breadCrumb = rootPathData.data?.CategoryInfoList.Content.map(cat=>({
+    const breadCrumb = rootPathData?.data?.CategoryInfoList?.Content.map(cat=>({
         text:cat.Name,
         url:`/shop?catId=${cat.Id}`
     })).reverse()
@@ -31,9 +39,12 @@ const ProductDetailHasVariantsPage = () => {
         if (product) {
             productView = <ProductDetailVariants product={product} vendorItems={vendorItems} />;
         } else {
+            productView = <NotFoundState message='Энэ бүтээгдэхүүн түр хугацаанд боломжгүй байна'/>
         }
     } else {
-        productView = <SkeletonProductDetail />;
+        productView = <div className='p-[10px]'>
+            Энэ бүтээгдэхүүн түр хугацаанд боломжгүй байна
+        </div>;
     }
     return (
         <PageContainer title={product ? product.Title : 'Хайж байна...'}>

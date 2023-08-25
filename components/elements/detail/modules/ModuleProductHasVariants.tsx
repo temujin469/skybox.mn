@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '~/store/slices/cartSlice';
 // import { addToCompare } from '~/store/slices/compareSlice';
 import { addToWishlist } from '~/store/slices/wishlistSlice';
-import useSettings from '~/apiCall/strapi/useSettings';
+// import useSettings from '~/apiCall/strapi/useSettings';
 import { Box, Button, Grid, GridItem, HStack, Heading, IconButton, Input, Text, Tooltip } from '@chakra-ui/react';
 import { FiHeart, FiPieChart } from "react-icons/fi"
 import { addToCompare } from '~/store/slices/compareSlice';
@@ -27,14 +27,12 @@ const ModuleProductHasVariants = ({ product }: Props) => {
     const auth = useSelector((state: RootState) => state.auth);
     const isAuth = Boolean(auth.user);
 
-    const { data } = useSettings();
-    const settings = data?.data.attributes;
+    // const { data } = useSettings();
+    // const settings = data?.data?.attributes;
 
     const router = useRouter();
 
     const { cId } = router.query;
-
-
 
     const [quantity, setQuantity] = useState(1);
 

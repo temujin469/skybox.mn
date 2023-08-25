@@ -3,7 +3,7 @@ import React from "react";
 
 const SkeletonProductDetail = () => {
   return (
-      <Grid templateColumns="repeat(12,1fr)" mb={10}>
+      <Grid templateColumns="repeat(12,1fr)" mb={10} className=" p-[10px] md:p-[30px]">
         <GridItem colSpan={{base:12,md:5}} mb={5}>
           <AspectRatio ratio={1} mb={3}>
             <Skeleton />

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 // import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
 import DefaultDescription from "~/components/elements/detail/description/DefaultDescription";
 import ModuleProductHasVariants from "~/components/elements/detail/modules/ModuleProductHasVariants";
-import WidgetVendor from "~/components/shared/widgets/vendor/WidgetVendor";
 import useAppState from "~/hooks/useAppState";
 import Product from "../products/Product";
 import VendorView from "~/components/shared/widgets/vendor/VendorView";
@@ -25,7 +24,7 @@ const ProductDetailVariants = ({
   // console.log({ product });
   const { setProductId, setvendorId } = useAppState();
 
-  console.log(vendorItems);
+  // console.log(vendorItems);
 
   useEffect(() => {
     setProductId(product.Id);
