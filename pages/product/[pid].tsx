@@ -42,9 +42,7 @@ const ProductDetailHasVariantsPage = ({params}:Props) => {
             productView = <NotFoundState message='Энэ бүтээгдэхүүн түр хугацаанд боломжгүй байна'/>
         }
     } else {
-        productView = <div className='p-[10px]'>
-            Энэ бүтээгдэхүүн түр хугацаанд боломжгүй байна
-        </div>;
+        productView = <SkeletonProductDetail/>
     }
     return (
         <PageContainer title={product ? product.Title : 'Хайж байна...'}>
