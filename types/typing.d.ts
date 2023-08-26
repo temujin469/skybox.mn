@@ -174,7 +174,8 @@ type Price = {
 
 type ProductInfo = {
   Id: string;
-  VendorId:string
+  VendorId: string;
+  VendorScore:number
   ProviderType: string;
   CategoryId: string;
   ExternalItemUrl: string;

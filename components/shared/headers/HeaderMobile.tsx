@@ -64,7 +64,7 @@ const  HeaderMobile = ()=> {
                 type="text"
                 value={keyword}
                 onChange={(e)=>setKeyword(e.target.value)}
-                placeholder="Ямар нэг зүйл хайх..."
+                placeholder="Бүтээгдэхүүн хайх..."
               />
               <button onClick={handleSubmit}>
                 <i className="icon-magnifier"></i>

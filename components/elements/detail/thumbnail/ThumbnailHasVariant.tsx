@@ -24,8 +24,6 @@ const ThumbnailHasVariant = ({ colorPicture, pictures, setColorPicture, videos }
     const [productImages, setProductImages] = useState<{ url: string, videoUrl?: string }[]>([]);
 
 
-
-
     const handleOpenLightbox = (e: any, imageIndex: number) => {
         e.preventDefault();
         setPhotoIndex(imageIndex);
@@ -103,16 +101,17 @@ const ThumbnailHasVariant = ({ colorPicture, pictures, setColorPicture, videos }
             },
         ],
     };
-
+  
 
     //Views
     let lightboxView, variantCarouselView, imagesView, galleryImagesView;
     if (productImages.length > 0) {
         // videos
         imagesView = productImages?.map((item, i) => (
-            <Box rounded="5px" border="1px" borderColor="gray.100" position={"relative"} className="item" key={i} onClick={() => setColorPicture(undefined)}>
+            <Box rounded="5px" position={"relative"} className="item" key={i} onClick={() => setColorPicture(undefined)}>
+                
                 <AspectRatio ratio={1} overflow="hidden">
-                    <BlurImage fill src={item.url} alt={item.url} />
+                        <BlurImage className='rounded-[0]' fill src={item.url} alt={item.url} />
                 </AspectRatio>
                 <Box _hover={{
                     color: "brand.100"
@@ -136,9 +135,9 @@ const ThumbnailHasVariant = ({ colorPicture, pictures, setColorPicture, videos }
                 <div className="item" key={item.url} style={{
                     display: 'inline-block',
                     width: "100%",
-                    borderRadius: "5px"
+                    borderRadius: "5px",
                 }}>
-                    <a href="#" onClick={(e) => handleOpenLightbox(e, index)}>
+                    <a href="#" >
                         {
                             !colorPicture ? (
                                 item.videoUrl ? (
@@ -163,6 +162,7 @@ const ThumbnailHasVariant = ({ colorPicture, pictures, setColorPicture, videos }
 
                         }
                     </a>
+                    <div onClick={(e) => handleOpenLightbox(e, index)} className='absolute w-full h-full top-0 left-0 hover:bg-black/5'></div>
                 </div>
             </AspectRatio>
         ));

@@ -21,7 +21,7 @@ const useBatchGetItemFullInfo = createQuery<Response, Variables>({
   queryFn: async ({ queryKey: [primaryKey, variables] }) => {
     try {
       const res = await otApi.get(
-        `${primaryKey}?instanceKey=${key}&itemId=${variables.id}&blockList=DeliveryCosts,MostPopularVendorItems16,Promotions`
+        `${primaryKey}?instanceKey=${key}&itemId=${variables.id}&blockList=DeliveryCosts,Promotions`
       );
       return res.data;
     } catch (err) {

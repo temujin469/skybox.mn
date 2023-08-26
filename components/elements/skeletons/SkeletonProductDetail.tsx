@@ -10,8 +10,8 @@ const SkeletonProductDetail = () => {
           </AspectRatio>
           <Grid gap={3} templateColumns="repeat(6,1fr)" w="full">
             {Array(6).fill(null).map((_,i)=>(
-              <GridItem colSpan={1}>
-                <AspectRatio ratio={1} key={i}>
+              <GridItem colSpan={1} key={i}>
+                <AspectRatio ratio={1}>
                   <Skeleton />
                 </AspectRatio>
               </GridItem>

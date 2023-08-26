@@ -53,15 +53,15 @@ function VendorView() {
           <div className="flex items-center justify-around mt-[20px] text-gray-600">
             <div className="flex items-center gap-1 ">
               <TbTruckDelivery size={25} />
-              <p className="font-[600] text-[16px] text-gray-600">{vendorInfo.Scores?.DeliveryScore}</p>
+              <p className="font-[600] text-[16px] text-gray-600">{vendorInfo.Scores?.DeliveryScore || 0}</p>
             </div>
             <div className="flex items-center gap-1">
               <MdOutlineShoppingBag size={25} />
-              <p className="font-[600] text-[16px] text-gray-600">{vendorInfo.Scores?.ItemScore}</p>
+              <p className="font-[600] text-[16px] text-gray-600">{vendorInfo.Scores?.ItemScore || 0}</p>
             </div>
             <div className="flex items-center gap-1">
               <LuHeartHandshake size={25} />
-              <p className="font-[600] text-[16px] text-gray-600">{vendorInfo.Scores?.ServiceScore}</p>
+              <p className="font-[600] text-[16px] text-gray-600">{vendorInfo.Scores?.ServiceScore || 0}</p>
             </div>
           </div>
         </div>

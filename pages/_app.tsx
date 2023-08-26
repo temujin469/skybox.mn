@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { CookiesProvider } from 'react-cookie';
-import '/public/static/fonts/Linearicons/Font/demo-files/demo.css';
-import '/public/static/fonts/font-awesome/css/font-awesome.min.css';
 import '/public/static/css/bootstrap.min.css';
 import '/public/static/css/slick.min.css';
 import '/scss/style.scss';
@@ -26,12 +24,23 @@ import { store } from '~/store/store';
 import { ChakraProvider } from '@chakra-ui/react'
 import theme from '~/chakra/theme';
 
+import { Commissioner } from 'next/font/google'
+
+// If loading a variable font, you don't need to specify the font weight
+const commissioner = Commissioner({
+  weight: '400',
+  subsets: ['latin'],
+  variable: "--font-commissioner"
+})
+
+
+
 function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     setTimeout(function () {
       document?.getElementById('__next')?.classList.add('loaded');
     }, 100);
-    window.scroll({top:0,behavior:"smooth"})
+    window.scroll({ top: 0, behavior: "smooth" })
   });
 
   // const { store, props } = wrapper.useWrappedStore(rest);
@@ -57,18 +66,20 @@ function App({ Component, pageProps }: AppProps) {
 
       </Head>
       <QueryClientProvider client={queryClient}>
-        <ChakraProvider theme={theme} >
 
-          <Hydrate state={pageProps.dehydratedState}>
-            <Provider store={store}>
-              <CookiesProvider>
-                <MasterLayout>
-                  <Component {...pageProps} />
-                </MasterLayout>
-              </CookiesProvider>
-            </Provider>
-          </Hydrate>
-        </ChakraProvider>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Provider store={store}>
+            <CookiesProvider>
+              <main className={commissioner.className}>
+                <ChakraProvider theme={theme} >
+                  <MasterLayout>
+                    <Component {...pageProps} />
+                  </MasterLayout>
+                </ChakraProvider>
+              </main>
+            </CookiesProvider>
+          </Provider>
+        </Hydrate>
 
       </QueryClientProvider>
       {/* </ReactQueryProvider> */}

@@ -12,10 +12,11 @@ import Link from 'next/link';
 
 type Props = {
     title: string
-    titlelink?:string
+    titlelink:string
     layout?: "standard" | "fullwidth"
     products?: ProductInfo[]
     isLoading: boolean
+    carouselConfig?:any
 }
 
 const ProductGroupByCarousel = ({
@@ -23,7 +24,8 @@ const ProductGroupByCarousel = ({
     layout = 'fullwidth',
     products,
     isLoading,
-    titlelink
+    titlelink,
+    carouselConfig
 }: Props) => {
     const sliderRef = useRef<any>();
 
@@ -55,6 +57,8 @@ const ProductGroupByCarousel = ({
                     <Slider
                         ref={(slider) => (sliderRef.current = slider)}
                         {...carouselFullwidth}
+                        // {...carouselConfig}
+                        autoplay={true}
                         arrows={false}
                         className="ps-carousel outside">
                         {slideItems}
@@ -65,6 +69,7 @@ const ProductGroupByCarousel = ({
                     <Slider
                         ref={(slider) => (sliderRef.current = slider)}
                         {...carouselStandard}
+                        autoplay={true}
                         arrows={false}
                         className="ps-carousel outside">
                         {slideItems}
@@ -86,8 +91,8 @@ const ProductGroupByCarousel = ({
     return (
         <div className="ps-block--shop-features">
             <div className="ps-block__header">
-                <Link href={titlelink || "/shop"}>
-                    <Heading cursor="pointer" display="flex" className='group' alignItems={"center"} gap={3} textTransform="uppercase">{title}
+                <Link href={titlelink || "#"}>
+                    <Heading fontSize={{base:"15px",sm:"17px"}} cursor="pointer" display="flex" className='group' alignItems={"center"} gap={3} textTransform="uppercase">{title}
                         <Text color="gray.600" display={["none","inline-block"]} className='group-hover:translate-x-4 transition-transform duration-100'>
                             <HiOutlineArrowLongRight size={30} />
                         </Text>

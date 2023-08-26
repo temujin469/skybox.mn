@@ -23,7 +23,6 @@ function BlurImage(props:Props) {
   return (
     <Image src={props.src}
       style={props.style || {
-        borderRadius:"5px",
         objectFit: "cover",
       }}
       alt={props.alt || "any image"}
@@ -35,7 +34,7 @@ function BlurImage(props:Props) {
       placeholder="blur"
       className={cn(
         props.className,
-        'duration-700 ease-in-out',
+        'duration-700 ease-in-out rounded-[5px]',
         isLoading
           ? 'blur-sm'
           : 'blur-0'

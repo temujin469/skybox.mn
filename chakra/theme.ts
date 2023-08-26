@@ -4,6 +4,10 @@ import { Button } from "./custom/button";
 import { Heading } from "./custom/heading";
 
 const theme = extendTheme({
+  fonts: {
+    heading: "var(--font-commissioner)",
+    body: "var(--font-commissioner)",
+  },
   colors: {
     primary: {
       "50": "#fff7e2",
@@ -143,9 +147,6 @@ const theme = extendTheme({
       "900": "#123662",
     },
   },
-  fonts: {
-    body: "Open Sans, sans-serif",
-  },
   styles: {
     global: () => ({
       body: {
@@ -156,7 +157,7 @@ const theme = extendTheme({
   components: {
     Button,
     // Input, // not working for some reason - come back to this
-    Heading
+    Heading,
   },
 });
 

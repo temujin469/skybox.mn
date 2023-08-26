@@ -16,13 +16,6 @@ export default function Document() {
           href={'/static/img/favi.png'}
         />
 
-        <link
-          href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700&amp;amp;subset=latin-ext"
-          rel="stylesheet"
-        />
-
-        
-
         <meta name="application-name" content="Skyboxmn" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -45,8 +38,6 @@ export default function Document() {
         <link rel="manifest" href="/manifest.json" />
         <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#5bbad5" />
         <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
-
 {/* 
        
         <link rel='apple-touch-startup-image' href='/images/apple_splash_2048.png' sizes='2048x2732' />

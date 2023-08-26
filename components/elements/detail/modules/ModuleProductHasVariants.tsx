@@ -5,18 +5,27 @@ import ModuleProductDetailSpecification from '~/components/elements/detail/modul
 // import Rating from '~/components/elements/Rating';
 import ThumbnailHasVariant from '~/components/elements/detail/thumbnail/ThumbnailHasVariant';
 import { useRouter } from 'next/router';
-import { notification } from 'antd';
+import { Rate, notification } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '~/store/slices/cartSlice';
 // import { addToCompare } from '~/store/slices/compareSlice';
 import { addToWishlist } from '~/store/slices/wishlistSlice';
 // import useSettings from '~/apiCall/strapi/useSettings';
-import { Box, Button, Grid, GridItem, HStack, Heading, IconButton, Input, Text, Tooltip } from '@chakra-ui/react';
-import { FiHeart, FiPieChart } from "react-icons/fi"
+import { Box, Button, Divider, Grid, GridItem, HStack, Heading, IconButton, Input, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, Text, Tooltip } from '@chakra-ui/react';
+import { FiCopy, FiHeart, FiPieChart } from "react-icons/fi"
 import { addToCompare } from '~/store/slices/compareSlice';
 import { RootState } from '~/store/store';
 import BlurImage from '../../BlurImage';
+import { HiOutlineShare } from 'react-icons/hi';
+import SameProductDrawer from '~/components/partials/product/SameProductDrawer';
+import {
+    FacebookShareButton,
+    InstapaperShareButton,
+    TelegramShareButton,
+    TwitterShareButton,
+    WhatsappShareButton,
+} from "react-share";
 
 type Props = {
     product?: ProductFullInfo
@@ -26,6 +35,17 @@ const ModuleProductHasVariants = ({ product }: Props) => {
 
     const auth = useSelector((state: RootState) => state.auth);
     const isAuth = Boolean(auth.user);
+    const [isOpenSameProductDrawer, setIsOpenSameProductDrawer] = useState(false);
+
+    console.log(product)
+
+    const closeSameProductDrawer = () => {
+        setIsOpenSameProductDrawer(false)
+    }
+
+    const openSameProductDrawer = () => {
+        setIsOpenSameProductDrawer(true)
+    }
 
     // const { data } = useSettings();
     // const settings = data?.data?.attributes;
@@ -259,7 +279,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
 
         if (selectedPromotion) {
             priceArea = (
-                <Heading color="gray.700" gap={2} size="2xl" mb={5} display="flex" alignItems="end">
+                <Heading color="gray.700" gap={2} size="2xl" display="flex" alignItems="end">
                     {formatCurrency(selectedPromotion.Price.ConvertedPriceList.Internal.Price)}
                     ₮
                     <Text textDecorationLine="line-through" color="gray.600" lineHeight="30px" fontSize="25px">
@@ -275,7 +295,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                 //     {formatCurrency(selectedVariant.Price.ConvertedPriceList.Internal.Price)}
                 //     ₮
                 // </h4>
-                <Heading color="gray.700" size="2xl" mb={5}>
+                <Heading color="gray.700" size="2xl">
                     {/* //     {/* {formatCurrency(selectedVariant.Price.OriginalPrice * Math.ceil(settings?.CNY_rate!))} */}
 
                     {formatCurrency(selectedVariant.Price.ConvertedPriceList.Internal.Price)}
@@ -286,7 +306,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
 
     } else {
         priceArea = (
-            <Heading color="gray.700" size="2xl" mb={5}>
+            <Heading color="gray.700" size="2xl">
                 {/* //     {/* {formatCurrency(selectedVariant.Price.OriginalPrice * Math.ceil(settings?.CNY_rate!))} */}
                 {formatCurrency(product?.Price.ConvertedPriceList.Internal.Price!)}
                 ₮
@@ -357,11 +377,11 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                 <div className="ps-product__variations">
                     <figure>
                         <figcaption>
-                            <Box display="flex" alignItems="end" mb={3}>
+                            <Box display="flex" alignItems="stretch" mb={3}>
                                 <Heading fontSize="16px" className="pr-1">
                                     Барааны үлдэгдэл:
                                 </Heading>
-                                <Text lineHeight="15px">
+                                <Text lineHeight="22px">
                                     {selectedVariant?.Quantity}
                                     ширхэг
                                 </Text>
@@ -370,11 +390,11 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                     </figure>
                     <figure>
                         <figcaption>
-                            <Box display="flex" alignItems="end" mb={3}>
+                            <Box display="flex" alignItems="stretch" mb={3}>
                                 <Heading fontSize="16px" className="pr-1">
                                     Хятад доторх тээвэр:
                                 </Heading>
-                                <Text lineHeight="15px">
+                                <Text lineHeight="22px">
                                     {formatCurrency(product?.Price.DeliveryPrice.ConvertedPriceList.Internal.Price!)}₮
                                 </Text>
                             </Box>
@@ -384,11 +404,11 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                         colors && colors.length > 0 ? (
                             <figure>
                                 <figcaption>
-                                    <Box display="flex" alignItems="end" mb={3}>
+                                    <Box display="flex" alignItems="stretch" mb={3}>
                                         <Heading fontSize="16px" className="pr-1">
                                             Өнгө:
                                         </Heading>
-                                        <Text lineHeight="15px">
+                                        <Text lineHeight="22px">
                                             {selectedColor
                                                 ? selectedColor.Value
                                                 : 'Сонгоx'}
@@ -429,88 +449,111 @@ const ModuleProductHasVariants = ({ product }: Props) => {
             {contextHolder}
             {thumbnailArea}
             <div className="ps-product__info">
-                <Heading fontSize="22px" mb={3}>{product?.Title}</Heading>
-                <div className="ps-product__meta">
-                    <Box display="flex" alignItems="end">
-                        <Heading fontSize="16px" className="pr-1">
+                <Heading fontSize={{ base: "19px", md: "22px" }} mb={3}>{product?.Title}</Heading>
+                <div className='pb-[20px] flex flex-col sm:flex-row gap-[10px]'>
+                    <Box display="flex items-center">
+                        <Heading fontSize="16px" lineHeight="14px" className="pr-1">
                             Барааны код:
                         </Heading>
                         <Text lineHeight="15px">
                             {product?.Id}
                         </Text>
                     </Box>
-                    {/* <div className="ps-product__rating">
-                        Сүүлийн 30 өдөрт:
+                    <Text lineHeight="14px" className='sm:border-l border-l-0 sm:pl-2 '>
+                        Сүүлийн 30 өдөрт {" "}
                         <span>{last30sales?.Value}{" "}
                             борлуулалт
                         </span>
-                    </div> */}
+                    </Text>
                 </div>
-                {priceArea}
+                <Divider borderColor="gray.400" borderStyle="dashed" />
+                <div className='pt-[15px] mb-[10px] lg:mb-[15px] flex flex-wrap items-baseline gap-[10px]'>
+                    <div>
+                        {priceArea}
+                    </div>
+                    <div>
+                        <Rate disabled value={product?.VendorScore} />
+                    </div>
+
+                </div>
                 {/* <ModuleProductDetailDescription product={product} /> */}
                 {variants}
-                <Box gap="10px" className="ps-product__shopping">
+
+                <Box gap="10px" className="flex flex-col pb-[20px]">
                     <Box>
                         <Heading fontSize="17px" mb={3}>
                             Тоо хэмжээ
                         </Heading>
-                        <Box gap="10px" display="flex" alignItems="center">
-                            <HStack w="100%" rounded={5} bgColor="gray.100">
-                                <Button variant="ghost" size="lg" borderRightRadius={0} bgColor="gray.200" onClick={(e) => handleDecreaseItemQty(e)}>-</Button>
-                                <Heading size="sm" w="100%" minW="45px" color="gray.600" textAlign="center">{quantity}</Heading>
-                                <Button variant="ghost" size="lg" borderLeftRadius={0} bgColor="gray.200" onClick={(e) => handleIncreaseItemQty(e)}>+</Button>
-                            </HStack>
-                            {/* <Box rounded={5} className="form-group--number">
-                                <button
-                                    className="up"
-                                    onClick={(e) => handleIncreaseItemQty(e)}>
-                                    <i className="fa fa-plus"></i>
-                                </button>
-                                <button
-                                    className="down"
-                                    onClick={(e) => handleDecreaseItemQty(e)}>
-                                    <i className="fa fa-minus"></i>
-                                </button>
-                                <input
-                                    className="form-control"
-                                    type="text"
-                                    placeholder={quantity.toString()}
-                                    disabled
-                                />
-                            </Box> */}
-                            <Tooltip placement='top' hasArrow label='Хүслийн жагсаалт'>
-                                <IconButton w="45px" fontSize="20px" variant="icon" size="lg" aria-label='' onClick={(e) => handleAddItemToWishlist(e)} icon={<FiHeart />} />
-                            </Tooltip>
-                            <Tooltip placement='top' hasArrow label="Харьцуулах жагсаалт">
-                                <IconButton w="45px" fontSize="20px" variant="icon" size="lg" aria-label='' onClick={(e) => handleAddItemToCompare(e)} icon={<FiPieChart />} />
-                            </Tooltip>
-
-
-
+                    </Box>
+                    <div className='flex gap-[10px]'>
+                        <HStack w="fit" rounded={5} bgColor="gray.100">
+                            <Button variant="ghost" size="lg" borderRightRadius={0} bgColor="gray.200" onClick={(e) => handleDecreaseItemQty(e)}>-</Button>
+                            <Heading size="sm" w="100%" minW="45px" color="gray.600" textAlign="center">{quantity}</Heading>
+                            <Button variant="ghost" size="lg" borderLeftRadius={0} bgColor="gray.200" onClick={(e) => handleIncreaseItemQty(e)}>+</Button>
+                        </HStack>
+                        <Box display={["none", "flex"]} style={{
+                            gap: "10px"
+                        }}>
+                            <Button size="lg"
+                                w="100%"
+                                onClick={(e) => handleAddItemToCart(e)}
+                            >
+                                Картанд нэмэх
+                            </Button>
+                            <Button variant="brand"
+                                w="100%"
+                                size="lg"
+                                onClick={(e) => handleBuynow(e)}
+                            >
+                                Худалдаж авах
+                            </Button>
                         </Box>
-
-                    </Box>
-                    <Box display={["none", "flex"]} style={{
-                        gap: "10px"
-                    }}>
-                        <Button size="lg"
-                            w="100%"
-                            onClick={(e) => handleAddItemToCart(e)}
-                        >
-                            Картанд нэмэх
-                        </Button>
-                        <Button variant="brand"
-                            w="100%"
-                            size="lg"
-                            onClick={(e) => handleBuynow(e)}
-                        >
-                            Худалдаж авах
-                        </Button>
-                    </Box>
-
+                    </div>
                 </Box>
-                <ModuleProductDetailSpecification />
-                <ModuleProductDetailSharing />
+                <Divider borderColor="gray.400" borderStyle="dashed" />
+                <Box gap="10px" display="flex" alignItems="center" py={3}>
+
+                    <Button onClick={(e) => handleAddItemToWishlist(e)} size="lg" variant="ghost" leftIcon={<FiHeart size={18} />}>
+                        Хадгалах
+                    </Button>
+                    <Button onClick={(e) => handleAddItemToCompare(e)} size="lg" variant="ghost" leftIcon={<FiPieChart size={18} />}>
+                        Харьцуулах
+                    </Button>
+                    <Popover>
+                        <PopoverTrigger>
+                            <Button size="lg" variant="ghost" leftIcon={<HiOutlineShare size={18} />}>
+                                Хуваалцах
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                            <PopoverArrow />
+                            <PopoverCloseButton />
+                            <PopoverBody>
+                                <div>
+                                    {/* <FacebookShareButton quote={product?.Title!} hashtag={product?.StuffStatus!} /> */}
+                                </div>
+                            </PopoverBody>
+                        </PopoverContent>
+                    </Popover>
+
+                    <Button display={{ base: "none", lg: "flex" }} size="lg" variant="ghost" onClick={openSameProductDrawer} leftIcon={<FiCopy size={18} />}>
+                        Төстэй бараа
+                        <SameProductDrawer filters={{ CategoryId: product?.CategoryId, BrandId: product?.BrandId }} isOpen={isOpenSameProductDrawer} onClose={closeSameProductDrawer} />
+                    </Button>
+
+                    {/* <Tooltip placement='top' hasArrow label='Хүслийн жагсаалт'>
+                            <IconButton w="45px" fontSize="20px" variant="icon" size="lg" aria-label='' onClick={(e) => handleAddItemToWishlist(e)} icon={<FiHeart />} />
+                        </Tooltip>
+                        <Tooltip placement='top' hasArrow label="Харьцуулах жагсаалт">
+                            <IconButton w="45px" fontSize="20px" variant="icon" size="lg" aria-label='' onClick={(e) => handleAddItemToCompare(e)} icon={<FiPieChart />} />
+                        </Tooltip> */}
+                </Box>
+                <Divider borderColor="gray.400" borderStyle="dashed" />
+                {/* <ModuleProductDetailSharing /> */}
+                <div className='pt-[20px]'>
+                    <ModuleProductDetailSpecification />
+                </div>
+
                 <div className="ps-product__actions-mobile">
                     <a
                         className="ps-btn ps-btn--black"

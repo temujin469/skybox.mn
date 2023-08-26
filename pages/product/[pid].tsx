@@ -2,29 +2,22 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 import BreadCrumb from '~/components/elements/BreadCrumb';
-import RelatedProduct from '~/components/partials/product/RelatedProducts';
 import ProductDetailVariants from '~/components/elements/detail/ProductDetailVariants';
 import PageContainer from '~/components/layouts/PageContainer';
-import useGetItemFullInfo from '~/apiCall/otapi/useGetItemFullInfo';
 import { Box } from '@chakra-ui/react';
 import useGetCategoryRootPath from '~/apiCall/otapi/useGetCategoryRootPath';
 import useBatchGetItemFullInfo from '~/apiCall/otapi/useBatchGetItemFullInfo';
 import NotFoundState from '~/components/elements/NotFound';
 
-type Props = {
-    params:{
-        pid:string
-    }
-}
 
-const ProductDetailHasVariantsPage = ({params}:Props) => {
+const ProductDetailHasVariantsPage = () => {
     const router = useRouter();
     const { pid } = router.query;
     // console.log(params)
 
     const { data, isLoading } = useBatchGetItemFullInfo({ variables: { id: pid as string } });
     const product = data?.Result?.Item;
-    const vendorItems = data?.Result?.VendorItems;
+    // const vendorItems = data?.Result?.VendorItems;
 
     const rootPathData = useGetCategoryRootPath({variables:{catId:product?.CategoryId}});
 
@@ -37,7 +30,7 @@ const ProductDetailHasVariantsPage = ({params}:Props) => {
     let productView;
     if (!isLoading) {
         if (product) {
-            productView = <ProductDetailVariants product={product} vendorItems={vendorItems} />;
+            productView = <ProductDetailVariants product={product} />;
         } else {
             productView = <NotFoundState message='Энэ бүтээгдэхүүн түр хугацаанд боломжгүй байна'/>
         }

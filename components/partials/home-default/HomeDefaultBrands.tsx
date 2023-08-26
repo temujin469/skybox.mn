@@ -41,7 +41,7 @@ const HomeDefaultBrands = () => {
     slidesToScroll: 3,
      autoplay: true,
     arrows: true,
-     pauseOnHover: false,
+     pauseOnHover: true,
     // nextArrow: <NextArrow />,
     // prevArrow: <PrevArrow />,
     lazyload:false,

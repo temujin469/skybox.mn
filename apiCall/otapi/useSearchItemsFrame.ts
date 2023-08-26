@@ -35,6 +35,7 @@ const useSearchItemsFrame = createQuery<Response, Variables>({
         BrandId:filters?.BrandId || undefined,
         OrderBy:filters?.OrderBy || undefined,
         ItemTitle:filters?.ItemTitle || undefined,
+        VendorId:filters?.VendorId || undefined,
       },
     });
 

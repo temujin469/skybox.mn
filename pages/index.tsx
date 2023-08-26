@@ -10,7 +10,6 @@ import { Box } from '@chakra-ui/react';
 // import HomeDefaultDealOfDay from '~/components/partials/home-default/HomeDefaultDealOfDay';
 import HomeDefaultProductListing from '~/components/partials/home-default/HomeDefaultProductListing';
 import Newsletters from '~/components/partials/commons/Newletters';
-import NewArrivals from '~/components/partials/home-default/NewArrivals';
 import HomeDafaultCategoryCollection from '~/components/partials/home-default/HomeDafaultCategoryCollection';
 import { GetStaticProps } from 'next';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
