@@ -6,6 +6,7 @@ import NextArrow from '~/components/elements/carousel/NextArrow';
 import PrevArrow from '~/components/elements/carousel/PrevArrow';
 import { GoPlay } from "react-icons/go"
 import BlurImage from '../../BlurImage';
+import { HiMiniViewfinderCircle } from 'react-icons/hi2';
 
 type Props = {
     colorPicture?: string;
@@ -108,10 +109,10 @@ const ThumbnailHasVariant = ({ colorPicture, pictures, setColorPicture, videos }
     if (productImages.length > 0) {
         // videos
         imagesView = productImages?.map((item, i) => (
-            <Box rounded="5px" position={"relative"} className="item" key={i} onClick={() => setColorPicture(undefined)}>
+            <Box position={"relative"} className="item" key={i} onClick={() => setColorPicture(undefined)}>
                 
-                <AspectRatio ratio={1} overflow="hidden">
-                        <BlurImage className='rounded-[0]' fill src={item.url} alt={item.url} />
+                <AspectRatio w="full" ratio={1} overflow="hidden" borderRadius={"5px"} bg="gray.200">
+                        <BlurImage className='rounded-[5px]' fill src={item.url} alt={item.url} />
                 </AspectRatio>
                 <Box _hover={{
                     color: "brand.100"
@@ -131,13 +132,13 @@ const ThumbnailHasVariant = ({ colorPicture, pictures, setColorPicture, videos }
 
 
         galleryImagesView = productImages.map((item, index) => (
-            <AspectRatio ratio={1}>
+            <AspectRatio w="full" height="full" ratio={1} className='group' borderRadius="5px" bg="gray.200">
                 <div className="item" key={item.url} style={{
                     display: 'inline-block',
                     width: "100%",
                     borderRadius: "5px",
                 }}>
-                    <a href="#" >
+                    <a href="#" className='group cursor-zoom-in' onClick={(e) => handleOpenLightbox(e, index)}>
                         {
                             !colorPicture ? (
                                 item.videoUrl ? (
@@ -150,8 +151,8 @@ const ThumbnailHasVariant = ({ colorPicture, pictures, setColorPicture, videos }
                                         <source src={item.videoUrl} type="video/mp4" />
                                     </video>
                                 ) : (
-                                    <AspectRatio ratio={1}>
-                                        <BlurImage src={item.url} alt={item.url} fill />
+                                    <AspectRatio w="full" ratio={1}>
+                                        <BlurImage src={item.url} alt={item.url} fill className='group-hover:brightness-[85%]' />
                                     </AspectRatio>
                                 )
                             ) : (
@@ -161,8 +162,10 @@ const ThumbnailHasVariant = ({ colorPicture, pictures, setColorPicture, videos }
                             )
 
                         }
+                        <div className='absolute opacity-0 group-hover:opacity-100 top-[50%] transition-all duration-300 left-[50%] translate-x-[-50%] translate-y-[-50%]'>
+                            <HiMiniViewfinderCircle size={30} color="white" />
+                        </div>
                     </a>
-                    <div onClick={(e) => handleOpenLightbox(e, index)} className='absolute w-full h-full top-0 left-0 hover:bg-black/5'></div>
                 </div>
             </AspectRatio>
         ));

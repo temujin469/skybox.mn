@@ -87,6 +87,7 @@ const VendorProductCarousel = ({
           <Slider
             ref={(slider) => (sliderRef.current = slider)}
             {...carouselConfig}
+            infinite={products.length >= 2}
             autoplay={true}
             arrows={false}
             className="ps-carousel outside">
@@ -116,7 +117,7 @@ const VendorProductCarousel = ({
     <div>
       <div className="flex items-center justify-between border-b mb-[20px] pb-[5px]">
         <Link href={`/shop?vendorId=${vendorId}`}>
-          <Heading fontSize={{ base: "15px", sm: "17px" }} cursor="pointer" display="flex" className='group' alignItems={"center"} gap={3} textTransform="uppercase">
+          <Heading fontSize={{ base: "16px", sm: "18px" }} cursor="pointer" display="flex" className='group' alignItems={"center"} gap={3} >
             Уг дэлгүүрийн бараа
             {/* <Text color="gray.600" display={["none", "inline-block"]} className='group-hover:translate-x-4 transition-transform duration-100'>
               <HiOutlineArrowLongRight size={30} />

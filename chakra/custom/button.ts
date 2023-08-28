@@ -24,7 +24,7 @@ export const Button: ComponentStyleConfig = {
   },
   variants: {
     brand: {
-      color: "black",
+      color: "white",
       bg: "brand.1",
       _hover: {
         bg: "primary.300",

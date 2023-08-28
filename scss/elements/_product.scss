@@ -618,13 +618,9 @@
       // padding-right: 10px;
       cursor: pointer;
 
-      div {
-        background-color: #000;
-        border-radius: 5px;
-      }
 
       img {
-        opacity: .8;
+        filter:brightness(.85);
         @include transition(all 0.4s ease);
       }
 
@@ -647,17 +643,18 @@
 
       &.slick-current {
         border-color: #000;
-        border-radius: 5px;
 
         img {
-          opacity: 1;
+          filter:brightness(1);
         }
       }
 
       &:hover {
         img {
           width: 100%;
-          opacity: 1;
+          // opacity: 1;
+          filter:brightness(1);
+
         }
       }
     }
@@ -666,8 +663,8 @@
       .item {
         border-color: $color-1st;
         img {
-          border-radius: 5px;
-          opacity: 1;
+          filter:brightness(1);
+          // opacity: 1;
         }
       }
     }

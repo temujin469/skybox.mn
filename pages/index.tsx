@@ -21,8 +21,10 @@ const HomepageDefaultPage = () => {
   return (
     <PageContainer title="Skybox">
       <main id="homepage-1">
-       <Box overflowX="hidden">
-          <HomeDefaultBrands />
+        <Box overflowX="hidden">
+          <div className='ps-container'>
+            <HomeDefaultBrands />
+          </div>
           <HomeDefaultBanner />
           <SiteFeatures />
           {/* <HomeDefaultDealOfDay collection="deal-of-the-day" /> */}
@@ -32,13 +34,13 @@ const HomepageDefaultPage = () => {
             collection="consumer-electronics"
             title="Хямдалтай бараа"
           />
-          
-          <HomeDafaultCategoryCollection/>
+
+          <HomeDafaultCategoryCollection />
           {/* <NewArrivals collection="new-arrivals-products" /> */}
-          <HomeDefaultProductCollections/>
+          <HomeDefaultProductCollections />
           <HomeAds />
           {/* <DownLoadApp /> */}
-       </Box>
+        </Box>
         <Newsletters />
       </main>
     </PageContainer>

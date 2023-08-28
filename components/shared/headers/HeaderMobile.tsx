@@ -15,7 +15,7 @@ const  HeaderMobile = ()=> {
   }
 
     return (
-      <header className="header header--mobile">
+      <header className={"header header--mobile md:hidden"}>
         {/* <div className="header__top">
                     <div className="header__left">
                         <p>Welcome to Martfury Online Shopping Store !</p>

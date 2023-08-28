@@ -10,7 +10,7 @@ type Props = {
 const BrandCard = ({ brand }: Props) => {
 
   return (
-    <Box border="1px" _hover={{
+    <Box border="1px" bg="white" _hover={{
       shadow:"sm",
       borderColor:"gray.400"
     }} borderRadius="full" overflow="hidden" p="5px" borderColor="gray.200" mx="4px">

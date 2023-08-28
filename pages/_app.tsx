@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { CookiesProvider } from 'react-cookie';
 import '/public/static/css/bootstrap.min.css';
+import '/public/static/fonts/Linearicons/Font/demo-files/demo.css';
 import '/public/static/css/slick.min.css';
 import '/scss/style.scss';
 import '/scss/home-default.scss';

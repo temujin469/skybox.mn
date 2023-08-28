@@ -7,6 +7,7 @@ import { TbMapPin, TbTruckDelivery } from "react-icons/tb";
 import useGetVendorInfo from "~/apiCall/otapi/useGetVendorInfo";
 import useAppState from "~/hooks/useAppState";
 import Link from "next/link";
+import { Rate } from "antd";
 
 function VendorView() {
   const { vendorId } = useAppState();
@@ -21,10 +22,10 @@ function VendorView() {
         <div>
           <Link href={`/shop?vendorId=${vendorId}`}>
             <div className="flex gap-[10px] items-center">
-              <div className="aspect-[1/1] relative w-full max-w-[30%] border rounded-full">
+              <div className="aspect-[1/1] relative w-full max-w-[100px] border rounded-[5px]">
                 <Image
                   fill
-                  className="rounded-full p-[10px]"
+                  className="rounded-[5px]"
                   src={
                     vendorInfo?.DisplayPictureUrl
                       ? vendorInfo.DisplayPictureUrl
@@ -34,7 +35,7 @@ function VendorView() {
                 />
               </div>
 
-              <div>
+              <div className="flex-[1]">
                 <Link href={`/shop?vendorId=${vendorId}`} >
                   <Heading size="sm">{vendorInfo.DisplayName}</Heading>
                 </Link>
@@ -46,11 +47,15 @@ function VendorView() {
                       : vendorInfo.Location?.City}
                   </Heading>
                 )}
+                <Rate disabled value={vendorInfo.Scores?.ServiceScore} className="mb-0" />
+
               </div>
+
             </div>
+
           </Link>
 
-          <div className="flex items-center justify-around mt-[20px] text-gray-600">
+          <div className="flex items-center justify-between mt-[20px] text-gray-600">
             <div className="flex items-center gap-1 ">
               <TbTruckDelivery size={25} />
               <p className="font-[600] text-[16px] text-gray-600">{vendorInfo.Scores?.DeliveryScore || 0}</p>

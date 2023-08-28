@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Slider from 'react-slick';
-import Lightbox from "react-18-image-lightbox";
-import NextArrow from '~/components/elements/carousel/NextArrow';
-import PrevArrow from '~/components/elements/carousel/PrevArrow';
-import { Box, Grid, GridItem } from '@chakra-ui/react';
-
+import { Box, Skeleton, } from '@chakra-ui/react';
+import Lightbox from 'react-18-image-lightbox';
+import { HiMiniViewfinderCircle } from 'react-icons/hi2';
 
 type Props = {
     product: ProductInfo
@@ -17,11 +14,11 @@ const ThumbnailDefault = ({ product }: Props) => {
     const [variant, setVariant] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [photoIndex, setPhotoIndex] = useState(0);
-    const [productImages, setProductImages] = useState<string[]>([]);
+    const [productImages, setProductImages] = useState<string[] | undefined>(undefined);
 
 
     useEffect(() => {
-        let images: string[] = [];
+        let images: string[] = [product.MainPictureUrl];
         if (product && product.Pictures.length > 0) {
             product.Pictures.map((item) => {
                 images.push(item.Medium.Url);
@@ -33,43 +30,68 @@ const ThumbnailDefault = ({ product }: Props) => {
     }, [product]);
 
     //Views
-    let imagesView, galleryImageView;
-    if (productImages.length > 0) {
+    let imagesView, galleryImageView,lightboxView;
+    if (productImages?.length) {
         galleryImageView = (
-            <img src={productImages[photoIndex]} alt={productImages[photoIndex]} style={{
-                height: "180px",
-                width: "180px",
-                borderRadius: "5px",
-                objectFit:"contain"
-            }} />
+            <div className='aspect-square group   bg-gray-50 relative w-[180px] md:w-[190px] rounded-[5px] overflow-hidden'>
+                <img src={productImages[photoIndex]} alt={productImages[photoIndex]} 
+                    className='object-cover w-full h-full cursor-zoom-in hover:brightness-90 transition-all duration-200' />
+                <div className='absolute opacity-0 group-hover:opacity-100 top-[50%] transition-all duration-200 left-[50%] translate-x-[-50%] translate-y-[-50%]'>
+                    <HiMiniViewfinderCircle size={30} color="white"/>
+                </div>
+            </div>
+        )
+
+        lightboxView = isOpen && (
+            <Lightbox
+                mainSrc={productImages[photoIndex]}
+                nextSrc={productImages[(photoIndex + 1) % productImages.length]}
+                prevSrc={productImages[(photoIndex + productImages.length - 1) % productImages.length]}
+                onCloseRequest={() => setIsOpen(false)}
+                onMovePrevRequest={() =>
+                    setPhotoIndex((photoIndex + productImages.length - 1) % productImages.length)
+                }
+                onMoveNextRequest={() =>
+                    setPhotoIndex( (photoIndex + 1) % productImages.length)
+                }
+            />
+        )
+    }else {
+        galleryImageView = (
+            <div className='aspect-square bg-gray-50 relative w-[180px] md:w-[190px] rounded-[5px] overflow-hidden'>
+                <Skeleton
+                    className='w-full h-full' />
+            </div>
         )
     }
+
+
 
 
     return (
         <Box
             display="flex"
-            height="180px"
-            width="210px"
+            // height="180px"
+            className=' gap-2 w-fit'
         >
-            <Box width="230px">
+            <Box onClick={()=>setIsOpen(true)}>
                 {galleryImageView}
             </Box>
-            <Box display="flex" justifyContent="space-between" flexDirection="column" gap={2}>
+            <Box display="flex" justifyContent="start" flexDirection="column" gap="7px">
                 {
-                    productImages.slice(0,6).map((item) => (
-
-                        <img src={item} alt={item} style={{
-                            aspectRatio: "1/1",
-                            width: "25px",
-                            height: "25px",
-                            border: "1px solid gray",
-                            borderRadius: "5px",
-                            objectFit: "cover"
-                        }} />
+                    productImages ? productImages.slice(0, 5).map((item, i) => (
+                        <Box border="1px" borderColor="gray.200" _hover={{borderColor:"brand.1"}} onMouseEnter={() => setPhotoIndex(i)}
+                          onMouseOut={()=>setPhotoIndex(0)} className='aspect-square w-[28px] cursor-pointer bg-gray-50 overflow-hidden rounded-[4px]  h-[28px] md:w-[30px] md:h-[30px]'>
+                            <img src={item} alt={item} className='object-cover w-full h-full' />
+                        </Box>
+                    )) : Array.from(Array(3)).map(i=>(
+                        <Box className='aspect-square w-[28px] cursor-pointer overflow-hidden rounded-[4px]  h-[28px] md:w-[30px] md:h-[30px]'>
+                            <Skeleton className='w-full h-full'/>
+                        </Box>
                     ))
                 }
             </Box>
+            {lightboxView}
         </Box>
     );
 };

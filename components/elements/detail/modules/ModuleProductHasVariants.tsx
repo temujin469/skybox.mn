@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { LegacyRef, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import ModuleProductDetailSharing from '~/components/elements/detail/modules/ModuleProductDetailSharing';
 import ModuleProductDetailSpecification from '~/components/elements/detail/modules/ModuleProductDetailSpecification';
@@ -12,20 +12,25 @@ import { addToCart } from '~/store/slices/cartSlice';
 // import { addToCompare } from '~/store/slices/compareSlice';
 import { addToWishlist } from '~/store/slices/wishlistSlice';
 // import useSettings from '~/apiCall/strapi/useSettings';
-import { Box, Button, Divider, Grid, GridItem, HStack, Heading, IconButton, Input, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, Text, Tooltip } from '@chakra-ui/react';
+import { Box, Button, Divider, Grid, GridItem, HStack, Heading, IconButton, Input, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, Stack, Text, Tooltip } from '@chakra-ui/react';
 import { FiCopy, FiHeart, FiPieChart } from "react-icons/fi"
 import { addToCompare } from '~/store/slices/compareSlice';
 import { RootState } from '~/store/store';
 import BlurImage from '../../BlurImage';
 import { HiOutlineShare } from 'react-icons/hi';
+import { FaFacebookF } from "react-icons/fa"
+import { BsTwitter, BsInstagram, BsFacebook } from "react-icons/bs"
 import SameProductDrawer from '~/components/partials/product/SameProductDrawer';
 import {
+    FacebookIcon,
     FacebookShareButton,
-    InstapaperShareButton,
-    TelegramShareButton,
+    TwitterIcon,
     TwitterShareButton,
+    WhatsappIcon,
     WhatsappShareButton,
 } from "react-share";
+import ProductDetailMobileAction from '../ProductDetailMobileAction';
+
 
 type Props = {
     product?: ProductFullInfo
@@ -55,6 +60,8 @@ const ModuleProductHasVariants = ({ product }: Props) => {
     const { cId } = router.query;
 
     const [quantity, setQuantity] = useState(1);
+
+    const hiddenRef = useRef<HTMLDivElement>(null);
 
 
     // const cart = useSelector((state: RootState) => state.cart);
@@ -86,8 +93,8 @@ const ModuleProductHasVariants = ({ product }: Props) => {
     const [api, contextHolder] = notification.useNotification();
 
 
-    function handleAddItemToCart(e: any) {
-        e.preventDefault();
+
+    function handleAddItemToCart() {
         if (sizes?.length && !selectedSize || !selectedVariant || colors?.length && !selectedColor) {
             return api.info({
                 message: "Сонголтоо хийнэ үү!"
@@ -113,8 +120,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
 
     }
 
-    function handleBuynow(e: any) {
-        e.preventDefault();
+    function handleBuynow() {
 
         if (!auth.isLoading) {
             if (!isAuth) {
@@ -485,25 +491,25 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                             Тоо хэмжээ
                         </Heading>
                     </Box>
-                    <div className='flex gap-[10px]'>
+                    <div className='flex flex-col md:flex-row gap-[10px]' ref={hiddenRef}>
                         <HStack w="fit" rounded={5} bgColor="gray.100">
                             <Button variant="ghost" size="lg" borderRightRadius={0} bgColor="gray.200" onClick={(e) => handleDecreaseItemQty(e)}>-</Button>
                             <Heading size="sm" w="100%" minW="45px" color="gray.600" textAlign="center">{quantity}</Heading>
                             <Button variant="ghost" size="lg" borderLeftRadius={0} bgColor="gray.200" onClick={(e) => handleIncreaseItemQty(e)}>+</Button>
                         </HStack>
-                        <Box display={["none", "flex"]} style={{
+                        <Box display={["flex", "flex"]} style={{
                             gap: "10px"
                         }}>
                             <Button size="lg"
                                 w="100%"
-                                onClick={(e) => handleAddItemToCart(e)}
+                                onClick={handleAddItemToCart}
                             >
                                 Картанд нэмэх
                             </Button>
                             <Button variant="brand"
                                 w="100%"
                                 size="lg"
-                                onClick={(e) => handleBuynow(e)}
+                                onClick={handleBuynow}
                             >
                                 Худалдаж авах
                             </Button>
@@ -525,12 +531,28 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                                 Хуваалцах
                             </Button>
                         </PopoverTrigger>
-                        <PopoverContent>
+                        <PopoverContent w="160px">
                             <PopoverArrow />
-                            <PopoverCloseButton />
-                            <PopoverBody>
-                                <div>
-                                    {/* <FacebookShareButton quote={product?.Title!} hashtag={product?.StuffStatus!} /> */}
+                            <PopoverBody p={"8px"}>
+                                <div className='gap-[10px] flex flex-col'>
+                                    <FacebookShareButton url={`skybox.mn/${router.asPath}`} quote={product?.Title} hashtag='#skyboxmn' >
+                                        <Stack direction="row" alignItems="center" className='hover:bg-gray-100 rounded-[5px] p-1 px-2'>
+                                            <FacebookIcon size={30} className='rounded-full' />
+                                            <Text>Facebook</Text>
+                                        </Stack>
+                                    </FacebookShareButton>
+                                    <TwitterShareButton url={`skybox.mn/${router.asPath}`}  >
+                                        <Stack direction="row" alignItems="center" className='hover:bg-gray-100 rounded-[5px] p-1 px-2'>
+                                            <TwitterIcon size={30} className='rounded-full' />
+                                            <Text>Twitter</Text>
+                                        </Stack>
+                                    </TwitterShareButton>
+                                    <WhatsappShareButton url={`skybox.mn/${router.asPath}`}  >
+                                        <Stack direction="row" alignItems="center" className='hover:bg-gray-100 rounded-[5px] p-1 px-2'>
+                                            <WhatsappIcon size={30} className='rounded-full' />
+                                            <Text>Whatsapp</Text>
+                                        </Stack>
+                                    </WhatsappShareButton>
                                 </div>
                             </PopoverBody>
                         </PopoverContent>
@@ -554,33 +576,7 @@ const ModuleProductHasVariants = ({ product }: Props) => {
                     <ModuleProductDetailSpecification />
                 </div>
 
-                <div className="ps-product__actions-mobile">
-                    <a
-                        className="ps-btn ps-btn--black"
-                        style={{
-                            height: "67px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-
-                        }}
-                        onClick={(e) => handleAddItemToCart(e)}
-                    >
-                        Сагслах
-                    </a>
-                    <a
-                        className="ps-btn"
-                        onClick={(e) => handleBuynow(e)}
-                        style={{
-                            height: "67px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}
-                    >
-                        Авах
-                    </a>
-                </div>
+                <ProductDetailMobileAction quantity={quantity} handleIncreaseItemQty={handleIncreaseItemQty} handleDecreaseItemQty={handleDecreaseItemQty} target={hiddenRef.current as Element} handleAddItemToCart={handleAddItemToCart} handleBuynow={handleBuynow} />
             </div>
         </div>
     );

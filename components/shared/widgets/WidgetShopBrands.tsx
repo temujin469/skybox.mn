@@ -65,7 +65,7 @@ const WidgetShopBrands = () => {
     //     brandsView = <p>Loading...</p>;
     // }
     return (
-        <aside className="rounded-md p-[20px] mb-[20px] bg-white">
+        <aside className="rounded-md p-[20px] mb-[13px] sm:mb-[20px] bg-white">
             <Heading size="md">Брэнд</Heading>
             <figure>
                 {/* <Radio.Group

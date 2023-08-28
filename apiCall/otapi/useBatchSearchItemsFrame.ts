@@ -11,7 +11,7 @@ type Response = {
         Content: ProductInfo[];
         TotalCount: number;
       };
-      CurrentFramSize: number;
+      CurrentFrameSize: number;
       MaximumPageCount:number
     };
     SearchProperties: {

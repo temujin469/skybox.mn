@@ -47,7 +47,10 @@ const WidgetShopFilterByPriceRange = () => {
     return (
         <aside className="rounded-md bg-white p-[20px] mb-[20px]">
             <div>
-                <Heading size="md" className='mb-3'>Үнэ</Heading>
+                <Heading size="md" className='mb-3 hidden md:block'>Үнэ</Heading>
+                {/* <Heading fontSize="15px" overflow="hidden" color="gray.700" textOverflow="ellipsis">
+                    Үнэ
+                </Heading> */}
                 {/* <Slider
                     range
                     defaultValue={[0, 2000]}

@@ -58,6 +58,7 @@ const ProductGroupByCarousel = ({
                         ref={(slider) => (sliderRef.current = slider)}
                         {...carouselFullwidth}
                         // {...carouselConfig}
+                        infinite={products.length >= 7}
                         autoplay={true}
                         arrows={false}
                         className="ps-carousel outside">
@@ -92,7 +93,7 @@ const ProductGroupByCarousel = ({
         <div className="ps-block--shop-features">
             <div className="ps-block__header">
                 <Link href={titlelink || "#"}>
-                    <Heading fontSize={{base:"15px",sm:"17px"}} cursor="pointer" display="flex" className='group' alignItems={"center"} gap={3} textTransform="uppercase">{title}
+                    <Heading fontSize={{base:"16px",sm:"18px"}} cursor="pointer" display="flex" className='group' alignItems={"center"} gap={3}>{title}
                         <Text color="gray.600" display={["none","inline-block"]} className='group-hover:translate-x-4 transition-transform duration-100'>
                             <HiOutlineArrowLongRight size={30} />
                         </Text>

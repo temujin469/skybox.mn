@@ -1,17 +1,12 @@
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef} from 'react';
 import Slider from 'react-slick';
-import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import { generateTempArray } from '~/utilities/common-helpers';
 // import NextArrow from '~/components/elements/carousel/NextArrow';
 // import PrevArrow from '~/components/elements/carousel/PrevArrow';
-import { AspectRatio, Box, Heading, Skeleton, Text } from '@chakra-ui/react';
-import { HiOutlineArrowLongRight } from 'react-icons/hi2';
-import Link from 'next/link';
+import { AspectRatio, Box, Skeleton, Text } from '@chakra-ui/react';
 import VendorCard from '~/components/elements/brand/BrandCard';
 import useGetBrandInfoList from '~/apiCall/otapi/useGetBrandInfoList';
-import NextArrow from '~/components/elements/carousel/NextArrow';
-import PrevArrow from '~/components/elements/carousel/PrevArrow';
 
 
 
@@ -134,7 +129,7 @@ const HomeDefaultBrands = () => {
   }
 
   return (
-    <Box mt={{base:"10px",sm:"20px"}} className="ps-container">
+    <Box mt={{base:"10px",sm:"20px"}}>
      {brandItemsView}
     </Box >
   );

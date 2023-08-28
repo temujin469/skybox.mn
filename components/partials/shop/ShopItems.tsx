@@ -7,16 +7,17 @@ import { useRouter } from 'next/router';
 import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import useFilter from '~/hooks/useFilter';
-import { Box, Heading } from '@chakra-ui/react';
+import { Box  } from '@chakra-ui/react';
 import NotFoundState from '~/components/elements/NotFound';
 import useBatchSearchItemsFrame from '~/apiCall/otapi/useBatchSearchItemsFrame';
 import useAppState from '~/hooks/useAppState';
 import { LuLayoutList } from 'react-icons/lu';
 import { FiGrid } from 'react-icons/fi';
+import useShopState from '~/hooks/shop/useShopState';
 
 const ShopItems = ({ columns = 1, pageSize = 60 }) => {
     const router = useRouter();
-    const { catId,brandId,min,max,keyword,filtered ,vendorId} = router.query;
+    const { catId, brandId, min, max, keyword, filtered, vendorId } = router.query;
     const { filters } = useFilter()
     const [listView, setListView] = useState(true);
     const [totalPage, setTotalPage] = useState<number>(0);
@@ -43,17 +44,21 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
                 BrandId: brandId as string,
                 MinPrice: Number(min),
                 MaxPrice: Number(max),
-                VendorId:vendorId as string,
+                VendorId: vendorId as string,
                 ItemTitle: (keyword || brandId || vendorId) ? keyword as string : "a",
-                Configurators:filtered == "true" ? filters?.Configurators : undefined
+                Configurators: filtered == "true" ? filters?.Configurators : undefined
             }
         }
     });
 
     const productItems = data?.Result?.Items?.Items?.Content;
     const searchPropertyContents = data?.Result?.SearchProperties?.Content;
+    const resultCount = data?.Result?.Items?.Items.TotalCount;
 
-    const {setSearchPropertyContents} = useAppState()
+
+
+    const { setSearchPropertyContents } = useAppState()
+    const { setResultCount } = useShopState()
 
 
     function handleChangeViewMode(e: any) {
@@ -79,7 +84,6 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
                 setClasses('col-xl-2 col-lg-4 col-md-6 col-sm-6 col-6');
                 return 6;
                 break;
-
             default:
                 setClasses('col-xl-4 col-lg-4 col-md-3 col-sm-6 col-6');
         }
@@ -88,7 +92,7 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
     const handlePagination = (page: number) => {
         setPage(page)
         setStart(page * pageSize);
-        window.scroll({top:0,behavior:"smooth"})
+        window.scroll({ top: 0, behavior: "smooth" })
     }
 
     useEffect(() => {
@@ -104,9 +108,10 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
             setTotalPage(totalPage)
         }
 
-        if(searchPropertyContents){
+        if (searchPropertyContents) {
             setSearchPropertyContents(searchPropertyContents)
         }
+        setResultCount(resultCount)
         handleSetColumns();
     }, [columns, data, pageSize]);
     useEffect(() => {
@@ -134,7 +139,7 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
                 ));
             }
         } else {
-            productItemsView = <NotFoundState/>;
+            productItemsView = <NotFoundState />;
         }
     } else {
         const skeletonItems = generateTempArray(12).map((item) => (
@@ -142,26 +147,31 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
                 <SkeletonProduct />
             </div>
         ));
-        productItemsView = <div className="row">{skeletonItems}</div>;
+        productItemsView = <div className="ps-shop-items">
+            <div className='row'>
+                    {skeletonItems}
+            </div>
+        </div>
     }
 
     return (
         <div>
             <div className="ps-shopping">
-                <div className="bg-white rounded-md sm:mx-[5px] p-[10px] sm:p-[20px] mb-[15px]">
+                {/* <ShopMobileHeader /> */}
+                <div className="bg-white rounded-md sm:mx-[5px] p-[10px] sm:p-[20px] mb-[15px] hidden md:block">
                     {/* <p>
                     <strong className="mr-2">{total}</strong>
                     Products found
                 </p> */}
                     <Box style={{
-                        display:"flex",
+                        display: "flex",
                         alignItems: "center",
-                        flexGrow:1,
-                        gap:"10px",
-                        justifyContent:"space-between"
-                    }} className="ps-shopping__actions">
+                        flexGrow: 1,
+                        gap: "10px",
+                        justifyContent: "space-between"
+                    }} className="ps-shopping__actions" >
                         <ModuleShopSortBy />
-                        <Box display="flex" className="ps-shopping__view" alignItems="center">
+                        <Box display={"flex"} className="ps-shopping__view" alignItems="center">
                             {/* <Heading display={{base:"none",md:"block"}} size="sm" mr="10px">Харах</Heading> */}
                             <ul className="ps-tab-list h-fit">
                                 <li className={listView === true ? 'active' : ''}>
@@ -183,8 +193,8 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
                     </Box>
                 </div>
                 <div className="ps-shopping__content">{productItemsView}</div>
-                <div className="ps-shopping__footer text-center">
-                    <div className="ps-pagination">
+                <div className=" text-center">
+                    <div className="py-[20px] md:py-[60px]">
                         <Pagination
                             total={totalPage}
                             pageSize={pageSize}

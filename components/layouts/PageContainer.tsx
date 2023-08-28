@@ -22,6 +22,7 @@ type Props = {
     footer?: React.ReactNode
     children:React.ReactNode
     title?:string
+    // hideMobileHeader?:boolean
     bgColor?:string
 }
 
@@ -41,7 +42,11 @@ const PageContainer = ({
     }
 
     return (
-        <Box pb={["80px","80px",0]} bg={bgColor ? bgColor : "white"}>
+        <Box
+         pb={["80px","80px",0]}
+        //  pb={["62px","62px",0]}
+        
+          bg={bgColor ? bgColor : "white"}>
             <Head>
                 <title>{titleView}</title>
             </Head>
