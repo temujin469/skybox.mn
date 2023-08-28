@@ -12,7 +12,7 @@ import WidgetVendor from "~/components/shared/widgets/vendor/WidgetVendor";
 import HeaderDefault from "~/components/shared/headers/HeaderDefault";
 import ShopMobileHeader from "~/components/partials/shop/ShopMobileHeader";
 import ShopSortDrawer from "~/components/partials/shop/modules/ShopSortDrawer";
-import HomeDefaultBrands from "~/components/partials/home-default/HomeDefaultBrands";
+import TopVendorsCarousel from "~/components/partials/shop/TopVendorsCarousel";
 // import { Box } from "@chakra-ui/react";
 
 const ShopSidebarWithoutBannerPage = () => {
@@ -49,8 +49,8 @@ const ShopSidebarWithoutBannerPage = () => {
 
         <div className="ps-container">
           {/* <Box px={["10px", "30px"]}> */}
-          <HomeDefaultBrands/>
-          <div className=" md:grid grid-cols-12 md:gap-[20px] xl:gap-[25px] mt-[10px] md:mt-[20px]">
+          <TopVendorsCarousel/>
+          <div className=" md:grid grid-cols-12 md:gap-[20px] xl:gap-[18px] mt-[8px] md:mt-[18px]">
             <div className="col-span-4 xl:col-span-3  h-full">
               {/* {
                 catId && <WidgetShopCategories category={cat} />

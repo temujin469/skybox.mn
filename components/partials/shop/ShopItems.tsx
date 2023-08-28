@@ -14,6 +14,7 @@ import useAppState from '~/hooks/useAppState';
 import { LuLayoutList } from 'react-icons/lu';
 import { FiGrid } from 'react-icons/fi';
 import useShopState from '~/hooks/shop/useShopState';
+import HomeDefaultBrands from '../home-default/HomeDefaultBrands';
 
 const ShopItems = ({ columns = 1, pageSize = 60 }) => {
     const router = useRouter();
@@ -191,6 +192,7 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
                             </ul>
                         </Box>
                     </Box>
+                    <HomeDefaultBrands />
                 </div>
                 <div className="ps-shopping__content">{productItemsView}</div>
                 <div className=" text-center">
