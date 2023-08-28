@@ -25,11 +25,11 @@ const HeaderDefault = () => {
                         <MenuCategoriesDropdown />
                     </div>
                     <div className="header__center">
-                        <div className=' max-w-[800px] pr-[20px]'>
+                        <div>
                             <SearchHeader />
                         </div>
                     </div>
-                    <div className="header__right">
+                    <div className="header__right overflow-hidden">
                         <HeaderActions />
                     </div>
                 </div>

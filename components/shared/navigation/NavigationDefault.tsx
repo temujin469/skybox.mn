@@ -16,7 +16,7 @@ const NavigationDefault = ()=>{
                     <div className="navigation__left">
                         <MenuCategoriesDropdown />
                     </div>
-                    <div className="navigation__right">
+                    <div className="navigation__right whitespace-nowrap">
                         <Menu
                         isMega={false}
                         source={

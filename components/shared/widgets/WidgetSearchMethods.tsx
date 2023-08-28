@@ -158,7 +158,7 @@ function WidgetSearchMethods() {
               <WidgetShopFilterByPriceRange/>
               {
                 properties?.map(property => (
-                  <Accordion allowToggle>
+                  <Accordion defaultIndex={[0,1]}>
                     <AccordionItem border={0} >
                       {({ isExpanded }) => (
                         <>

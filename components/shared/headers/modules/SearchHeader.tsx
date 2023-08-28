@@ -3,7 +3,10 @@ import ProductSearchResult from '~/components/elements/products/ProductSearchRes
 import useGetBrandInfoList from '~/apiCall/otapi/useGetBrandInfoList';
 import { useRouter } from 'next/router';
 import searchItemsFrame from '~/apiCall/otapi/searchItemsFrame';
-import { CircularProgress } from '@chakra-ui/react';
+import { Box, CircularProgress, CloseButton, Input, InputGroup, InputLeftAddon, InputLeftElement, Select } from '@chakra-ui/react';
+import clsx from 'clsx';
+import { GoSearch } from 'react-icons/go';
+import { useScrollLock } from '~/hooks/useScrollLock';
 
 
 function useDebounce(value: string, delay: number) {
@@ -30,7 +33,7 @@ const SearchHeader = () => {
     const [brand, setBrand] = useState<string | undefined>(router.query.brandId as string)
     const [loading, setLoading] = useState(false);
     const [resultItems, setResultItems] = useState<ProductInfo[] | undefined>()
-    const debouncedSearchTerm = useDebounce(keyword!,1000);
+    const debouncedSearchTerm = useDebounce(keyword!, 1000);
 
     const brandData = useGetBrandInfoList();
 
@@ -105,22 +108,20 @@ const SearchHeader = () => {
                     ))
                 }
             </div>
-        } 
+        }
         // else {
         //     productItemsView = <p>
         //         Бүтээгдэхүүн олдсонгүй.</p>;
         // }
         if (keyword !== '') {
             clearTextView = (
-                <span className="ps-form__action" onClick={handleClearKeyword}>
-                    <i className="icon icon-cross2"></i>
-                </span>
+                <CloseButton color="gray.400" size='sm' onClick={handleClearKeyword} />
             );
         }
     } else {
         loadingView = (
             <span className="ps-form__action">
-                <CircularProgress isIndeterminate size={5} color='brand.1'/>
+                <CircularProgress isIndeterminate size={5} color='brand.1' />
             </span>
         );
     }
@@ -131,43 +132,75 @@ const SearchHeader = () => {
         </option>
     ));
 
+    const { lockScroll, unlockScroll } = useScrollLock();
+
+    const onClose = () => {
+        unlockScroll();
+        setIsSearch(false)
+    }
+
+    const onOpen = () => {
+        lockScroll()
+        setIsSearch(true)
+    }
+
     return (
-        <form
-            className="ps-form--quick-search"
-            method="get"
-            action="/"
-            onSubmit={handleSubmit}>
-            <div className="ps-form__categories">
-                <select className="form-control" onChange={(e) => setBrand(e.target.value)}>
-                    <option>
-                        Брэнд
-                    </option>
-                    {
-                        selectOptionView
-                    }</select>
-            </div>
-            <div className="ps-form__input">
-                <input
-                    ref={inputEl}
-                    className="form-control"
-                    type="text"
-                    value={keyword}
-                    placeholder="хайх..."
-                    onClick={()=>setIsSearch(true)}
-                    onChange={(e) => setKeyword(e.target.value)}
-                />
-                {clearTextView}
-                {loadingView}
-            </div>
-            <button onClick={handleSubmit}>Хайх</button>
+        <div className='h-[40px]'>
+            <div onClick={onClose} className={
+                clsx(
+                    "fixed z-10  w-full h-full left-0 top-0",
+                    isSearch ? "block" : "hidden"
+                )
+            } />
             <div
-            onMouseLeave={()=>setIsSearch(false)}
-                className={`ps-panel--search-result${isSearch ? ' active ' : ''
-                    }`}>
-                <div className="overflow-hidden">{productItemsView}</div>
-                {/* {loadMoreView} */}
+                className={
+                    clsx(
+                        "ease-in-out relative z-[900]  duration-200 overflow-hidden  rounded-[5px] bg-white",
+                        isSearch ? "shadow-2xl max-w-[900px] 2xl:max-w-[930px] p-[10px]" : "p-[0] max-w-[500px] xl:max-w-[600px] 2xl:max-w-[700px] shadow-none"
+                    )
+                }
+            >
+
+                <Box className={clsx('flex w-[880px] 2xl:w-[910px] items-center transition-all duration-400 rounded-[5px] overflow-hidden', isSearch ? "bg-gray-100" : "bg-white")}>
+                    <div className='bg-gray-100 pl-[10px]'>
+                        <Select variant="unstyled" h="40px" w="95px" onChange={(e) => setBrand(e.target.value)}>
+                            <option>
+                                Брэнд
+                            </option>
+                            {
+                                selectOptionView
+                            }</Select>
+                    </div>
+                    <div className='px-[10px] text-gray-400 cursor-pointer'>
+                        <GoSearch size={20} />
+                    </div>
+                    <Input h="40px" variant="unstyled" ref={inputEl}
+                        className="h-[40px]"
+                        type="text"
+                        value={keyword}
+                        placeholder="хайх..."
+                        onClick={onOpen}
+                        onChange={(e) => setKeyword(e.target.value)} />
+                    <div className="px-[10px]">
+                        {clearTextView}
+                        {loadingView}
+                    </div>
+                </Box>
+
+
+                {/* <button onClick={handleSubmit}>Хайх</button> */}
+                <div
+                    // onMouseLeave={() => setIsSearch(false)}
+                    className={
+                        clsx(
+                            'transition-all w-full ease-in overflow-hidden bg-white duration-100',
+                            isSearch ? 'h-full min-h-[500px]' : 'h-0'
+                        )}>
+                    <div className="overflow-hidden">{productItemsView}</div>
+                    {/* {loadMoreView} */}
+                </div>
             </div>
-        </form>
+        </div>
     );
 };
 

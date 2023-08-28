@@ -35,7 +35,7 @@ const TopVendorsCarousel = () => {
     dots: false,
     infinite: true,
     speed: 750,
-    slidesToShow: 5,
+    slidesToShow: 6,
     slidesToScroll: 1,
     autoplay: true,
     arrows: true,
@@ -47,21 +47,21 @@ const TopVendorsCarousel = () => {
       {
         breakpoint: 1750,
         settings: {
-          slidesToShow: 5,
+          slidesToShow: 6,
         },
       },
 
       {
         breakpoint: 1366,
         settings: {
-          slidesToShow:5,
+          slidesToShow:6,
           infinite: true,
         },
       },
       {
         breakpoint: 1200,
         settings: {
-          slidesToShow:4,
+          slidesToShow:5,
           slidesToScroll: 1,
           infinite: true,
         },
@@ -69,7 +69,7 @@ const TopVendorsCarousel = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow:3,
+          slidesToShow:4,
           slidesToScroll: 1,
           infinite: true,
         },
@@ -77,13 +77,13 @@ const TopVendorsCarousel = () => {
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 3,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 2,
         },
       },
     ],
@@ -101,23 +101,25 @@ const TopVendorsCarousel = () => {
               shadow: "sm",
               borderColor: "gray.400"
             }} borderRadius="5px" overflow="hidden" p="10px" borderColor="gray.200" mx="4px">
-              <Link href={`/shop?brandId=${item.Id}`} className='flex gap-[10px]'>
-                <AspectRatio ratio={1} className='w-[100px]'>
+              <Link href={`/shop?brandId=${item.Id}`} className='flex gap-[10px] items-center'>
+                <AspectRatio ratio={1} className='rounded-[5px] border w-[40%]'>
                   <BlurImage fill src={item.PictureUrl!} />
                 </AspectRatio>
-                <div className='hidden md:block'>
+                <Heading size="sm" className='overflow-hidden whitespace-nowrap text-ellipsis w-[50%]'>{item.Name.split("/")[0]}</Heading>
+
+                {/* <div className='hidden md:block'>
                     <Heading size="sm">{"name"}</Heading>
-                  {/* {vendorInfo?.Location?.State && (
+                  {vendorInfo?.Location?.State && (
                     <Heading fontSize="14px" className="flex gap-1 items-center mt-[5px]">
                       <TbMapPin size={20} />
                       {vendorInfo.Location?.State
                         ? vendorInfo.Location?.State
                         : vendorInfo.Location?.City}
                     </Heading>
-                )} */}
+                )}
                   <Rate disabled value={4} className="mb-0" />
 
-                </div>
+                </div> */}
 
               </Link>
             </Box>
