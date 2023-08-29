@@ -1,15 +1,16 @@
-import { Heading } from '@chakra-ui/react';
-import { Form, Input, Spin, notification } from 'antd';
+import { Button, Heading, useToast } from '@chakra-ui/react';
+import { Form, Input, Spin } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { FaFacebook } from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
-import { register, reset,signinWithProvider } from '~/store/auth/authSlice';
+import { register, reset } from '~/store/auth/authSlice';
 import type { AppDispatch, RootState } from '~/store/store';
 
 function Register() {
   const dispatch: AppDispatch = useDispatch()
-  const [api, contextHolder] = notification.useNotification();
 
 
   const router = useRouter()
@@ -18,27 +19,31 @@ function Register() {
     (state: RootState) => state.auth
   )
 
+  const toast = useToast()
+
   useEffect(() => {
     if (isError) {
-      api.error({
-        message: `Алдаа гарлаа`,
-        // description:"",
-        placement:"bottomRight"
+      toast({
+        title: `Алдаа гарлаа`,
+        description:message,
+        status: 'error',
+        variant: "subtle",
+        isClosable: true,
       });
-      console.log(message)
+      // console.log("err",message)
     }
 
     if (isSuccess && user && !isLoading && !isError) {
-      api.success({
-        message: `Амжилттай бүртгэгдлээ`,
-        // description:"",
-        placement: "bottomRight"
+      toast({
+        title: "Амжилттай нэвтэрлээ",
+        variant: "subtle",
+          isClosable: true,
       });
       router.push("/")
     }
 
     dispatch(reset())
-  }, [user, isError, isSuccess, router, dispatch])
+  }, [isError, isSuccess])
 
   const handleSubmit = (userData: UserBody) => {
 
@@ -57,7 +62,6 @@ function Register() {
 
   return (
     <div className="ps-my-account">
-      {contextHolder}
       <div className="container">
         <Form className="ps-form--account" onFinish={handleSubmit}>
           <ul className="ps-tab-list">
@@ -143,28 +147,18 @@ function Register() {
             </div>
             <div className="ps-form__footer">
               <p className='mb-2'>Сошиал хаягаар нэвтрэх</p>
-              <ul className="ps-list--social">
-                <li>
-                  <a className="facebook"  href={`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/facebook`}>
-                    <i className="fa fa-facebook"></i>
+              <div className='flex gap-[10px]'>
+                  <a className='flex-[1]' href={`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/facebook`}>
+                    <Button size="lg" w="full" color="facebook.400">
+                    <FaFacebook size={28}/>
+                    </Button>
                   </a>
-                </li>
-                <li>
-                  <a className="google" href={`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/google`}>
-                    <i className="fa fa-google-plus"></i>
+                  <a className="flex-[1]" href={`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/google`}>
+                    <Button size="lg" w="full">
+                    <FcGoogle size={28}/>
+                    </Button>
                   </a>
-                </li>
-                {/* <li>
-                  <a className="twitter" href="#">
-                    <i className="fa fa-twitter"></i>
-                  </a>
-                </li>
-                <li>
-                  <a className="instagram" href="#">
-                    <i className="fa fa-instagram"></i>
-                  </a>
-                </li> */}
-              </ul>
+              </div>
             </div>
           </div>
         </Form>

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./authService";
+import { handleErrorMessage } from "~/utilities/handleError";
 
 // Get user from localStorage
 
@@ -13,7 +14,7 @@ if (typeof window !== "undefined") {
 }
 
 type InitialState = {
-  user?: User
+  user?: User;
   token?: string;
   isError: boolean;
   isSuccess: boolean;
@@ -33,33 +34,26 @@ const initialState: InitialState = {
 // Register user
 export const register = createAsyncThunk(
   "auth/register",
-  async (user:UserBody, thunkAPI) => {
+  async (user: UserBody, thunkAPI) => {
     try {
       return await authService.register(user);
-    } catch (error: any) {
-      const message: string =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(handleErrorMessage(error));
     }
   }
 );
 
 // Login user
-export const login = createAsyncThunk("auth/login", async (user:UserBody, thunkAPI) => {
-  try {
-    return await authService.login(user);
-  } catch (error: any) {
-    const message:string =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-    return thunkAPI.rejectWithValue(message);
+export const login = createAsyncThunk(
+  "auth/login",
+  async (user: UserBody, thunkAPI) => {
+    try {
+      return await authService.login(user);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(handleErrorMessage(error));
+    }
   }
-});
+);
 
 // signin with provided credentials
 export const signinWithProvider = createAsyncThunk(
@@ -70,14 +64,8 @@ export const signinWithProvider = createAsyncThunk(
   ) => {
     try {
       return await authService.signinWithProvider(data);
-    } catch (error: any) {
-      const message: string =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(handleErrorMessage(error));
     }
   }
 );
@@ -127,7 +115,7 @@ export const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.message = action.payload as any;
+        state.message = action.payload as string;
         state.user = undefined;
         state.token = undefined;
       })
@@ -143,7 +131,7 @@ export const authSlice = createSlice({
       .addCase(signinWithProvider.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.message = action.payload as any;
+        state.message = action.payload as string;
         state.user = undefined;
         state.token = undefined;
       })

@@ -1,42 +1,46 @@
-import { Heading } from '@chakra-ui/react';
+import { Button, Heading, useToast } from '@chakra-ui/react';
 import { Form, Input, Spin, notification } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
+import { FaFacebook } from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, reset } from '~/store/auth/authSlice';
 import type { AppDispatch, RootState } from '~/store/store';
 
 function Login() {
   const dispatch: AppDispatch = useDispatch()
-  const [api, contextHolder] = notification.useNotification();
   const router = useRouter()
 
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state: RootState) => state.auth
   )
 
+  const toast = useToast()
+
   useEffect(() => {
     if (isError) {
-      api.error({
-        message: `Алдаа гарлаа`,
-        // description:"",
-        placement: "bottomRight"
+      toast({
+        title: `Алдаа гарлаа`,
+        description: message,
+        variant: "subtle",
+        status: 'error',
+        isClosable: true,
       });
-      console.log(message)
+      // console.log("err",message)
     }
-
-    if (isSuccess && user && !isLoading && !isError) {
+    if (isSuccess) {
       router.push("/")
-      api.success({
-        message: `Амжилттай нэвтэрлээ`,
-        // description:"",
-        placement: "bottomRight"
+      toast({
+        title: "Амжилттай нэвтэрлээ",
+        variant: "subtle",
+        isClosable: true,
       });
     }
 
     dispatch(reset())
-  }, [user, isError, isSuccess, router, dispatch])
+  }, [isError, isSuccess])
 
   const handleSubmit = (userData: UserBody) => {
     // if (password !== password2) {
@@ -55,7 +59,6 @@ function Login() {
 
   return (
     <div className="ps-my-account">
-      {contextHolder}
       <div className="container">
         <Form
           className="ps-form--account"
@@ -132,40 +135,24 @@ function Login() {
               <div className="form-group submit">
                 <button type="submit" className="ps-btn ps-btn--fullwidth">
                   Нэвтрэх
-                  <Spin className='pl-10' spinning={isLoading}/>
+                  <Spin className='pl-10' spinning={isLoading} />
                 </button>
               </div>
             </div>
             <div className="ps-form__footer">
               <p className='mb-2'>Сошиал хаягаар нэвтрэх</p>
-              <ul className="ps-list--social">
-                <li>
-                  <a className="facebook" href={`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/facebook`}>
-                    <i className="fa fa-facebook"></i>
-                  </a>
-                </li>
-                <li>
-                  <a className="google" href={`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/google`}>
-                    <i className="fa fa-google-plus"></i>
-                  </a>
-                </li>
-                {/* <li>
-                  <a
-                    className="twitter"
-                    href="#"
-                  >
-                    <i className="fa fa-twitter"></i>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="instagram"
-                    href="#"
-                  >
-                    <i className="fa fa-instagram"></i>
-                  </a>
-                </li> */}
-              </ul>
+              <div className='flex gap-[10px]'>
+                <a className='flex-[1]' href={`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/facebook`}>
+                  <Button size="lg" w="full" color="facebook.400">
+                    <FaFacebook size={28} />
+                  </Button>
+                </a>
+                <a className="flex-[1]" href={`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/google`}>
+                  <Button size="lg" w="full">
+                    <FcGoogle size={28} />
+                  </Button>
+                </a>
+              </div>
             </div>
           </div>
         </Form>

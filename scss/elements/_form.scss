@@ -23,7 +23,7 @@
 
     &.ant-input {
         height: 50px;
-        border-radius: 0;
+        border-radius: 5px;
         border: 1px solid #dddddd;
         &:focus {
             border-color: $color-1st;
@@ -134,6 +134,7 @@ textarea.form-control {
             height: 20px;
             width: 20px;
             z-index: 10;
+            border-radius: 5px;
             border: 1px solid $color-heading;
             transition: all 0.4s ease;
         }

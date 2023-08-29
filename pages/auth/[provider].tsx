@@ -1,4 +1,5 @@
-import { Spin, notification } from 'antd';
+import { useToast } from '@chakra-ui/react';
+import { Spin} from 'antd';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,8 +8,7 @@ import { AppDispatch, RootState } from '~/store/store';
 
 function Auth() {
   const dispatch: AppDispatch = useDispatch()
-  const [api, contextHolder] = notification.useNotification();
-
+const toast = useToast()
 
   const router = useRouter()
 
@@ -21,15 +21,21 @@ function Auth() {
 
   useEffect(() => {
     if (isError) {
-      api.error({
-        message: `Алдаа гарлаа`,
-        // description:"",
-        placement: "bottomRight"
+      toast({
+        title: `Алдаа гарлаа`,
+        description: message,
+        variant: "subtle",
+        status: 'error',
+        isClosable: true,
       });
-      console.log(message)
     }
 
     if (isSuccess || user) {
+      toast({
+        title: "Амжилттай нэвтэрлээ",
+        variant: "subtle",
+        isClosable: true,
+      });
       router.push("/")
     }
 
@@ -38,10 +44,9 @@ function Auth() {
     }
 
     dispatch(reset())
-  }, [user, isError, isSuccess, message, router, dispatch])
+  }, [isError, isSuccess])
   return (
     <div>
-      {contextHolder}
       <Spin/>
     </div>
   );

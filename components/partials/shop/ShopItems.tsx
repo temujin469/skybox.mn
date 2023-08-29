@@ -143,7 +143,7 @@ const ShopItems = ({ columns = 1, pageSize = 60 }) => {
             productItemsView = <NotFoundState />;
         }
     } else {
-        const skeletonItems = generateTempArray(12).map((item) => (
+        const skeletonItems = generateTempArray(18).map((item) => (
             <div className={classes} key={item}>
                 <SkeletonProduct />
             </div>

@@ -6,6 +6,7 @@ import { strapiApi } from "~/utilities/axios";
     const response = await strapiApi.get(
       `/auth/${provider}/callback?access_token=${token}`
     );
+    console.log(provider,token);
      if (response.data) {
        localStorage.setItem("user", JSON.stringify(response.data));
      }
