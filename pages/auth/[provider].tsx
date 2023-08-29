@@ -44,7 +44,7 @@ const toast = useToast()
     }
 
     dispatch(reset())
-  }, [isError, isSuccess])
+  }, [isError, isSuccess,access_token,user])
   return (
     <div>
       <Spin/>
