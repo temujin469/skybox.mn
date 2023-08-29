@@ -44,6 +44,7 @@ const login = async (userData: UserBody) => {
 // Logout user
 const logout = () => {
   localStorage.removeItem("user");
+  location.reload();
 };
 
 const authService = {
