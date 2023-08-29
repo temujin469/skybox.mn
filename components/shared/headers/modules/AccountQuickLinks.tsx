@@ -3,23 +3,23 @@ import { useDispatch } from 'react-redux';
 import Link from 'next/link';
 import { logout } from '~/store/auth/authSlice';
 import { AppDispatch } from '~/store/store';
-import { useToast } from '@chakra-ui/react';
+import { Menu, MenuButton, MenuDivider, MenuItem, MenuList, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 type Props = {
   isLoggedIn: boolean;
 }
 
-const AccountQuickLinks = (props:Props) => {
-  const dispatch:AppDispatch = useDispatch();
+const AccountQuickLinks = (props: Props) => {
+  const dispatch: AppDispatch = useDispatch();
   const router = useRouter()
   const toast = useToast()
-  const handleLogout = (e:any) => {
+  const handleLogout = (e: any) => {
     e.preventDefault();
     dispatch(logout());
     toast({
-      title:"Амжилттай гарлаа",
-      status:"success",
+      title: "Амжилттай гарлаа",
+      status: "success",
       isClosable: true,
     })
     router.push("/")
@@ -55,26 +55,28 @@ const AccountQuickLinks = (props:Props) => {
 
   // View
   const linksView = accountLinks.map((item) => (
-    <li key={item.text}>
-      <Link href={item.url}>{item.text}</Link>
-    </li>
+    <MenuItem key={item.text}>
+      <a className='text-gray-700 hover:text-gray-700 text-[15px]' href={item.url}>{item.text}</a>
+    </MenuItem>
   ));
 
   if (isLoggedIn === true) {
     return (
-      <div className="ps-block--user-account mt-1">
-        <i className="icon-user mt-1"></i>
-        <div className="ps-block__content">
-          <ul className="ps-list--arrow">
-            {linksView}
-            <li className="ps-block__footer">
-              <a href="#" onClick={(e) => handleLogout(e)}>
-              Системээс гарах
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      // <div className="ps-block--user-account mt-1">
+      <Menu >
+        <MenuButton>
+          <i className="icon-user mt-2 text-[30px]"></i>
+        </MenuButton>
+        <MenuList>
+          {linksView}
+          <MenuDivider/>
+          <MenuItem fontSize="15px" onClick={(e) => handleLogout(e)}>
+            Системээс гарах
+          </MenuItem>
+        </MenuList>
+      </Menu>
+      // </div>
+
     );
   } else {
     return (

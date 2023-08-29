@@ -3,10 +3,12 @@ import ProductSearchResult from '~/components/elements/products/ProductSearchRes
 import useGetBrandInfoList from '~/apiCall/otapi/useGetBrandInfoList';
 import { useRouter } from 'next/router';
 import searchItemsFrame from '~/apiCall/otapi/searchItemsFrame';
-import { Box, CircularProgress, CloseButton, Input, InputGroup, InputLeftAddon, InputLeftElement, Select } from '@chakra-ui/react';
+import { Box, CircularProgress, CloseButton, Input, InputGroup, InputLeftAddon, InputLeftElement, Select, Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react';
 import clsx from 'clsx';
 import { GoSearch } from 'react-icons/go';
 import { useScrollLock } from '~/hooks/useScrollLock';
+import NotFoundState from '~/components/elements/NotFound';
+import Image from 'next/image';
 
 
 function useDebounce(value: string, delay: number) {
@@ -64,7 +66,6 @@ const SearchHeader = () => {
         setResultItems(items);
         setLoading(false);
         setIsSearch(true);
-
     }
 
     useEffect(() => {
@@ -109,10 +110,11 @@ const SearchHeader = () => {
                 }
             </div>
         }
-        // else {
-        //     productItemsView = <p>
-        //         Бүтээгдэхүүн олдсонгүй.</p>;
-        // }
+        else {
+            productItemsView = <div className='relative aspect-square max-w-[400px] mx-auto'>
+                <Image src="/static/img/products/search.webp" alt="search" className='object-contain' fill/>
+            </div>
+        }
         if (keyword !== '') {
             clearTextView = (
                 <CloseButton color="gray.400" size='sm' onClick={handleClearKeyword} />
@@ -124,6 +126,19 @@ const SearchHeader = () => {
                 <CircularProgress isIndeterminate size={5} color='brand.1' />
             </span>
         );
+        productItemsView = <div className='p-2'>
+            {Array(5).fill(null).map((_, i) => (
+                <div key={i} className='flex gap-2 h-[100px] p-2 rounded-md'>
+                    <div className='relative aspect-square h-full'>
+                        <Skeleton w="full" h="full" />
+                    </div>
+                    <div className='flex-[1]'>
+                        <SkeletonText noOfLines={4} spacing='4' skeletonHeight='2' />
+                    </div>
+                </div>
+            ))}
+
+        </div>
     }
 
     selectOptionView = brands?.map((brand) => (
@@ -195,7 +210,8 @@ const SearchHeader = () => {
                         clsx(
                             'transition-all w-full ease-in overflow-hidden bg-white duration-100',
                             isSearch ? 'h-full min-h-[500px]' : 'h-0'
-                        )}>
+                        )}
+                        >
                     <div className="overflow-hidden">{productItemsView}</div>
                     {/* {loadMoreView} */}
                 </div>
