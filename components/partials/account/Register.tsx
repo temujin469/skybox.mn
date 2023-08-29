@@ -19,31 +19,42 @@ function Register() {
     (state: RootState) => state.auth
   )
 
-  const toast = useToast()
+  const toast = useToast();
 
   useEffect(() => {
     if (isError) {
-      toast({
-        title: `Алдаа гарлаа`,
-        description:message,
-        status: 'error',
-        variant: "subtle",
-        isClosable: true,
-      });
+      const id = '#1'
+      if (!toast.isActive(id)) {
+        toast({
+          id: id,
+          title: `Алдаа гарлаа`,
+          description: message,
+          status: 'error',
+          variant: "subtle",
+          isClosable: true,
+        });
+      }
+
       // console.log("err",message)
     }
 
-    if (isSuccess && user && !isLoading && !isError) {
-      toast({
-        title: "Амжилттай нэвтэрлээ",
-        variant: "subtle",
+    if (isSuccess) {
+      const id = '#2'
+      if (!toast.isActive(id)) {
+        toast({
+          id: id,
+          title: "Амжилттай нэвтэрлээ",
+          variant: "subtle",
           isClosable: true,
-      });
+        });
+      }
+
       router.push("/")
     }
 
     dispatch(reset())
-  }, [isError, isSuccess])
+
+  }, [isError, isSuccess, dispatch])
 
   const handleSubmit = (userData: UserBody) => {
 
@@ -70,14 +81,14 @@ function Register() {
                 <Heading color="gray.400">
                   Нэвтрэх
                 </Heading>
-                </Link>
+              </Link>
             </li>
             <li className="active">
               <Link href="/account/register">
                 <Heading>
                   Бүртгүүлэх
                 </Heading>
-                </Link>
+              </Link>
             </li>
           </ul>
           <div className="ps-tab active" id="register">
@@ -126,8 +137,8 @@ function Register() {
                       message: "Нууц үгээ оруулна уу!",
                     },
                     {
-                      min:6,
-                      message:"Хамгийн багадаа 6 тэмдэгт байх ёстой!"
+                      min: 6,
+                      message: "Хамгийн багадаа 6 тэмдэгт байх ёстой!"
                     },
                   ]}
                 >
@@ -148,16 +159,16 @@ function Register() {
             <div className="ps-form__footer">
               <p className='mb-2'>Сошиал хаягаар нэвтрэх</p>
               <div className='flex gap-[10px]'>
-                  <a className='flex-[1]' href={`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/facebook`}>
-                    <Button size="lg" w="full" color="facebook.400">
-                    <FaFacebook size={28}/>
-                    </Button>
-                  </a>
-                  <a className="flex-[1]" href={`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/google`}>
-                    <Button size="lg" w="full">
-                    <FcGoogle size={28}/>
-                    </Button>
-                  </a>
+                <a className='flex-[1]' href={`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/facebook`}>
+                  <Button size="lg" w="full" color="facebook.400">
+                    <FaFacebook size={28} />
+                  </Button>
+                </a>
+                <a className="flex-[1]" href={`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/google`}>
+                  <Button size="lg" w="full">
+                    <FcGoogle size={28} />
+                  </Button>
+                </a>
               </div>
             </div>
           </div>

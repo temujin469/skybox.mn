@@ -21,21 +21,30 @@ const toast = useToast()
 
   useEffect(() => {
     if (isError) {
-      toast({
-        title: `Алдаа гарлаа`,
-        description: message,
-        variant: "subtle",
-        status: 'error',
-        isClosable: true,
-      });
+      
+      const id = '#1'
+      if (!toast.isActive(id)) {
+        toast({
+          id: id,
+          title: `Алдаа гарлаа`,
+          description: message,
+          status: 'error',
+          variant: "subtle",
+          isClosable: true,
+        });
+      }
     }
 
     if (isSuccess || user) {
-      toast({
-        title: "Амжилттай нэвтэрлээ",
-        variant: "subtle",
-        isClosable: true,
-      });
+      const id = '#2'
+      if (!toast.isActive(id)) {
+        toast({
+          id: id,
+          title: "Амжилттай нэвтэрлээ",
+          variant: "subtle",
+          isClosable: true,
+        });
+      }
       router.push("/")
     }
 
@@ -44,7 +53,7 @@ const toast = useToast()
     }
 
     dispatch(reset())
-  }, [isError, isSuccess,access_token,user])
+  }, [isError, isSuccess,access_token,dispatch])
   return (
     <div>
       <Spin/>

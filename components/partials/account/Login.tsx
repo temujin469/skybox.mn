@@ -21,26 +21,34 @@ function Login() {
 
   useEffect(() => {
     if (isError) {
-      toast({
-        title: `Алдаа гарлаа`,
-        description: message,
-        variant: "subtle",
-        status: 'error',
-        isClosable: true,
-      });
-      // console.log("err",message)
+      const id = '#1'
+      if (!toast.isActive(id)) {
+        toast({
+          id: id,
+          title: `Алдаа гарлаа`,
+          description: message,
+          status: 'error',
+          variant: "subtle",
+          isClosable: true,
+        });
+      }
     }
     if (isSuccess) {
       router.push("/")
-      toast({
-        title: "Амжилттай нэвтэрлээ",
-        variant: "subtle",
-        isClosable: true,
-      });
+      const id = '#2'
+      if (!toast.isActive(id)) {
+        toast({
+          id:id,
+          title: "Амжилттай нэвтэрлээ",
+          variant: "subtle",
+          isClosable: true,
+        });
+      }
+     
     }
 
     dispatch(reset())
-  }, [isError, isSuccess])
+  }, [isError, isSuccess,dispatch])
 
   const handleSubmit = (userData: UserBody) => {
     // if (password !== password2) {
